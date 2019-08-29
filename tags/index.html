@@ -13,6 +13,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google-site-verification" content="Ur2fR4zlPv14-itEPEmWCYIG2kTtA8knSfb9kWOMk8k">
     <title>标签 | ReliableCoder</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
@@ -294,11 +295,52 @@ $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay
             </div>
             <div class="tag-chips">
                 
+                
+                <a href="/tags/TCP-IP/" title="TCP-IP: 1">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            data-tagname="TCP-IP" style="background-color: #F9EBEA;">TCP-IP
+                        <span class="tag-length">1</span>
+                    </span>
+                </a>
+                
+                
+                <a href="/tags/网络协议/" title="网络协议: 1">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            data-tagname="网络协议" style="background-color: #F5EEF8;">网络协议
+                        <span class="tag-length">1</span>
+                    </span>
+                </a>
+                
             </div>
         </div>
     </div>
 </div>
 
+    
+    <link rel="stylesheet" type="text/css" href="/libs/jqcloud/jqcloud.css">
+<style type="text/css">
+    #tag-wordcloud {
+        width: 100%;
+        height: 300px;
+    }
+</style>
+
+<div class="container" data-aos="fade-up">
+    <div class="card">
+        <div id="tag-wordcloud" class="card-content"></div>
+    </div>
+</div>
+
+<script type="text/javascript" src="/libs/jqcloud/jqcloud-1.0.4.min.js"></script>
+<script type="text/javascript">
+    
+
+    $('#tag-wordcloud').jQCloud([{"text":"TCP-IP","weight":1,"link":"http://yoursite.com/tags/TCP-IP/"},{"text":"网络协议","weight":1,"link":"http://yoursite.com/tags/网络协议/"}], {
+        autoResize: true
+    });
+</script>
     
 
 </main>
