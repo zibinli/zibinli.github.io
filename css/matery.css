@@ -9,7 +9,7 @@
 /*中等屏幕下(平板类)的样式*/
 @media only screen and (min-width: 600px) and (max-width: 992px) {
     .container {
-        width: 90%;
+        width: 95%;
     }
 }
 
@@ -92,8 +92,19 @@ blockquote {
     background-color: rgba(66, 185, 131, .1);
 }
 
+/*源文件的代码行样式
 pre {
     padding: 1.5rem !important;
+    margin: 1rem 0 !important;
+    background: #272822;
+    overflow: auto;
+    border-radius: 0.35rem;
+    tab-size: 4;
+}
+*/
+/*修改一下2019.08.14*/
+pre {
+    padding: 1.5rem 1.5rem 1.5rem 3.3rem !important;
     margin: 1rem 0 !important;
     background: #272822;
     overflow: auto;
@@ -104,7 +115,7 @@ pre {
 code {
     padding: 1px 5px;
     font-family: Inconsolata, Monaco, Consolas, 'Courier New', Courier, monospace;
-    font-size: 0.91rem;
+    /*font-size: 0.91rem;*/
     color: #e96900;
     background-color: #f8f8f8;
     border-radius: 2px;
@@ -163,7 +174,8 @@ mark {
 }
 
 .bg-color {
-    background-image: linear-gradient(to right,#bf30ac 0,#0f9d58 100%);
+    background-image: linear-gradient(to right, #bf30ac 0%, #0f9d58 100%);
+    opacity: 0.7;
 }
 
 .text-color {
@@ -175,12 +187,12 @@ mark {
 }
 
 .progress-bar {
-    height: 4px;
+    height: 5px;
     position: fixed;
     bottom: 0;
     z-index: 300;
-    background: linear-gradient(to right,#bf30ac 0,#0f9d58 100%);
-    opacity: 0.8;
+    background: linear-gradient(to right, #bf30ac 0%, #0f9d58 100%);
+    opacity: 0.7;
 }
 
 .sidenav-overlay {
@@ -236,7 +248,7 @@ header .side-nav .mobile-head img {
 }
 
 header .side-nav .mobile-head .logo-name {
-    margin-top: -30px;
+    margin-top: 0px;/*修改移动端侧边栏顶部没有图标时显示不全，改为0即可，原值-30px和上面img的magin对应*/
     padding-left: 10px;
     font-size: 1.5rem;
 }
@@ -279,7 +291,7 @@ header .side-nav .social-link {
 }
 
 .social-link a {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     display: inline;
     padding: 0 12px;
 }
@@ -442,6 +454,7 @@ header .go-back i {
         background: -moz-linear-gradient(135deg, rgba(233, 30, 99, 0.75) 0%, rgba(233, 30, 99, 0.65) 100%);
         background: -webkit-linear-gradient(135deg, rgba(2233, 30, 99, 0.75) 0%, rgba(233, 30, 99, 0.65) 100%);
     }
+
 }
 
 @keyframes rainbow {
@@ -522,7 +535,7 @@ header .go-back i {
 .music-player,
 .video-player {
     margin-top: 10px;
-    margin-bottom: 50px;
+    margin-bottom: 10px;
 }
 
 .music,
@@ -564,8 +577,8 @@ header .go-back i {
 }
 
 .recommend .title {
-    margin-top: 25px;
-    margin-bottom: 25px;
+    margin-top: 20px;/*原值25*/
+    margin-bottom: 20px;/*原值25*/
     text-align: center;
     font-size: 1.8rem;
     font-weight: 700;
@@ -929,7 +942,24 @@ article .article-tags .chip {
         padding: 0 50px 20px 50px;
     }
 }
+/*下面连着三段是老版reprint样式*/
+#artDetail .reprint1 {
+    margin: 15px 0 5px 0;
+}
 
+#artDetail .reprint1 .reprint1-tip {
+    margin-right: 3px;
+    font-size: 1.05rem;
+    font-weight: 500;
+}
+
+#artDetail .reprint1 a {
+    font-size: 1.05rem;
+    color: #42b983;
+    font-weight: 500;
+}
+
+/*下面连着三段是reprint-statement样式*/
 #artDetail .reprint {
     margin: 15px 0 5px 0;
 }
@@ -1347,8 +1377,19 @@ table tr:nth-child(2n), thead {
     }
 }
 
-/* about page styles. */
+.contact-container {
+    width: 90%;
+    max-width: 900px;
+    margin-top: -60px;
+}
 
+@media only screen and (max-width: 600px) {
+    .contact-container {
+        width: 95%;
+    }
+}
+
+/* about page styles. */
 .about-container {
     width: 90%;
     max-width: 1225px;
@@ -1791,3 +1832,4 @@ footer .copy-right {
     /* bg color = bg color under block */
     background: white;
 }
+

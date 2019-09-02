@@ -72,7 +72,7 @@ $(function () {
     let articleInit = function () {
         $('#articleContent a').attr('target', '_blank');
 
-        $('#articleContent img').each(function () {
+        $('#articleContent img').not('img.emoji').each(function () {
             let imgPath = $(this).attr('src');
             $(this).wrap('<div class="img-item" data-src="' + imgPath + '" data-sub-html=".caption"></div>');
             // 图片添加阴影
@@ -100,10 +100,17 @@ $(function () {
                 this.insertAdjacentElement('afterend', captionDiv)
             }
         });
+
         $('#articleContent, #myGallery').lightGallery({
             selector: '.img-item',
             // 启用字幕
-            subHtmlSelectorRelative: true
+            subHtmlSelectorRelative: true,
+            showThumbByDefault: false  //2018.08.14
+        });
+
+        /*网站加载逻辑问题 网站加载逻辑问题：图片最后加载 修改时间：2019.08.14*/
+        $(document).find('img[data-original]').each(function () {
+            $(this).parent().attr("href", $(this).attr("data-original"));
         });
 
         // progress bar init
@@ -120,7 +127,9 @@ $(function () {
 
     /*回到顶部*/
     $('#backTop').click(function () {
-        $('body,html').animate({scrollTop: 0}, 400);
+        $('body,html').animate({
+            scrollTop: 0
+        }, 400);
         return false;
     });
 

@@ -1,0 +1,960 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="网络协议 20 - RPC 协议（上）- 基于XML的SOAP协议, PHP Redis Linux Nginx">
+    <meta name="baidu-site-verification" content="fmlEuI34ir">
+    <meta name="google-site-verification" content="KeoTn_OFy4ndJwXNmm2gMeQfPhd7alqE9vQDwI32KCY">
+    <meta name="description" content="上一节我们了解 RPC 的经典模型和设计要点，并用最早期的 ONC RPC 为例子，详述了具体的实现。而时代在进步，ONC RPC 逐渐因为各种问题被替代，SOAP 协议就是替代者之一。
+ONC RPC 存在的问题ONC RPC 将客户端要">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>网络协议 20 - RPC 协议（上）- 基于XML的SOAP协议 | ReliableCoder</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    
+    <style type="text/css">
+        
+            
+            code[class*="language-"],
+            pre[class*="language-"] {
+                white-space: pre !important;
+            }
+
+        
+    </style>
+
+    <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
+    <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?46e79e71af0709a5b9106bf20cecc493";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+    
+    
+        <script>
+            (function(){
+                var bp = document.createElement('script');
+                var curProtocol = window.location.protocol.split(':')[0];
+                if (curProtocol === 'https') {
+                    bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+                }
+                else {
+                    bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+                }
+                var s = document.getElementsByTagName("script")[0];
+                s.parentNode.insertBefore(bp, s);
+            })();
+        </script>
+    
+
+<link rel="stylesheet" href="/css/prism-xonokai.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+
+<body>
+
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <span class="logo-span">ReliableCoder</span>
+                </a>
+            </div>
+            
+
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a>
+<ul class="right">
+    
+    <li class="hide-on-med-and-down">
+        <a href="/" class="waves-effect waves-light">
+            
+            <i class="fa fa-home"></i>
+            
+            <span>首页</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/tags" class="waves-effect waves-light">
+            
+            <i class="fa fa-tags"></i>
+            
+            <span>标签</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/categories" class="waves-effect waves-light">
+            
+            <i class="fa fa-bookmark"></i>
+            
+            <span>分类</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/archives" class="waves-effect waves-light">
+            
+            <i class="fa fa-archive"></i>
+            
+            <span>归档</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/about" class="waves-effect waves-light">
+            
+            <i class="fa fa-user-circle-o"></i>
+            
+            <span>关于我</span>
+        </a>
+    </li>
+    
+    <li>
+        <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+            <i id="searchIcon" class="fa fa-search" title="搜索"></i>
+        </a>
+    </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <div class="logo-name">ReliableCoder</div>
+        <div class="logo-desc">
+            
+            WEB开发 | PHP开发 | 源码解读
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li>
+            <a href="/" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-home"></i>
+                
+                首页
+            </a>
+        </li>
+        
+        <li>
+            <a href="/tags" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-tags"></i>
+                
+                标签
+            </a>
+        </li>
+        
+        <li>
+            <a href="/categories" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-bookmark"></i>
+                
+                分类
+            </a>
+        </li>
+        
+        <li>
+            <a href="/archives" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-archive"></i>
+                
+                归档
+            </a>
+        </li>
+        
+        <li>
+            <a href="/about" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-user-circle-o"></i>
+                
+                关于我
+            </a>
+        </li>
+        
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+<script src="/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/';
+            }
+        }
+    })();
+</script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/20.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        网络协议 20 - RPC 协议（上）- 基于XML的SOAP协议
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 20px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/RPC协议/" target="_blank">
+                                <span class="chip bg-color">RPC协议</span>
+                            </a>
+                        
+                            <a href="/tags/SOAP协议/" target="_blank">
+                                <span class="chip bg-color">SOAP协议</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fa fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/网络协议/" class="post-category" target="_blank">
+                                网络协议
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="post-info">
+                <div class="post-date info-break-policy">
+                    <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2019-01-09
+                </div>
+
+                <div class="post-author info-break-policy">
+                    <i class="fa fa-user-o fa-fw"></i>作者:&nbsp;&nbsp;
+                    
+                        Reliable Mark
+                    
+                </div>
+
+                
+                    
+                    <div class="info-break-policy">
+                        <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
+                        2.5k
+                    </div>
+                    
+
+                    
+                    <div class="info-break-policy">
+                        <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                        9 分
+                    </div>
+                    
+                
+                
+                
+                        <span id="busuanzi_container_site_pv" style='display:none'></span>
+                        <i class="fa fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv" ></span>
+    
+                
+
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <p>上一节我们了解 RPC 的经典模型和设计要点，并用最早期的 ONC RPC 为例子，详述了具体的实现。而时代在进步，ONC RPC 逐渐因为各种问题被替代，SOAP 协议就是替代者之一。</p>
+<h3 id="ONC-RPC-存在的问题"><a href="#ONC-RPC-存在的问题" class="headerlink" title="ONC RPC 存在的问题"></a>ONC RPC 存在的问题</h3><p>ONC RPC 将客户端要发送的参数，以及服务端要发送的回复，都压缩为一个二进制串，这样固然能够解决双方的协议约定问题，但是存在一定的不方便。</p>
+<p>首先，<strong>需要双方的压缩格式完全一致</strong>，一点都不能差。一旦有少许的差错，多一位，少一位或者错一位，都可能造成无法解压缩。当然，我们可以用传输层的可靠性以及加入校验值等方式，来减少传输过程中的差错。</p>
+<p>其次，<strong>协议修改不灵活</strong>。如果不是传输过程中造成的差错，而是客户端因为业务逻辑的改变，添加或者删除了字段，或者服务端添加或者删除了字段，而双方没有及时通知，或者线上系统没有及时升级，就会造成解压缩不成功。</p>
+<p>因而，当业务发生改变，需要多传输一些参数或者少传输一些参数的时候，都需要及时通知对方，并且根据约定好的协议文件重新生成双方的 Stub 程序。自然，这样灵活性比较差。</p>
+<p>如果仅仅是沟通的问题也还好解决，其实更难弄的还有<strong>版本的问题</strong>。比如在服务端提供一个服务，参数的格式是版本一的，已经有 50 个客户端在线上调用了。现在有一个客户端有个需求，要加一个字段，怎么办呢？这可是一个大工程，所有的客户端都要适配这个，需要重新写程序，加上这个字段，但是传输值是 0，不需要这个字段的客户端很“冤”，本来没我啥事儿，为啥让我也忙活？</p>
+<p>最后，<strong>ONC RPC 的设计明显是面向函数的，而非面向对象</strong>。而当前面向对象的业务逻辑设计与实现方式已经成为主流。</p>
+<p>这一切的根源就在于压缩。这就像平时我们爱用缩略语。如果是篮球爱好者，你直接说 NBA，他马上就知道什么意思，但是如果你给一个大妈说 NBA，她可能就不知所云。</p>
+<p>所以，这种 RPC 框架只能用于客户端和服务端全由一拨人开发的场景，或者至少客户端和服务端的开发人员要密切沟通，相互合作，有大量的共同语言，才能按照既定的协议顺畅地进行工作。</p>
+<h3 id="XML-与-SOAP"><a href="#XML-与-SOAP" class="headerlink" title="XML 与 SOAP"></a>XML 与 SOAP</h3><p>但是，一般情况下，我们做一个服务，都是要提供给陌生人用的，你和客户不会经常沟通，也没有什么共同语言。就像你给别人介绍 NBA，你要说美国职业篮球赛，这样不管他是干啥的，都能听得懂。</p>
+<p>放到我们的场景中，对应的就是用<strong>文本类</strong>的方式进行传输。无论哪个客户端获得这个文本，都能够知道它的意义。</p>
+<p>一种常见的文本类格式是 XML。我们这里举个例子来看。</p>
+<pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;cnblog:purchaseOrder xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cnblog="http://www.example.com"&gt;
+    &lt;order&gt;
+        &lt;date&gt;2019-01-08&lt;/date&gt;
+        &lt;className&gt; 板栗焖鸡 &lt;/className&gt;
+        &lt;price&gt;58&lt;/price&gt;
+    &lt;/order&gt;
+&lt;/cnblog:purchaseOrder&gt;
+</code></pre><p>我这里不准备详细讲述 XML 的语法规则，但是你相信我，看完下面的内容，即便你没有学过 XML，也能一看就懂，这段 XML 描述的是什么，不像全面的二进制，你看到的都是 010101，不知所云。</p>
+<p>有了这个，刚才我们说的那几个问题就都不是问题了。</p>
+<p>首先，<strong>格式没必要完全一致</strong>。比如如果我们把 price 和 author 换个位置，并不影响客户端和服务端解析这个文本，也根本不会误会，说这个作者的名字叫 68。</p>
+<p>如果有的客户端想增加一个字段，例如添加一个推荐人字段，只需要在上面的文件中加一行：</p>
+<pre><code>&lt;recommended&gt; Gary &lt;/recommended&gt; </code></pre><p>对于不需要这个字段的客户端，只要不解析这一行就是了。只要用简单的处理，就不会出现错误。</p>
+<p>另外，这种表述方式显然是描述一个订单对象的，是一种面向对象的、更加接近用户场景的表示方式。</p>
+<p>既然 XML 这么好，接下来我们来看看怎么把它用在 RPC 中。</p>
+<h3 id="传输协议问题"><a href="#传输协议问题" class="headerlink" title="传输协议问题"></a>传输协议问题</h3><p>我们先解决第一个，传输协议的问题。</p>
+<p>基于 XML 的最著名的通信协议就是<strong>SOAP</strong>了，全称<strong>简单对象访问协议</strong>（Simple Object Access Protocol）。它使用 XML 编写简单的请求和回复消息，并用 HTTP 协议进行传输。</p>
+<p>SOAP 将请求和回复放在一个信封里面，就像传递一个邮件一样。信封里面的信分<strong>抬头</strong>和<strong>正文</strong></p>
+<pre><code>POST /purchaseOrder HTTP/1.1
+Host: www.cnblog.com
+Content-Type: application/soap+xml; charset=utf-8
+Content-Length: nnn</code></pre><pre><code>&lt;?xml version="1.0"?&gt;
+&lt;soap:Envelope xmlns:soap="http://www.w3.org/2001/12/soap-envelope"
+soap:encodingStyle="http://www.w3.org/2001/12/soap-encoding"&gt;
+    &lt;soap:Header&gt;
+        &lt;m:Trans xmlns:m="http://www.w3schools.com/transaction/"
+          soap:mustUnderstand="1"&gt;1234
+        &lt;/m:Trans&gt;
+    &lt;/soap:Header&gt;
+    &lt;soap:Body xmlns:m="http://www.cnblog.com/perchaseOrder"&gt;
+        &lt;m:purchaseOrder"&gt;
+            &lt;order&gt;
+                &lt;date&gt;2019-01-08&lt;/date&gt;
+                &lt;className&gt; 板栗焖鸡 &lt;/className&gt;
+                &lt;price&gt;88&lt;/price&gt;
+            &lt;/order&gt;
+        &lt;/m:purchaseOrder&gt;
+    &lt;/soap:Body&gt;
+&lt;/soap:Envelope&gt;</code></pre><p>HTTP 协议我们学过，这个请求使用 POST 方法，发送一个格式为 application/soap + xml 的 XML 正文给 <a href="http://www.geektime.com" target="_blank" rel="noopener">www.geektime.com</a> ，从而下一个单，这个订单封装在 SOAP 的信封里面，并且表明这是一笔交易（transaction），而且订单的详情都已经写明了。</p>
+<h3 id="协议约定问题"><a href="#协议约定问题" class="headerlink" title="协议约定问题"></a>协议约定问题</h3><p>接下来我们解决第二个问题，就是双方的协议约定是什么样的？</p>
+<p>因为服务开发出来是给陌生人用的，就像上面下单的那个 XML 文件，对于客户端来说，它如何知道应该拼装成上面的格式呢？这就需要对于服务进行描述，因为调用的人不认识你，所以没办法找到你，问你的服务应该如何调用。</p>
+<p>当然你可以写文档，然后放在官方网站上，但是你的文档不一定更新得那么及时，而且你也写的文档也不一定那么严谨，所以常常会有调试不成功的情况。因而，我们需要一种相对比较严谨的<strong>Web 服务描述语言</strong>，WSDL（Web Service Description Languages）。它也是一个 XML 文件。</p>
+<p>在这个文件中，要定义一个类型 order，与上面的 XML 对应起来。</p>
+<pre><code> &lt;wsdl:types&gt;
+  &lt;xsd:schema targetNamespace="http://www.example.org/cnblog"&gt;
+   &lt;xsd:complexType name="order"&gt;
+    &lt;xsd:element name="date" type="xsd:string"&gt;&lt;/xsd:element&gt;
+&lt;xsd:element name="className" type="xsd:string"&gt;&lt;/xsd:element&gt;
+&lt;xsd:element name="Author" type="xsd:string"&gt;&lt;/xsd:element&gt;
+    &lt;xsd:element name="price" type="xsd:int"&gt;&lt;/xsd:element&gt;
+   &lt;/xsd:complexType&gt;
+  &lt;/xsd:schema&gt;
+ &lt;/wsdl:types&gt;</code></pre><p>接下来，需要定义一个 message 的结构。</p>
+<pre><code> &lt;wsdl:message name="purchase"&gt;
+  &lt;wsdl:part name="purchaseOrder" element="tns:order"&gt;&lt;/wsdl:part&gt;
+ &lt;/wsdl:message&gt;</code></pre><p>接下来，应该暴露一个端口。</p>
+<pre><code> &lt;wsdl:portType name="PurchaseOrderService"&gt;
+  &lt;wsdl:operation name="purchase"&gt;
+   &lt;wsdl:input message="tns:purchase"&gt;&lt;/wsdl:input&gt;
+   &lt;wsdl:output message="......"&gt;&lt;/wsdl:output&gt;
+  &lt;/wsdl:operation&gt;
+ &lt;/wsdl:portType&gt;</code></pre><p>然后，我们来编写一个 binding，将上面定义的信息绑定到 SOAP 请求的 body 里面。</p>
+<pre><code> &lt;wsdl:binding name="purchaseOrderServiceSOAP" type="tns:PurchaseOrderService"&gt;
+  &lt;soap:binding style="rpc"
+   transport="http://schemas.xmlsoap.org/soap/http" /&gt;
+  &lt;wsdl:operation name="purchase"&gt;
+   &lt;wsdl:input&gt;
+    &lt;soap:body use="literal" /&gt;
+   &lt;/wsdl:input&gt;
+   &lt;wsdl:output&gt;
+    &lt;soap:body use="literal" /&gt;
+   &lt;/wsdl:output&gt;
+  &lt;/wsdl:operation&gt;
+ &lt;/wsdl:binding&gt;</code></pre><p>最后，我们需要编写 service。</p>
+<pre><code> &lt;wsdl:service name="PurchaseOrderServiceImplService"&gt;
+  &lt;wsdl:port binding="tns:purchaseOrderServiceSOAP" name="PurchaseOrderServiceImplPort"&gt;
+   &lt;soap:address location="http://www.cnblog.com:8080/purchaseOrder" /&gt;
+  &lt;/wsdl:port&gt;
+ &lt;/wsdl:service&gt;</code></pre><p>WSDL 还是有些复杂的，不过好在有工具可以生成。</p>
+<p>对于某个服务，哪怕是一个陌生人，都可以通过在服务地址后面加上“?wsdl”来获取到这个文件，但是这个文件还是比较复杂，比较难以看懂。不过好在也有工具可以根据 WSDL 生成客户端 Stub，让客户端通过 Stub 进行远程调用，就跟调用本地的方法一样。</p>
+<h3 id="服务发现问题"><a href="#服务发现问题" class="headerlink" title="服务发现问题"></a>服务发现问题</h3><p>最后解决第三个问题，服务发现问题。</p>
+<p>这里有一个<strong>UDDI</strong>（Universal Description, Discovery, and Integration），也即<strong>统一描述、发现和集成协议</strong>。它其实是一个注册中心，服务提供方可以将上面的 WSDL 描述文件，发布到这个注册中心，注册完毕后，服务使用方可以查找到服务的描述，封装为本地的客户端进行调用。</p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><ul>
+<li>原来的二进制 RPC 有很多缺点，格式要求严格，修改过于复杂，不面向对象，于是产生了基于文本的调用方式——基于 XML 的 SOAP；</li>
+<li>SOAP 有三大要素：协议约定用 WSDL、传输协议用 HTTP、服务发现用 UDDL。</li>
+</ul>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+            </div>
+            <hr/>
+
+            
+
+            <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    <div class="social-share" data-disabled="qzone" data-wechat-qrcode-helper="<p>微信里点“发现”->“扫一扫”二维码便可查看分享。</p>"></div>
+    
+</div>
+
+<script src="/libs/share/js/social-share.min.js"></script>
+
+            
+            
+            
+            <div class="reprint1">
+                <p>
+                    <span class="reprint1-tip">
+                        <i class="fa fa-exclamation-circle"></i>&nbsp;&nbsp;转载请注明:
+                    </span>
+                    <a href="http://yoursite.com" class="b-link-green">ReliableCoder</a>
+                    <i class="fa fa-angle-right fa-lg fa-fw text-color"></i>
+                    <a href="/9/wang-luo-xie-yi-20-rpc-xie-yi-shang-ji-yu-xml-de-soap-xie-yi/" class="b-link-green">网络协议 20 - RPC 协议（上）- 基于XML的SOAP协议</a>
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/14/wang-luo-xie-yi-21-rpc-xie-yi-zhong-ji-yu-json-de-restful-jie-kou-xie-yi/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="网络协议 21 - RPC 协议（中）- 基于 JSON 的 RESTful 接口协议">
+                        
+                        <span class="card-title">网络协议 21 - RPC 协议（中）- 基于 JSON 的 RESTful 接口协议</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            上一节我们了解了基于 XML 的 SOAP 协议，SOAP 的 S 是啥意思来着？是 Simple，但是好像一点儿都不简单啊！
+传输协议问题对于 SOAP 来讲，比如我创建一个订单，用 POST，在 XML 里面写明动作是 CreateOr
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-01-14
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/网络协议/" class="post-category" target="_blank">
+                                    网络协议
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/RPC协议/" target="_blank">
+                        <span class="chip bg-color">RPC协议</span>
+                    </a>
+                    
+                    <a href="/tags/RESTFUL接口协议/" target="_blank">
+                        <span class="chip bg-color">RESTFUL接口协议</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/7/wang-luo-xie-yi-19-rpc-xie-yi-zong-shu-yuan-zai-tian-bian-jin-zai-yan-qian/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="网络协议 19 - RPC协议综述：远在天边近在眼前">
+                        
+                        <span class="card-title">网络协议 19 - RPC协议综述：远在天边近在眼前</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            这几年微服务很火，想必各位博友或多或少的都接触过。微服务概念中，各服务间的相互调用是不可或缺的一环。你知道微服务之间是通过什么方式相互调用的吗？
+你可能说，这还不简单，用 socket 呗。服务之间分调用方和被调用方，我们就建立一个 TCP
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-01-07
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/网络协议/" class="post-category" target="_blank">
+                                    网络协议
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/RPC协议/" target="_blank">
+                        <span class="chip bg-color">RPC协议</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: ReliableCoder<br />'
+            + '作者: Reliable Mark<br />'
+            + '链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fa fa-list"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h1, h2, h3, h4, h5'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h1, h2, h3, h4, h5').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).slideUp(500);
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).slideDown(500);
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+    
+
+</main>
+
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            &copy; 2019 shw2018. All Rights Reserved.
+
+            
+                &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
+                <span class="white-color">143.1k</span>
+
+            
+            <br>
+
+            <span id="sitetime"></span>
+
+            
+
+            
+                <br>
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'></span>
+                    <i class="fa fa-heart-o"></i>
+                    本站总访问量 <span id="busuanzi_value_site_pv" class="white-color"></span>
+
+                
+
+                
+                    <span id="busuanzi_container_site_uv" style='display:none'></span>
+                    人次,&nbsp;访客数 <span id="busuanzi_value_site_uv" class="white-color"></span> 人.
+                    
+                
+
+            
+
+        </div>
+
+        <div class="col s12 m4 l4 social-link social-statis">
+
+
+
+
+
+
+
+
+
+</div>
+
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+<script language=javascript>
+    function siteTime() {
+        window.setTimeout("siteTime()", 1000);
+        var seconds = 1000;
+        var minutes = seconds * 60;
+        var hours = minutes * 60;
+        var days = hours * 24;
+        var years = days * 365;
+        var today = new Date();
+        var todayYear = today.getFullYear();
+        var todayMonth = today.getMonth() + 1;
+        var todayDate = today.getDate();
+        var todayHour = today.getHours();
+        var todayMinute = today.getMinutes();
+        var todaySecond = today.getSeconds();
+
+        /* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+        year - 作为date对象的年份，为4位年份值
+        month - 0-11之间的整数，做为date对象的月份
+        day - 1-31之间的整数，做为date对象的天数
+        hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+        minutes - 0-59之间的整数，做为date对象的分钟数
+        seconds - 0-59之间的整数，做为date对象的秒数
+        microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+
+        var t1 = Date.UTC(2019, 08, 01, 00, 00, 00); //北京时间2019-8-1 00:00:00
+        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+        var diff = t2 - t1;
+        var diffYears = Math.floor(diff / years);
+        var diffDays = Math.floor((diff / days) - diffYears * 365);
+        var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+        var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) / minutes);
+        var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours - diffMinutes * minutes) / seconds);
+        document.getElementById("sitetime").innerHTML = "本站已运行 " + diffYears + " 年 " + diffDays + " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+    }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+    siteTime();
+</script>
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+
+    
+        <script src="/libs/others/clicklove.js"></script>
+    
+    
+    
+        <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+    
+</body>
+
+</html>
