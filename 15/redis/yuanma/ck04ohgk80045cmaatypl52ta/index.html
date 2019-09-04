@@ -1,0 +1,1022 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="跟着大彬读源码 - Redis 3 - 服务器如何响应客户端请求？（下）, PHP Redis Linux Nginx">
+    <meta name="baidu-site-verification" content="fmlEuI34ir">
+    <meta name="google-site-verification" content="KeoTn_OFy4ndJwXNmm2gMeQfPhd7alqE9vQDwI32KCY">
+    <meta name="description" content="继续我们上一节的讨论。服务器启动了，客户端也发送命令了。接下来，就要到服务器“表演”的时刻了。
+1 服务器处理服务器读取到命令请求后，会进行一系列的处理。
+1.1 读取命令请求当客户端与服务器之间的套接字因客户端的写入变得可读时，服务器将调">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>跟着大彬读源码 - Redis 3 - 服务器如何响应客户端请求？（下） | ReliableCoder</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    
+    <style type="text/css">
+        
+            
+            code[class*="language-"],
+            pre[class*="language-"] {
+                white-space: pre !important;
+            }
+
+        
+    </style>
+
+    <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
+    <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?46e79e71af0709a5b9106bf20cecc493";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+    
+    
+        <script>
+            (function(){
+                var bp = document.createElement('script');
+                var curProtocol = window.location.protocol.split(':')[0];
+                if (curProtocol === 'https') {
+                    bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+                }
+                else {
+                    bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+                }
+                var s = document.getElementsByTagName("script")[0];
+                s.parentNode.insertBefore(bp, s);
+            })();
+        </script>
+    
+
+<link rel="stylesheet" href="/css/prism-xonokai.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+
+<body>
+
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <span class="logo-span">ReliableCoder</span>
+                </a>
+            </div>
+            
+
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a>
+<ul class="right">
+    
+    <li class="hide-on-med-and-down">
+        <a href="/" class="waves-effect waves-light">
+            
+            <i class="fa fa-home"></i>
+            
+            <span>首页</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/tags" class="waves-effect waves-light">
+            
+            <i class="fa fa-tags"></i>
+            
+            <span>标签</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/categories" class="waves-effect waves-light">
+            
+            <i class="fa fa-bookmark"></i>
+            
+            <span>分类</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/archives" class="waves-effect waves-light">
+            
+            <i class="fa fa-archive"></i>
+            
+            <span>归档</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/about" class="waves-effect waves-light">
+            
+            <i class="fa fa-user-circle-o"></i>
+            
+            <span>关于我</span>
+        </a>
+    </li>
+    
+    <li>
+        <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+            <i id="searchIcon" class="fa fa-search" title="搜索"></i>
+        </a>
+    </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <div class="logo-name">ReliableCoder</div>
+        <div class="logo-desc">
+            
+            WEB开发 | PHP开发 | 源码解读
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li>
+            <a href="/" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-home"></i>
+                
+                首页
+            </a>
+        </li>
+        
+        <li>
+            <a href="/tags" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-tags"></i>
+                
+                标签
+            </a>
+        </li>
+        
+        <li>
+            <a href="/categories" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-bookmark"></i>
+                
+                分类
+            </a>
+        </li>
+        
+        <li>
+            <a href="/archives" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-archive"></i>
+                
+                归档
+            </a>
+        </li>
+        
+        <li>
+            <a href="/about" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-user-circle-o"></i>
+                
+                关于我
+            </a>
+        </li>
+        
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+<script src="/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/';
+            }
+        }
+    })();
+</script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        跟着大彬读源码 - Redis 3 - 服务器如何响应客户端请求？（下）
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 20px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/服务器响应客户端请求/" target="_blank">
+                                <span class="chip bg-color">服务器响应客户端请求</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fa fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Redis/" class="post-category" target="_blank">
+                                Redis
+                            </a>
+                        
+                            <a href="/categories/Redis/源码/" class="post-category" target="_blank">
+                                源码
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="post-info">
+                <div class="post-date info-break-policy">
+                    <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2019-07-15
+                </div>
+
+                <div class="post-author info-break-policy">
+                    <i class="fa fa-user-o fa-fw"></i>作者:&nbsp;&nbsp;
+                    
+                        Reliable Mark
+                    
+                </div>
+
+                
+                    
+                    <div class="info-break-policy">
+                        <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
+                        2.7k
+                    </div>
+                    
+
+                    
+                    <div class="info-break-policy">
+                        <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                        9 分
+                    </div>
+                    
+                
+                
+                <!-- 
+                        <span id="busuanzi_container_site_pv" style='display:none'></span>
+                        <i class="fa fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv" ></span>
+    
+                 -->
+
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <p>继续我们上一节的讨论。服务器启动了，客户端也发送命令了。接下来，就要到服务器“表演”的时刻了。</p>
+<h3 id="1-服务器处理"><a href="#1-服务器处理" class="headerlink" title="1 服务器处理"></a>1 服务器处理</h3><p>服务器读取到命令请求后，会进行一系列的处理。</p>
+<h4 id="1-1-读取命令请求"><a href="#1-1-读取命令请求" class="headerlink" title="1.1 读取命令请求"></a>1.1 读取命令请求</h4><p>当客户端与服务器之间的套接字因客户端的写入变得可读时，服务器将调用命令请求处理器执行以下操作：</p>
+<ol>
+<li>读取套接字中的命令请求，并将其保存到客户端状态的输入缓冲区。</li>
+<li>对输入缓冲区的命令请求进行分析，提取出命令请求中包含的命令参数及参数个数，然后分别将参数和参数个数保存到客户端状态的 argv 属性和 argc 属性里。</li>
+<li>调用命令执行器，执行客户端指定的命令。</li>
+</ol>
+<p>上面的 <code>SET</code> 命令保存到客户端状态的输入缓存区之后，客户端状态如图 4。</p>
+<p><img src="https://raw.githubusercontent.com/zibinli/blog/master/Redis/_v_images/20190605220440144_29575.png" alt="图 4 - 客户端状态中的命令请求"></p>
+<p>之后，分析程序将对输入缓冲区中的协议进行分析，并将得出的结果保存的客户端的 argv 和 argc 属性中，如图 5 所示：</p>
+<p><img src="https://raw.githubusercontent.com/zibinli/blog/master/Redis/_v_images/20190605220637329_1161.png" alt="图 5 - 客户端状态中的 argv 和 argc 属性"></p>
+<p>之后，服务器将通过调用<strong>命令执行器</strong>来完成执行命令的余下步骤。</p>
+<h4 id="1-2-查找命令实现"><a href="#1-2-查找命令实现" class="headerlink" title="1.2 查找命令实现"></a>1.2 查找命令实现</h4><p>命令执行器要做的第一件事就是根据 argv[0] 参数，在命令表（commandtable）中查找参数所指定的命令，并将找到的命令保存到 cmd 属性中。</p>
+<p>命令表是一个字典，字典的键是一个个命令名称，比如 “SET”、”GET” 等。而字典的值则是一个个 redisCommand 结构，每个 redisCommand 结构记录了 Redis 命令的实现信息。源码如下：</p>
+<pre><code># server.h/redisCommand
+struct redisCommand {
+    char *name;   // 命令名称。如 "SET"
+    redisCommandProc *proc; // 对应函数指针，指向命令的实现函数。比如 SET 对应的 setCommand 函数
+    int arity;    // 命令参数的格个数。用来检查命令请求的格式是否合法。
+                        // 要注意的命令的名称也是一个参数。像我们上面的 SET KEY VALUE 命令，实际上有三个参数。
+    char *sflags; // 字符串形式的标识值。记录了命令的属性。
+    int flags;    // 对 sflags 标识分析得出的二进制标识，由程序自动生成。检查命令时，实际上使用的是此字段
+    redisGetKeysProc *getkeys_proc; // 指针函数，通过此方法来指定 key 的位置。
+    int firstkey; // 第一个 key 的位置
+    int lastkey;  // 最后一个 key 的位置
+    int keystep;  // key 之间的间距
+    long long microseconds, calls; // 命令的总调用时间及调用次数
+};</code></pre><p>另外，对于 sflags 属性，可使用的标识值及含义如下表：</p>
+<table>
+<thead>
+<tr>
+<th align="center">标识</th>
+<th>意义</th>
+<th>带有此标识的命令</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">w</td>
+<td>这是一个写入命令，可能会修改数据库</td>
+<td>SET、RPUSH、DEL 等</td>
+</tr>
+<tr>
+<td align="center">r</td>
+<td>这是一个只读命令，不会修改数据库</td>
+<td>GET、STRLEN 等</td>
+</tr>
+<tr>
+<td align="center">m</td>
+<td>此命令可能会占用大量内存，执行器需先检查内存使用情况，如果内存紧缺就禁止执行此命令</td>
+<td>SET、APPEND、RPUSH、SADD 等</td>
+</tr>
+<tr>
+<td align="center">a</td>
+<td>这是一个管理命令</td>
+<td>SAVE、BGSAVE 等</td>
+</tr>
+<tr>
+<td align="center">p</td>
+<td>这是一个发布与订阅功能的命令</td>
+<td>PUBLISH、SUBSRIBE 等</td>
+</tr>
+<tr>
+<td align="center">s</td>
+<td>这个命令不可以在 lua 脚步中使用</td>
+<td>BPOP、BLPOP 等</td>
+</tr>
+<tr>
+<td align="center">R</td>
+<td>这是一个随机命令。对于相同的数据集和相同的参数，返回结果可能不同</td>
+<td>SPOP、SRANDMEMBER 等</td>
+</tr>
+<tr>
+<td align="center">S</td>
+<td>当在 lua 脚步中使用此命令时，对返回结果进行排序，使得结果有序</td>
+<td>SINTER、SUNION 等</td>
+</tr>
+<tr>
+<td align="center">l</td>
+<td>这个命令可以在服务器载入数据的过程中使用</td>
+<td>INFO、PUBLISH 等</td>
+</tr>
+<tr>
+<td align="center">t</td>
+<td>这个命令允许在从库有过期数据时使用</td>
+<td>SLAVEOF、PING 等</td>
+</tr>
+<tr>
+<td align="center">M</td>
+<td>这个命令在监视模式下，不会被自动传播</td>
+<td>EXEC</td>
+</tr>
+<tr>
+<td align="center">k</td>
+<td>集群模式下，如果对应槽点标记位“导入”，则接受此命令</td>
+<td>restore-asking</td>
+</tr>
+<tr>
+<td align="center">F</td>
+<td>这个命令在程序执行时应该立刻执行</td>
+<td>SETNX、GET 等</td>
+</tr>
+</tbody></table>
+<p>命令表结构如图 6：</p>
+<p><img src="https://raw.githubusercontent.com/zibinli/blog/master/Redis/_v_images/20190606123755943_21138.png" alt="图 6 - 命令表"></p>
+<p>对于我们上面的 <code>SET KEY VALUE</code> 命令，当程序以图 5 中的 argv[0] 作为输入，在命令表中进行查找时，命令表返回 “set” 键对于的 redisCommand 结构，客户端状态的 cmd 指针会指向这个 redisCommand 结构。如图 7 所示：</p>
+<p><img src="https://raw.githubusercontent.com/zibinli/blog/master/Redis/_v_images/20190606124028494_23495.png" alt="图 7 - 设置客户端状态的 cmd 指针"></p>
+<p>要注意的是，对于 Redis 而言，<strong>命令名字的大小写不影响命令表的查找结果</strong>，也就是命令名称不区分大小写。执行 SET 和 set、Set 将获得相同结果。</p>
+<h4 id="1-3-执行预备操作"><a href="#1-3-执行预备操作" class="headerlink" title="1.3 执行预备操作"></a>1.3 执行预备操作</h4><p>到目前为止，服务器已经将执行命令所需要的命令实现函数（客户端 cmd 属性）、参数（客户端 argv 属性）、参数个数（客户端 argc 属性）都初始化完毕。但在真正执行命令之前，程序还会进行一些预备操作，保证命令可以正确、顺利的被执行。预备操作包括：</p>
+<ol>
+<li>检查客户端的 cmd 指针是否指向 NULL，如果是的话，说明用户输入的命令名称没有对应的函数，服务器将不再执行后续操作，并向客户端返回一个错误。</li>
+<li>根据客户端 cmd 属性指向的 redisCommand 结果的 arity 属性，检查命令请求所给定的<strong>参数个数</strong>是否正确。</li>
+<li>检查客户端是否已经通过了身份验证。未通过身份验证的客户端只能执行 <code>AUTH</code> 命令。否则，将会向客户端返回一个错误。</li>
+<li>如果服务器打开了 maxmemory 功能，在执行命令之前，会先检查服务器的内存占用情况，并在有需要时进行内存回收，从而使得接下来的命令可以顺利执行。如果内存回收失败，将不再执行后续步骤，向客户端返回一个错误。</li>
+<li>如果服务器上一次执行 <code>BGSAVE</code> 命令时出错，并且服务器打开了 <em>stop-writes-on-bgsave-error</em> 功能，而将要执行的命令是一个写命令，那么服务器将拒绝执行这个鞋命令，并向客户端返回一个错误。</li>
+<li>如果客户端正在用 <code>SUBSCRIBE</code> 和 <code>PSUBSCRIBE</code> 命令订阅频道或模式，那么服务器只会执行客户端发来的 <code>SUBSCRIBE</code>、<code>PSUBSCRIBE</code>、<code>UNSUBSCRIBE</code>、<code>PUNSUBSCRIBE</code> 四个命令，其它命令都会被拒绝。</li>
+<li>如果服务器正在进行数据载入，那么客户端发送是命令必须带有 <code>l</code> 标识才会被服务器执行。</li>
+<li>如果客户端正在执行事务，那么服务器只会执行 <code>EXEC</code>、<code>DISCARD</code>、<code>MULTI</code>、<code>WATCH</code> 四个命令，其他命令都会被放进事务队列中。</li>
+<li>如果服务器打开了监视器功能，那么服务器会将要执行的命令和参数等信息发送给监视器。</li>
+</ol>
+<p>当完成了以上预备操作之后，服务器就开始真正的执行命令了。</p>
+<p>要注意的是，上面列出的预备操作只是服务器在单机模式下的检查操作。如果在复制或者集群模式下，预备操作还会更多。</p>
+<h4 id="1-4-调用命令的实现函数"><a href="#1-4-调用命令的实现函数" class="headerlink" title="1.4 调用命令的实现函数"></a>1.4 调用命令的实现函数</h4><p>在前面的操作中 ，服务器已经将要执行的命令实现、参数、参数个数保存在客户端结构中。</p>
+<p>对于我们上面的 <code>SET KEY VALUE</code> 命令，图 8 包含了命令实现、参数和参数个数结构：</p>
+<p><img src="https://raw.githubusercontent.com/zibinli/blog/master/Redis/_v_images/20190606130340397_25001.png" alt="图 8 - 客户端状态"></p>
+<p>当服务器决定要执行命令时，只要执行以下语句即可：</p>
+<pre><code>// client 是指向客户端状态的指针。server.c/call()
+client-&gt;cmd-&gt;proc(client);</code></pre><p>上面的执行语句实际上就是调用 <code>setCommand</code> 函数（t_string.c）。</p>
+<p>被调用的命令实现函数会执行指定的操作，并产生相应的命令回复，这些回复会被保存在客户端状态的输出缓冲区中（bug 属性 和 reply 属性），之后实现函数会为客户端的套接字关联命令回复处理器，由命令回复处理器返回给客户端。</p>
+<p>回到我们的示例，<code>setCommand(client)</code> 将产生一个 “+OK\r\n” 回复，这个回复被保存在客户端的 buf 属性中。如图 9 所示：</p>
+<p><img src="https://raw.githubusercontent.com/zibinli/blog/master/Redis/_v_images/20190606130904312_21491.png" alt="图 9 - 保存了命令回复的客户端状态"></p>
+<h4 id="1-5-执行后续工作"><a href="#1-5-执行后续工作" class="headerlink" title="1.5 执行后续工作"></a>1.5 执行后续工作</h4><p>实现函数执行完后，服务器还会执行一些后续工作，主要包括：</p>
+<ol>
+<li>如果服务器开启了 slow-log 功能，那么慢查询日志模块将会检查是否需要将刚执行的命令添加到慢查询日志。</li>
+<li>更新 <code>redisCommand</code> 结构的 milliseconds 和 calls 属性。</li>
+<li>如果服务器开启了 AOF 持久化功能，那么 AOF 持久化模块会将刚刚执行的命令请求写入到 AOF 缓冲区中。</li>
+<li>如果有其它服务器正在复制当前这个服务器，那么服务器将会把刚刚执行的命令传播给所有从服务器。</li>
+</ol>
+<p>以上后续操作执行完毕后，一条执行命令也就执行完成了。服务器可以继续处理后续的命令。</p>
+<h4 id="1-6-将命令回复发送给客户端"><a href="#1-6-将命令回复发送给客户端" class="headerlink" title="1.6 将命令回复发送给客户端"></a>1.6 将命令回复发送给客户端</h4><p>上面过程中，命令实现函数会将命令回复保存到客户端的输出缓冲区中，并为客户端的套接字关联命令回复处理器。当客户端套接字变为可写状态时，服务器就会执行命令回复处理器，将命令回复发送给客户端。</p>
+<p>当命令回复发送完毕后，回复处理器会情况客户端的输出缓冲区，为处理下一个命令请求做好准备。</p>
+<p>以图 9 所示的客户端状态为例，当客户端的套接字变为可写状态时，命令回复处理器会将协议格式的命令回复 “+OK\r\n” 发送给客户端。</p>
+<h4 id="1-7-源码解读"><a href="#1-7-源码解读" class="headerlink" title="1.7 源码解读"></a>1.7 源码解读</h4><p>命令处理请求，函数调用堆栈信息如图 3-7-1：</p>
+<p><img src="https://raw.githubusercontent.com/zibinli/blog/master/Redis/_v_images/20190614180606647_15447.png" alt="图 3-7-1：命令执行过程函数堆栈信息"></p>
+<p>命令回复，函数调用堆栈信息如图 3-7-2：<br><img src="https://raw.githubusercontent.com/zibinli/blog/master/Redis/_v_images/20190617195653689_22592.png" alt="图 3-7-2：命令回复函数堆栈信息"></p>
+<h3 id="2-客户端接收并打印回复"><a href="#2-客户端接收并打印回复" class="headerlink" title="2 客户端接收并打印回复"></a>2 客户端接收并打印回复</h3><p>客户端接收到命令回复之后，会将回复转换成我们可读的格式，并打印在屏幕上（对于 redis-cli 客户端），如图 10 所示。</p>
+<p><img src="https://raw.githubusercontent.com/zibinli/blog/master/Redis/_v_images/20190612080448952_13253.png" alt="图 10 客户端接收并打印命令回复的过程"></p>
+<p>至此，我们走完了从发起一个命令请求，到收到回复的所有过程。对于我们最开始提的问题，服务器如何响应客户端请求，你有答案了吗？</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ol>
+<li>服务器通过 <code>networking.c/readQueryFromClient()</code> 读取和执行对应命令。</li>
+<li>服务器通过 <code>networking.c/writeToClient()</code> 将命令回复发送给客户端。</li>
+</ol>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+            </div>
+            <hr/>
+
+            
+
+            <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    <div class="social-share" data-disabled="qzone" data-wechat-qrcode-helper="<p>微信里点“发现”->“扫一扫”二维码便可查看分享。</p>"></div>
+    
+</div>
+
+<script src="/libs/share/js/social-share.min.js"></script>
+
+            
+            
+            
+            <div class="reprint1">
+                <p>
+                    <span class="reprint1-tip">
+                        <i class="fa fa-exclamation-circle"></i>&nbsp;&nbsp;转载请注明:
+                    </span>
+                    <a href="http://yoursite.com" class="b-link-green">ReliableCoder</a>
+                    <i class="fa fa-angle-right fa-lg fa-fw text-color"></i>
+                    <a href="/15/redis/yuanma/ck04ohgk80045cmaatypl52ta/" class="b-link-green">跟着大彬读源码 - Redis 3 - 服务器如何响应客户端请求？（下）</a>
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/17/redis/yuanma/ck04ohgmr007jcmaao7ax584g/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="跟着大彬读源码 - Redis 4 - 服务器的事件驱动有什么含义？">
+                        
+                        <span class="card-title">跟着大彬读源码 - Redis 4 - 服务器的事件驱动有什么含义？</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            众所周知，Redis 服务器是一个事件驱动程序。那么事件驱动对于 Redis 而言有什么含义？源码中又是如何实现事件驱动的呢？今天，我们一起来认识下 Redis 服务器的事件驱动。
+对于 Redis 而言，服务器需要处理以下两类事件：
+
+文
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-07-17
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Redis/" class="post-category" target="_blank">
+                                    Redis
+                                </a>
+                            
+                            <a href="/categories/Redis/源码/" class="post-category" target="_blank">
+                                    源码
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/事件驱动/" target="_blank">
+                        <span class="chip bg-color">事件驱动</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/10/redis/yuanma/ck04ohger000gcmaazks5bvqu/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="跟着大彬读源码 - Redis 2 - 服务器如何响应客户端请求？（上）">
+                        
+                        <span class="card-title">跟着大彬读源码 - Redis 2 - 服务器如何响应客户端请求？（上）</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            上次我们通过问题“启动服务器，程序都干了什么？”，跟着源码，深入了解了 Redis 服务器的启动过程。
+既然启动了 Redis 服务器，那我们就要连上 Redis 服务干些事情。这里我们可以通过 redis-cli 测试。
+现在客户端和服务
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-07-10
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Redis/" class="post-category" target="_blank">
+                                    Redis
+                                </a>
+                            
+                            <a href="/categories/Redis/源码/" class="post-category" target="_blank">
+                                    源码
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/服务器响应客户端请求/" target="_blank">
+                        <span class="chip bg-color">服务器响应客户端请求</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: ReliableCoder<br />'
+            + '作者: Reliable Mark<br />'
+            + '链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fa fa-list"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h1, h2, h3, h4, h5'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h1, h2, h3, h4, h5').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).slideUp(500);
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).slideDown(500);
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+    
+
+</main>
+
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            &copy; 2019 shw2018. All Rights Reserved.
+
+            
+                &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
+                <span class="white-color">143.9k</span>
+
+            
+            <br>
+
+            <span id="sitetime"></span>
+
+            
+
+            <!-- 
+                <br>
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'></span>
+                    <i class="fa fa-heart-o"></i>
+                    本站总访问量 <span id="busuanzi_value_site_pv" class="white-color"></span>
+
+                
+
+                
+                    <span id="busuanzi_container_site_uv" style='display:none'></span>
+                    人次,&nbsp;访客数 <span id="busuanzi_value_site_uv" class="white-color"></span> 人.
+                    
+                
+
+             -->
+
+        </div>
+
+        <div class="col s12 m4 l4 social-link social-statis">
+
+
+
+
+
+
+
+
+
+</div>
+
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+<script language=javascript>
+    function siteTime() {
+        window.setTimeout("siteTime()", 1000);
+        var seconds = 1000;
+        var minutes = seconds * 60;
+        var hours = minutes * 60;
+        var days = hours * 24;
+        var years = days * 365;
+        var today = new Date();
+        var todayYear = today.getFullYear();
+        var todayMonth = today.getMonth() + 1;
+        var todayDate = today.getDate();
+        var todayHour = today.getHours();
+        var todayMinute = today.getMinutes();
+        var todaySecond = today.getSeconds();
+
+        /* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+        year - 作为date对象的年份，为4位年份值
+        month - 0-11之间的整数，做为date对象的月份
+        day - 1-31之间的整数，做为date对象的天数
+        hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+        minutes - 0-59之间的整数，做为date对象的分钟数
+        seconds - 0-59之间的整数，做为date对象的秒数
+        microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+
+        var t1 = Date.UTC(2018, 08, 01, 00, 00, 00); //北京时间2019-8-1 00:00:00
+        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+        var diff = t2 - t1;
+        var diffYears = Math.floor(diff / years);
+        var diffDays = Math.floor((diff / days) - diffYears * 365);
+        var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+        var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) / minutes);
+        var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours - diffMinutes * minutes) / seconds);
+        document.getElementById("sitetime").innerHTML = "本站已运行 " + diffYears + " 年 " + diffDays + " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+    }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+    siteTime();
+</script>
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+
+    
+        <script src="/libs/others/clicklove.js"></script>
+    
+    
+    
+        <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+    
+</body>
+
+</html>
