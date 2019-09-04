@@ -4,14 +4,16 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="Nginx location匹配规则, PHP Redis Linux Nginx">
+    <meta name="keywords" content="Nginx 实用配置, PHP Redis Linux Nginx">
     <meta name="baidu-site-verification" content="fmlEuI34ir">
     <meta name="google-site-verification" content="KeoTn_OFy4ndJwXNmm2gMeQfPhd7alqE9vQDwI32KCY">
-    <meta name="description" content="1、语法location [=|~|~*|^~|@] /uri/ {
-  ...
-} 2、说明从上面的语法出发，可以了解到 location 可以区分为三个部分，接下来一个一个的研究一下。
-1) [=||*|^~|@]
-= : 表示精确匹配">
+    <meta name="description" content="1 防盗链相关配置：
+
+valid_referers
+
+location ~* \.(gif|jpg|png)$ {
+    # 只允许 192.168.0.1 请求资源
+    valid_referers none blocked 19">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -19,7 +21,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Nginx location匹配规则 | ReliableCoder</title>
+    <title>Nginx 实用配置 | ReliableCoder</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -233,13 +235,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        Nginx location匹配规则
+                        Nginx 实用配置
                     </div>
                 </div>
             </div>
@@ -361,7 +363,7 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2018-10-24
+                    2019-09-04
                 </div>
 
                 <div class="post-author info-break-policy">
@@ -375,14 +377,14 @@
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        1.2k
+                        839
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        5 分
+                        3 分
                     </div>
                     
                 
@@ -399,128 +401,110 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="1、语法"><a href="#1、语法" class="headerlink" title="1、语法"></a>1、语法</h3><pre><code>location [=|~|~*|^~|@] /uri/ {
-  ...
-} </code></pre><h3 id="2、说明"><a href="#2、说明" class="headerlink" title="2、说明"></a>2、说明</h3><p>从上面的语法出发，可以了解到 location 可以区分为三个部分，接下来一个一个的研究一下。</p>
-<h5 id="1"><a href="#1" class="headerlink" title="1) [=||*|^~|@]"></a>1) [=|<del>|</del>*|^~|@]</h5><ul>
-<li>= : 表示精确匹配后面的url</li>
-<li>~ : 表示正则匹配，但是区分大小写</li>
-<li>~* : 正则匹配，不区分大小写</li>
-<li>^~ : 表示普通字符匹配，如果该选项匹配，只匹配该选项，不匹配别的选项，一般用来匹配目录</li>
-<li>@ : “@” 定义一个命名的 location，使用在内部定向时，例如 error_page</li>
-</ul>
-<p>上面定义了几个不同的符号，表示不同的匹配规则，那么先后顺序呢？</p>
-<ol>
-<li>= 前缀的指令严格匹配这个查询。如果找到，停止搜索；</li>
-<li>所有剩下的常规字符串，最长的匹配。如果这个匹配使用 ^~ 前缀，搜索停止；</li>
-<li>正则表达式，在配置文件中定义的顺序；</li>
-<li>如果第 3 条规则产生匹配的话，结果被使用。否则，使用第 2 条规则的结果。</li>
-</ol>
-<h6 id="测试示例1"><a href="#测试示例1" class="headerlink" title="测试示例1:"></a>测试示例1:</h6><pre><code>location = /world {
-    return 600;
+                <h3 id="1-防盗链"><a href="#1-防盗链" class="headerlink" title="1 防盗链"></a>1 防盗链</h3><p>相关配置：</p>
+<blockquote>
+<p><a href="http://nginx.org/en/docs/http/ngx_http_referer_module.html" target="_blank" rel="noopener">valid_referers</a></p>
+</blockquote>
+<pre><code>location ~* \.(gif|jpg|png)$ {
+    # 只允许 192.168.0.1 请求资源
+    valid_referers none blocked 192.168.0.1;
+    if ($invalid_referer) {
+       rewrite ^/ http://$host/logo.png;
+    }
+}</code></pre><h3 id="2-根据文件类型设置过期时间"><a href="#2-根据文件类型设置过期时间" class="headerlink" title="2 根据文件类型设置过期时间"></a>2 根据文件类型设置过期时间</h3><pre><code>location ~.*\.css$ {
+    expires 1d;
+    break;
 }
-
-location = /hello {
-    return 600;
+location ~.*\.js$ {
+    expires 1d;
+    break;
 }
-
-location ~ /hellowo {
-    return 602;
+location ~* \.(js|css|jpg|jpeg|gif|png)$ {
+    expires 1h;
+    break;
 }
+</code></pre><h3 id="3-禁止访问某个目录"><a href="#3-禁止访问某个目录" class="headerlink" title="3 禁止访问某个目录"></a>3 禁止访问某个目录</h3><pre><code>location ~* \.(txt|doc)${
+    root /opt/htdocs/site/test;
+    deny all;
+}</code></pre><h3 id="4-静态资源访问"><a href="#4-静态资源访问" class="headerlink" title="4 静态资源访问"></a>4 静态资源访问</h3><pre><code>http {
+    # 这个将为打开文件指定缓存，默认是没有启用的，max 指定缓存数量，
+    # 建议和打开文件数一致，inactive 是指经过多长时间文件没被请求后删除缓存。
+    open_file_cache max=204800 inactive=20s;
 
-location ^~ /hello {
-    return 601;
-}</code></pre><pre><code>- 请求 localhost/world 返回600
-- 请求 localhost/world2 localhost/test/world 返回其他
-- 请求 localhost/hello  返回600
-- 请求 localhost/hello/123 返回601
-- 请求 localhost/hellow 返回601
-- 请求 localhost/hellowo 返回601
-- 请求 localhost/test/hellowo  返回602
-- 请求 localhost/test/hello 返回其他</code></pre><p>因此可以知道:</p>
-<ul>
-<li>= 是精确完整匹配，且优先级最高；</li>
-<li>正则匹配时，如果 ~ 和 ^~ 同时匹配规则，则 ^~ 优先；</li>
-<li>^~ 这个规则不会匹配请求 url 中后面的路径，如上面的 /test/hello 没有匹配上</li>
-<li>^~ 不支持正则，和 = 相比，范围更广，hellowo 是可以被 ^~ 匹配，但是 = 不会匹配；</li>
-<li>~ 路径中只要包含就可以匹配，如上面的 /test/hellowo 返回了 602</li>
-</ul>
-<h6 id="测试示例2"><a href="#测试示例2" class="headerlink" title="测试示例2:"></a>测试示例2:</h6><pre><code>location ~ /hello {
-  return 602;
-}
+    # open_file_cache 指令中的inactive 参数时间内文件的最少使用次数，
+    # 如果超过这个数字，文件描述符一直是在缓存中打开的，如上例，如果有一个
+    # 文件在inactive 时间内一次没被使用，它将被移除。
+    open_file_cache_min_uses 1;
 
-location ~ /helloworld {
-  return 601;
-}</code></pre><pre><code>- 请求 localhost/world/helloworld 返回 602
-- 请求 localhost/helloworld 返回 602</code></pre><p>调整上面的顺序</p>
-<pre><code>location ~ /helloworld {
-  return 601;
-}
+    # 这个是指多长时间检查一次缓存的有效信息
+    open_file_cache_valid 30s;
 
-location ~ /hello {
-  return 602;
-}</code></pre><pre><code>- 请求 localhost/helloworld 返回601
-- 请求 localhost/world/helloworld 返回601
-- 请求 localhost/helloWorld 返回602</code></pre><p>所以同时正则匹配时</p>
-<ul>
-<li>放在前面的优先匹配</li>
-<li>注意如果不区分大小写时，使用 ~*</li>
-<li>尽量将精确匹配的放在前面</li>
-</ul>
-<h6 id="测试示例3"><a href="#测试示例3" class="headerlink" title="测试示例3:"></a>测试示例3:</h6><pre><code>location ^~ /hello/ {
-  return 601;
-}
+    # 默认情况下，Nginx的gzip压缩是关闭的， gzip压缩功能就是可以让你节省不
+    # 少带宽，但是会增加服务器CPU的开销哦，Nginx默认只对text/html进行压缩 ，
+    # 如果要对html之外的内容进行压缩传输，我们需要手动来设置。
+    gzip on;
+    gzip_min_length 1k;
+    gzip_buffers 4 16k;
+    gzip_http_version 1.0;
+    gzip_comp_level 2;
+    gzip_types text/plain application/x-javascript text/css application/xml;
 
-location /hello/world {
-  return 602;
-}</code></pre><p>这种场景中，存在一个没有符合的路由规则，那么实际的测试是怎样呢？</p>
-<pre><code>- http://localhost/hello/wor 返回601
-- http://localhost/hello/world 返回602
-- http://localhost/hello/world23 返回602
-- http://localhost/hello/world/123 返回602</code></pre><p>从上面的示例可以看出</p>
-<ul>
-<li>没有符合时，全匹配是优先 ^~ 的</li>
-</ul>
-<h5 id="2-uri"><a href="#2-uri" class="headerlink" title="2) [uri]"></a>2) [uri]</h5><p>这里主要填的是需要匹配的 path 路径，根据前面的符号，这里可以填写精确到 path 路径，也可以填正则表达式，下面则主要针对正则进行说明</p>
-<pre><code>. ： 匹配除换行符以外的任意字符
-? ： 重复0次或1次
-+ ： 重复1次或更多次
-* ： 重复0次或更多次
-\d ：匹配数字
-^ ： 匹配字符串的开始
-$ ： 匹配字符串的介绍
-{n} ： 重复n次
-{n,} ： 重复n次或更多次
-[c] ： 匹配单个字符c
-[a-z] ： 匹配a-z小写字母的任意一个
-小括号()之间匹配的内容，可以在后面通过$1来引用，$2表示的是前面第二个()里的内容。正则里面容易让人困惑的是\转义特殊字符。</code></pre><h2 id="路由转发"><a href="#路由转发" class="headerlink" title="路由转发"></a>路由转发</h2><pre><code>请求 path 匹配只是第一步，匹配完成之后，如何将请求转发给其它的 web 服务呢？</code></pre><h3 id="1、反向代理"><a href="#1、反向代理" class="headerlink" title="1、反向代理"></a>1、反向代理</h3><p>通常可见的一种使用姿势就是使用 nginx 代理请求，转发到内部的其它 web 服务上</p>
-<p>主要通过 prixy_pass 来实现</p>
-<pre><code>location ^~ /webs {
-    proxy_pass http://127.0.0.1:8080/webs;
-}</code></pre><p>上面规则的含义是，将所有以 webs 开头的请求，转发到 8080 端口的 web 服务上。</p>
-<p>上面是直接写死转发到一个 ip 上，如果是多个机器提供服务，可以这样配置</p>
-<pre><code>## 下面放在http的括号内，作为第一层
-upstream test.online {
-    server 47.106.81.116:8080 weight=1;
-    server 47.106.81.117:8080 weight=1;
-}
+    server {
+        listen       80;
+        server_name www.test.com;
+        charset utf-8;
+        root   /data/www.test.com;
+        index  index.html index.htm;
+    }
+}</code></pre><h3 id="5-日志配置"><a href="#5-日志配置" class="headerlink" title="5 日志配置"></a>5 日志配置</h3><h4 id="5-1-日志字段说明"><a href="#5-1-日志字段说明" class="headerlink" title="5.1 日志字段说明"></a>5.1 日志字段说明</h4><p>字段 | 说明 |<br>— | — | —<br>remote_addr 和 http_x_forwarded_for | 客户端 IP 地址<br>remote_user | 客户端用户名称<br>request | 请求的 URI 和 HTTP 协议<br>status | 请求状态<br>body_bytes_sent | 返回给客户端的字节数，不包括响应头的大小<br>bytes_sent | 返回给客户端总字节数<br>connection | 连接的序列号<br>connection_requests | 当前同一个 TCP 连接的的请求数量<br>msec | 日志写入时间。单位为秒，精度是毫秒<br>pipe | 如果请求是通过HTTP流水线(pipelined)发送，pipe值为“p”，否则为“.”<br>http_referer | 记录从哪个页面链接访问过来的<br>http_user_agent | 记录客户端浏览器相关信息<br>request_length | 请求的长度（包括请求行，请求头和请求正文）<br>time_iso8601 | ISO8601标准格式下的本地时间<br>time_local | 记录访问时间与时区</p>
+<h4 id="5-1-access-log-访问日志"><a href="#5-1-access-log-访问日志" class="headerlink" title="5.1 access_log 访问日志"></a>5.1 access_log 访问日志</h4><pre><code>http {
+    log_format  access  '$remote_addr - $remote_user [$time_local] $host "$request" '
+                  '$status $body_bytes_sent "$http_referer" '
+                  '"$http_user_agent" "$http_x_forwarded_for" "$clientip"';
+    access_log  /srv/log/nginx/talk-fun.access.log  access;
+}</code></pre><h4 id="5-2-error-log-日志"><a href="#5-2-error-log-日志" class="headerlink" title="5.2 error_log 日志"></a>5.2 error_log 日志</h4><pre><code>error_log  /srv/log/nginx/nginx_error.log  error;
+# error_log /dev/null; # 真正的关闭错误日志
+http {
+    # ...
+}</code></pre><h3 id="6-反向代理"><a href="#6-反向代理" class="headerlink" title="6 反向代理"></a>6 反向代理</h3><pre><code>http {
+    include mime.types;
+    server_tokens off;
 
-location ^~ /webs {
-    proxy_pass http://test.online;
-    proxy_redirect default;
-}</code></pre><h3 id="2、Rewrite-命令"><a href="#2、Rewrite-命令" class="headerlink" title="2、Rewrite 命令"></a>2、Rewrite 命令</h3><p>rewrite功能就是，使用nginx提供的全局变量或自己设置的变量，结合正则表达式和标志位实现url重写以及重定向。</p>
-<p>rewrite只能放在server{},location{},if{}中，并且只能对域名后边的除去传递的参数外的字符串起作用, 如</p>
-<pre><code>http://blog.muzixizao.com/a/we/index.php?id=1&amp;u=str</code></pre><p> 只对/a/we/index.php重写。</p>
-<pre><code>语法: rewrite regex replacement [flag];</code></pre><p>示例:</p>
-<pre><code>location ^~ /hexo {
-  root '/Users/yihui/GitHub/';
-}
+    ## 配置反向代理的参数
+    server {
+        listen    8080;
 
-location ~ /hello {
-  rewrite ^(/hello).*$ /hexo/public/index.html last;
-  return 603;
-}</code></pre><p>将hello开头的，全部转发到/hexo/public/index.html</p>
-<script>
+        ## 1. 用户访问 http://ip:port，则反向代理到 https://github.com
+        location / {
+            proxy_pass  https://github.com;
+            proxy_redirect     off;
+            proxy_set_header   Host             $host;
+            proxy_set_header   X-Real-IP        $remote_addr;
+            proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
+        }
+
+        ## 2.用户访问 http://ip:port/README.md，则反向代理到
+        ##   https://github.com/zibinli/blog/blob/master/README.md
+        location /README.md {
+            proxy_set_header  X-Real-IP  $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_pass https://github.com/zibinli/blog/blob/master/README.md;
+        }
+    }
+}</code></pre><h3 id="7-负载均衡"><a href="#7-负载均衡" class="headerlink" title="7 负载均衡"></a>7 负载均衡</h3><pre><code>http {
+    upstream test.net {
+        ip_hash;
+        server 192.168.10.13:80;
+        server 192.168.10.14:80  down;
+        server 192.168.10.15:8009  max_fails=3  fail_timeout=20s;
+        server 192.168.10.16:8080;
+    }
+    server {
+        location / {
+            proxy_pass  http://test.net;
+        }
+    }
+}</code></pre><script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
@@ -564,7 +548,7 @@ location ~ /hello {
                     </span>
                     <a href="http://yoursite.com" class="b-link-green">ReliableCoder</a>
                     <i class="fa fa-angle-right fa-lg fa-fw text-color"></i>
-                    <a href="/24/nginx-location-pi-pei-gui-ze/" class="b-link-green">Nginx location匹配规则</a>
+                    <a href="/4/nginx-shi-yong-pei-zhi/" class="b-link-green">Nginx 实用配置</a>
                 </p>
             </div>
 
@@ -586,38 +570,42 @@ location ~ /hello {
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/24/nginx-wei-jing-tai/">
+                <a href="/4/nginx-shi-yong-pei-zhi/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="nginx 伪静态">
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="Nginx 实用配置">
                         
-                        <span class="card-title">nginx 伪静态</span>
+                        <span class="card-title">Nginx 实用配置</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            最近有个在官网加【行业资讯】的需求。考虑到主要目的是为了推广，决定对资讯的栏目和内容页进行伪静态处理。
-下面以文章 id 为 5 的文章页为例。原始地址为：
+                            1 防盗链相关配置：
 
-oriUrl = http://blog.muzixizao.com/?p=5
+valid_referers
 
+location ~* \.(gif|jpg|png)$ {
+    # 只允许 192.168.0.1 请求资源
+    valid_referers none blocked 19
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2018-10-24
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-04
+                            </span>
                         <span class="publish-author">
                             
                         </span>
                     </div>
                 </div>
+
                 
             </div>
         </div>
@@ -628,50 +616,53 @@ oriUrl = http://blog.muzixizao.com/?p=5
                 下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/23/wei-yun-suan-fu/">
+                <a href="/12/gen-zhao-da-bin-du-yuan-ma-redis-10-dui-xiang-bian-ma-zhi-zheng-shu-ji-he/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="位运算符">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="跟着大彬读源码 - Redis 10 - 对象编码之整数集合">
                         
-                        <span class="card-title">位运算符</span>
+                        <span class="card-title">跟着大彬读源码 - Redis 10 - 对象编码之整数集合</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            位运算一览表
-
-
-符号
-示例
-含义
-
-
-
-&amp;
-$a &amp; $b
-按位与。将 $a 和 $b 中都为 1 的位设为 1
-
-
-|
-$a | $b
-按位或。将 $a 和 $b 中任何一个为 1 的位设为 1
-
-
-^
-$a ^ $c
-
+                            整数集合是 Redis 集合键的底层实现之一。当一个集合只包含整数值元素，并且元素数量不多时，Redis 就会使用整数集合作为集合键的底层实现。
+1 整数集合的实现整数集合是 Redis 用于保存整数值的集合抽象数据结构。它可以保存类型为 
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2018-10-23
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-08-12
                             </span>
                         <span class="publish-author">
                             
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Redis/" class="post-category" target="_blank">
+                                    Redis
+                                </a>
+                            
+                            <a href="/categories/Redis/源码/" class="post-category" target="_blank">
+                                    源码
+                                </a>
+                            
+                            
                         </span>
                     </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/intset/" target="_blank">
+                        <span class="chip bg-color">intset</span>
+                    </a>
+                    
+                    <a href="/tags/整数集合/" target="_blank">
+                        <span class="chip bg-color">整数集合</span>
+                    </a>
+                    
                 </div>
                 
             </div>

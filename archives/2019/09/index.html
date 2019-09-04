@@ -4,10 +4,10 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="归档: 2018, PHP Redis Linux Nginx">
+    <meta name="keywords" content="归档: 2019/9, PHP Redis Linux Nginx">
     <meta name="baidu-site-verification" content="fmlEuI34ir">
     <meta name="google-site-verification" content="KeoTn_OFy4ndJwXNmm2gMeQfPhd7alqE9vQDwI32KCY">
-    <meta name="description" content="归档: 2018 | ReliableCoder">
+    <meta name="description" content="归档: 2019/9 | ReliableCoder">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -15,7 +15,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>归档: 2018 | ReliableCoder</title>
+    <title>归档: 2019/9 | ReliableCoder</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -342,7 +342,7 @@ $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay
             
             
             <div class="cd-timeline-img year" data-aos="zoom-in-up">
-                <a href="/archives/2018">2018</a>
+                <a href="/archives/2019">2019</a>
             </div>
             
 
@@ -350,159 +350,42 @@ $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay
             
             
             <div class="cd-timeline-img month" data-aos="zoom-in-up">
-                <a href="/archives/2018/10">10</a>
+                <a href="/archives/2019/09">09</a>
             </div>
             
 
             
             <div class="cd-timeline-img day" data-aos="zoom-in-up">
-                <span>24</span>
+                <span>04</span>
             </div>
             <article class="cd-timeline-content" data-aos="fade-up">
                 <div class="article col s12 m6">
                     <div class="card">
-                        <a href="/24/nginx-wei-jing-tai/">
+                        <a href="/4/nginx-shi-yong-pei-zhi/">
                             <div class="card-image">
                                 
                                 
-                                <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="nginx 伪静态">
+                                <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="Nginx 实用配置">
                                 
-                                <span class="card-title">nginx 伪静态</span>
+                                <span class="card-title">Nginx 实用配置</span>
                             </div>
                         </a>
                         <div class="card-content article-content">
                             <div class="summary block-with-text">
                                 
-                                最近有个在官网加【行业资讯】的需求。考虑到主要目的是为了推广，决定对资讯的栏目和内容页进行伪静态处理。
-下面以文章 id 为 5 的文章页为例。原始地址为：
+                                1 防盗链相关配置：
 
-oriUrl = http://blog.muzixizao.com/?p=5
+valid_referers
 
+location ~* \.(gif|jpg|png)$ {
+    # 只允许 192.168.0.1 请求资源
+    valid_referers none blocked 19
                                 
                             </div>
                             <div class="publish-info">
                                 <span class="publish-date">
                                     <i
-                                        class="fa fa-clock-o fa-fw icon-date"></i>2018-10-24
-                                </span>
-                                <span class="publish-author">
-                                    
-                                </span>
-                            </div>
-                        </div>
-
-                        
-                    </div>
-                </div>
-            </article>
-        </div>
-        
-        <div class="cd-timeline-block">
-
-            
-            
-
-            
-            
-
-            
-            <div class="cd-timeline-img day" data-aos="zoom-in-up">
-                <span>24</span>
-            </div>
-            <article class="cd-timeline-content" data-aos="fade-up">
-                <div class="article col s12 m6">
-                    <div class="card">
-                        <a href="/24/nginx-location-pi-pei-gui-ze/">
-                            <div class="card-image">
-                                
-                                
-                                <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="Nginx location匹配规则">
-                                
-                                <span class="card-title">Nginx location匹配规则</span>
-                            </div>
-                        </a>
-                        <div class="card-content article-content">
-                            <div class="summary block-with-text">
-                                
-                                1、语法location [=|~|~*|^~|@] /uri/ {
-  ...
-} 2、说明从上面的语法出发，可以了解到 location 可以区分为三个部分，接下来一个一个的研究一下。
-1) [=||*|^~|@]
-= : 表示精确匹配
-                                
-                            </div>
-                            <div class="publish-info">
-                                <span class="publish-date">
-                                    <i
-                                        class="fa fa-clock-o fa-fw icon-date"></i>2018-10-24
-                                </span>
-                                <span class="publish-author">
-                                    
-                                </span>
-                            </div>
-                        </div>
-
-                        
-                    </div>
-                </div>
-            </article>
-        </div>
-        
-        <div class="cd-timeline-block">
-
-            
-            
-
-            
-            
-
-            
-            <div class="cd-timeline-img day" data-aos="zoom-in-up">
-                <span>23</span>
-            </div>
-            <article class="cd-timeline-content" data-aos="fade-up">
-                <div class="article col s12 m6">
-                    <div class="card">
-                        <a href="/23/wei-yun-suan-fu/">
-                            <div class="card-image">
-                                
-                                
-                                <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="位运算符">
-                                
-                                <span class="card-title">位运算符</span>
-                            </div>
-                        </a>
-                        <div class="card-content article-content">
-                            <div class="summary block-with-text">
-                                
-                                位运算一览表
-
-
-符号
-示例
-含义
-
-
-
-&amp;
-$a &amp; $b
-按位与。将 $a 和 $b 中都为 1 的位设为 1
-
-
-|
-$a | $b
-按位或。将 $a 和 $b 中任何一个为 1 的位设为 1
-
-
-^
-$a ^ $c
-
-                                
-                            </div>
-                            <div class="publish-info">
-                                <span class="publish-date">
-                                    <i
-                                        class="fa fa-clock-o fa-fw icon-date"></i>2018-10-23
+                                        class="fa fa-clock-o fa-fw icon-date"></i>2019-09-04
                                 </span>
                                 <span class="publish-author">
                                     
@@ -519,30 +402,6 @@ $a ^ $c
     </div>
 
 </main>
-
-
-<div class="container paging">
-    <div class="row">
-        <div class="col s6 m4 l4">
-            
-            <a href="/archives/2018/page/2/"
-               class="left btn-floating btn-large waves-effect waves-light bg-color">
-                <i class="fa fa-angle-left"></i>
-            </a>
-            
-        </div>
-        <div class="page-info col m4 l4 hide-on-small-only">
-            <div class="center-align b-text-gray">3 / 3</div>
-        </div>
-        <div class="col s6 m4 l4">
-            
-            <a class="right btn-floating btn-large disabled">
-                <i class="fa fa-angle-right"></i>
-            </a>
-            
-        </div>
-    </div>
-</div>
 
 
     <footer class="page-footer bg-color">

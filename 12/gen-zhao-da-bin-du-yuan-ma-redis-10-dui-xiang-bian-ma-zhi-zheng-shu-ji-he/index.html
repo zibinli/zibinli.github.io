@@ -581,59 +581,39 @@ static intset *intsetUpgradeAndAdd(intset *is, int64_t value) {
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
-            </div>
+                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/12/gen-zhao-da-bin-du-yuan-ma-redis-10-dui-xiang-bian-ma-zhi-zheng-shu-ji-he/">
+                <a href="/4/nginx-shi-yong-pei-zhi/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="跟着大彬读源码 - Redis 10 - 对象编码之整数集合">
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="Nginx 实用配置">
                         
-                        <span class="card-title">跟着大彬读源码 - Redis 10 - 对象编码之整数集合</span>
+                        <span class="card-title">Nginx 实用配置</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            整数集合是 Redis 集合键的底层实现之一。当一个集合只包含整数值元素，并且元素数量不多时，Redis 就会使用整数集合作为集合键的底层实现。
-1 整数集合的实现整数集合是 Redis 用于保存整数值的集合抽象数据结构。它可以保存类型为 
+                            1 防盗链相关配置：
+
+valid_referers
+
+location ~* \.(gif|jpg|png)$ {
+    # 只允许 192.168.0.1 请求资源
+    valid_referers none blocked 19
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-08-12
-                            </span>
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-04
+                        </span>
                         <span class="publish-author">
-                            
-                            <i class="fa fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/Redis/" class="post-category" target="_blank">
-                                    Redis
-                                </a>
-                            
-                            <a href="/categories/Redis/源码/" class="post-category" target="_blank">
-                                    源码
-                                </a>
-                            
                             
                         </span>
                     </div>
-                </div>
-
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/intset/" target="_blank">
-                        <span class="chip bg-color">intset</span>
-                    </a>
-                    
-                    <a href="/tags/整数集合/" target="_blank">
-                        <span class="chip bg-color">整数集合</span>
-                    </a>
-                    
                 </div>
                 
             </div>
@@ -861,7 +841,7 @@ static intset *intsetUpgradeAndAdd(intset *is, int64_t value) {
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">143.1k</span>
+                <span class="white-color">143.9k</span>
 
             
             <br>
