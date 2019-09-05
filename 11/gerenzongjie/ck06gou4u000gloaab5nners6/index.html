@@ -1,0 +1,938 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="工作两年, PHP Redis Linux Nginx">
+    <meta name="baidu-site-verification" content="fmlEuI34ir">
+    <meta name="google-site-verification" content="KeoTn_OFy4ndJwXNmm2gMeQfPhd7alqE9vQDwI32KCY">
+    <meta name="description" content="毕业一年，工作将近两年。刚工作的时候会记录每一点的成长，随着时间的推移，写的越来越少。在这即将到来两年的时间点上，蓦然发现，已经好久没有进行个人总结了。
+很多人都说，踏入工作 1-3 年是人生中一个重要的阶段。博主正处于这个阶段，不知道这个">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>工作两年 | ReliableCoder</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="http://47.106.81.116/libs/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="http://47.106.81.116/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="http://47.106.81.116/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="http://47.106.81.116/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="http://47.106.81.116/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    
+    <style type="text/css">
+        
+            
+            code[class*="language-"],
+            pre[class*="language-"] {
+                white-space: pre !important;
+            }
+
+        
+    </style>
+
+    <script src="http://47.106.81.116/libs/jquery/jquery-2.2.0.min.js"></script>
+    <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?46e79e71af0709a5b9106bf20cecc493";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+    
+    
+        <script>
+            (function(){
+                var bp = document.createElement('script');
+                var curProtocol = window.location.protocol.split(':')[0];
+                if (curProtocol === 'https') {
+                    bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+                }
+                else {
+                    bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+                }
+                var s = document.getElementsByTagName("script")[0];
+                s.parentNode.insertBefore(bp, s);
+            })();
+        </script>
+    
+
+<link rel="stylesheet" href="/css/prism-xonokai.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+
+<body>
+
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <span class="logo-span">ReliableCoder</span>
+                </a>
+            </div>
+            
+
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a>
+<ul class="right">
+    
+    <li class="hide-on-med-and-down">
+        <a href="/" class="waves-effect waves-light">
+            
+            <i class="fa fa-home"></i>
+            
+            <span>首页</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/tags" class="waves-effect waves-light">
+            
+            <i class="fa fa-tags"></i>
+            
+            <span>标签</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/categories" class="waves-effect waves-light">
+            
+            <i class="fa fa-bookmark"></i>
+            
+            <span>分类</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/archives" class="waves-effect waves-light">
+            
+            <i class="fa fa-archive"></i>
+            
+            <span>归档</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/about" class="waves-effect waves-light">
+            
+            <i class="fa fa-user-circle-o"></i>
+            
+            <span>关于我</span>
+        </a>
+    </li>
+    
+    <li>
+        <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+            <i id="searchIcon" class="fa fa-search" title="搜索"></i>
+        </a>
+    </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <div class="logo-name">ReliableCoder</div>
+        <div class="logo-desc">
+            
+            WEB开发 | PHP开发 | 源码解读
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li>
+            <a href="/" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-home"></i>
+                
+                首页
+            </a>
+        </li>
+        
+        <li>
+            <a href="/tags" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-tags"></i>
+                
+                标签
+            </a>
+        </li>
+        
+        <li>
+            <a href="/categories" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-bookmark"></i>
+                
+                分类
+            </a>
+        </li>
+        
+        <li>
+            <a href="/archives" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-archive"></i>
+                
+                归档
+            </a>
+        </li>
+        
+        <li>
+            <a href="/about" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-user-circle-o"></i>
+                
+                关于我
+            </a>
+        </li>
+        
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+<script src="http://47.106.81.116/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/';
+            }
+        }
+    })();
+</script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('http://47.106.81.116/medias/featureimages/7.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        工作两年
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="http://47.106.81.116/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 20px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/两年/" target="_blank">
+                                <span class="chip bg-color">两年</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fa fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/个人总结/" class="post-category" target="_blank">
+                                个人总结
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="post-info">
+                <div class="post-date info-break-policy">
+                    <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2018-11-05
+                </div>
+
+                <div class="post-author info-break-policy">
+                    <i class="fa fa-user-o fa-fw"></i>作者:&nbsp;&nbsp;
+                    
+                        Reliable Mark
+                    
+                </div>
+
+                
+                    
+                    <div class="info-break-policy">
+                        <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
+                        2k
+                    </div>
+                    
+
+                    
+                    <div class="info-break-policy">
+                        <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                        6 分
+                    </div>
+                    
+                
+                
+                <!-- 
+                        <span id="busuanzi_container_site_pv" style='display:none'></span>
+                        <i class="fa fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv" ></span>
+    
+                 -->
+
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <p>毕业一年，工作将近两年。刚工作的时候会记录每一点的成长，随着时间的推移，写的越来越少。在这即将到来两年的时间点上，蓦然发现，已经好久没有进行个人总结了。</p>
+<p>很多人都说，踏入工作 1-3 年是人生中一个重要的阶段。博主正处于这个阶段，不知道这个说法是对是错，但也知道，潜心学习，脚踏实地肯定不会错。</p>
+<p>恰处于这个时间段的中间，借此博文，总结与反思这两年的成长与教训，如果能得到各位前辈的指点，那就更为值得了。</p>
+<h3 id="第一份工作"><a href="#第一份工作" class="headerlink" title="第一份工作"></a>第一份工作</h3><h4 id="工作前"><a href="#工作前" class="headerlink" title="工作前"></a>工作前</h4><p>人生中会有很多难忘的第一次，我相信对于绝大多数人而言，第一次面试与第一份工作应该是其中之一。</p>
+<p>博主就读于广州一所普通本科，和大多数大学生一样，前两年在班务与学生会间折腾，到大三时，突然发现自己马上就要毕业了，然后就开始焦虑，想着毕业到底要干些什么。</p>
+<p>大学生毕业，一般就面临三个选择：就业、考研、考公务员。确定就业后，就要确定要就什么业。俗话说的好，”女怕嫁错郎，男怕入错行”，本着就业需谨慎的原则，兴致勃勃的咨询了好多师兄师姐，结果发现并没有很多选择。要么销售，要么IT。</p>
+<p>那得了，就 IT 吧。虽然大学才开始接触编程，但所幸还学了一些计算机知识和编程原理，也不算零基础。就这样，在大三正式走上 IT 就业路，成为了一个”准程序员”。</p>
+<p>大三跟着老师折腾了一年，大四开始准备简历，应战秋招。折腾了几个月，2016 年 12 月 1 号正式入职了 A 公司，也算开始了职业生涯。</p>
+<h4 id="工作中"><a href="#工作中" class="headerlink" title="工作中"></a>工作中</h4><p>公司主要做 H5 营销游戏平台。创业型公司，老板人挺好，团队也很赞。</p>
+<p>现在回头看来，在这家公司，时间上大致可以分为两个阶段，每个阶段对博主都有不同的影响，最主要的是，每个阶段，都有一个可以称为“导师”的人带着，也让博主从一个开发新人一步步迈向成熟。</p>
+<p><strong>入职阶段</strong>。这个阶段对于很多人来说，应该都是比较难熬的阶段。对于刚踏入社会的博主来讲更是如此。</p>
+<p>网上看过很多批评大学生的文章，都说大学生毕业眼高手低，心气高，能力低。但幸运的是，博主接触的这些同学、校友中，基本上没有这种情况，身边认识的基本上都持有一种观点：</p>
+<blockquote>
+<p>第一份工作，应该是一个跳板，而不是坑</p>
+</blockquote>
+<p>本着抓住当前跳板的想法，哪怕没玩过 git，没用过 yii，也没搞过微信开发，入职前两个月，靠着每天加班，拼命的去学习自己不熟悉的一切，两个月后对公司整个业务代码也算有个大概的认识，至少来个新功能不会心慌慌了。</p>
+<p>言归正传，这个阶段带博主的是后端组组长，文哥，人牛话不多，运维、开发，乃至网络排线，接近全能，当然，全公司数他最忙。博主就是在他的指导下，靠着修复一个个 bug，才能快速熟悉整体业务代码。</p>
+<p>简而言之，这个阶段学到了下面两点：</p>
+<ol>
+<li>技术上，会了 git，识了 yii，熟了 apache 与 mysql；</li>
+<li>团队协作上，了解了互联网公司的工作流程，最重要的是，提高了与 产 品 对 撕 的 能 力！</li>
+</ol>
+<p><strong>重构阶段</strong>。说起重构，很多人对它，应该是“爱恨交织”。这也是公司发展过程中，技术部门必须正视的一件大事。</p>
+<p>这个阶段博主基本上是跟着项目经理俊哥混。他是澳洲留学回来的，在技术方面和文哥是完全不同的风格。会更积极的去接触与尝试新技术，利用一些理论知识对整体方案进行评估。</p>
+<p>重构开始后，博主负责的那一块业务代码要全部用 Node 重写，更悲催的是，那时对 Node 的认知也仅限于，它和 JS 的语法一样。就这样，开始了重构之路。</p>
+<p>历时将近两个月，终于改写完成。不幸的是，又不小心引入了分布式数据一致性问题，出现 redis 数据与 mysql 数据不一致的问题，导致红包多发。</p>
+<p>那段时间是压力最大，最难熬的一段时间。中间几度想申请离职，但想一想我们的“跳板原则”，就咬牙坚持了下来。</p>
+<p>最后结果也算差强人意吧，虽然没有达到预定目标，但相比之前，业务架构更清晰，性能也提升了 5 倍左右。</p>
+<p>这个阶段给我的最大感触就是，重构真的是要人命的一件事。</p>
+<h4 id="离职"><a href="#离职" class="headerlink" title="离职"></a>离职</h4><p>一个人离职的原因有很多，但对于技术而言，团队氛围应该是一个相对比较重要的因素了。上面说过，公司团队氛围很好，这也是让我一再坚持的理由。</p>
+<p>但一家公司不单单只有技术团队，老板的影响，其他团队的因素，都会导致公司走上不同的道路。博主公司就是存在发展大方向经常变动的问题，导致走了很多弯路，最后投资人看不到发展前景，迫使公司改变了大的发展方向，团队成员相继离职，这也是博主最终离开公司的原因。</p>
+<p>当前，上述都是客观因素，就博主本人而言，一方面想换一个环境，让自己有更快的成长。另一方面，也想薪酬能跟着上涨。网上不是经常有人说：</p>
+<blockquote>
+<p>薪资涨幅低于 30% 的跳槽，都是失败的跳槽</p>
+</blockquote>
+<p>所以，也可以说成：</p>
+<blockquote>
+<p>当你想跳槽的时候，你的下一份薪资能有 30% 的涨幅吗？</p>
+</blockquote>
+<p>如果有底气，那就大胆的跳吧！</p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>现在看来，在这家公司，最幸运的就是能有人带着正式进入 web 开发世界。跟着文哥学到了在 coding 世界，每个字母，每个标点都应该慎之又慎。跟着俊哥学到了，除了眼前的苟且（业务代码），我们还要努力接触远方的诗（新技术），保持对技术的热情。</p>
+<p>下面是博主从第一家公司离职时所接触到的技术，作为创业型公司，这应该是一些很常见的技术，后续会为一些技术点写出单独的博文，以作个人总结，也希望能给刚入职的小伙伴一点点帮助。</p>
+<h5 id="服务器"><a href="#服务器" class="headerlink" title="服务器"></a>服务器</h5><ol>
+<li>Apache</li>
+<li>Nginx</li>
+</ol>
+<h5 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h5><ol>
+<li>Sql<ol>
+<li>Mysql</li>
+<li>Oracle</li>
+</ol>
+</li>
+<li>NoSql<ol>
+<li>Redis</li>
+<li>Mongodb</li>
+<li>Memcache</li>
+<li>Influxdb</li>
+</ol>
+</li>
+</ol>
+<h5 id="编程语言"><a href="#编程语言" class="headerlink" title="编程语言"></a>编程语言</h5><ol>
+<li>PHP</li>
+<li>Node</li>
+<li>Python</li>
+<li>Java</li>
+<li>C</li>
+</ol>
+<h5 id="相关应用"><a href="#相关应用" class="headerlink" title="相关应用"></a>相关应用</h5><ol>
+<li>微信开发</li>
+</ol>
+<h2 id="第二份工作"><a href="#第二份工作" class="headerlink" title="第二份工作"></a>第二份工作</h2><p>目前在一家直播公司就职。刚入职几个月，定个未来的规划。</p>
+<p>短期目标：</p>
+<blockquote>
+<ol>
+<li>进一步了解公司业务架构</li>
+<li>增强 nginx 服务器的了解</li>
+<li>增强操作系统、redis 集群等基础知识的认知</li>
+</ol>
+</blockquote>
+<p>中长期目标：</p>
+<blockquote>
+<ol>
+<li>配合 CTO 完成业务拆分，增强对架构的认知</li>
+</ol>
+</blockquote>
+<p>具体措施：</p>
+<blockquote>
+<ol>
+<li>阅读相关书籍</li>
+<li>学习相关网络课程</li>
+<li>每月至少两篇博文</li>
+</ol>
+</blockquote>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+            </div>
+            <hr/>
+
+            
+
+            <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    <div class="social-share" data-disabled="qzone" data-wechat-qrcode-helper="<p>微信里点“发现”->“扫一扫”二维码便可查看分享。</p>"></div>
+    
+</div>
+
+<script src="/libs/share/js/social-share.min.js"></script>
+
+            
+            
+            
+            <div class="reprint1">
+                <p>
+                    <span class="reprint1-tip">
+                        <i class="fa fa-exclamation-circle"></i>&nbsp;&nbsp;转载请注明:
+                    </span>
+                    <a href="http://yoursite.com" class="b-link-green">ReliableCoder</a>
+                    <i class="fa fa-angle-right fa-lg fa-fw text-color"></i>
+                    <a href="/11/gerenzongjie/ck06gou4u000gloaab5nners6/" class="b-link-green">工作两年</a>
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/11/uncategorized/ck06gou72001vloaajltj4dca/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="http://47.106.81.116/medias/featureimages/4.jpg" class="responsive-img" alt="python小应用-博客园隐藏的小秘密及各类排行榜【附源码】">
+                        
+                        <span class="card-title">python小应用-博客园隐藏的小秘密及各类排行榜【附源码】</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                                接触博客园有不短的时间了，今天突然想到，我们博客园各位博友，一天中哪个时间段比较活跃？又有多少夜猫子在深更半夜，冒着“聪明绝顶”的风险熬夜码字看博文？首页所有博文中，哪个博友发布博文数量最多？又是哪个博友大范围“收割”阅读量和评论量
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2018-11-07
+                        </span>
+                        <span class="publish-author">
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/10/wangluoxieyi/ck06gou7j002eloaavdtjw4rf/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="http://47.106.81.116/medias/featureimages/21.jpg" class="responsive-img" alt="网络协议 2 - IP 是怎么来，又是怎么没的？">
+                        
+                        <span class="card-title">网络协议 2 - IP 是怎么来，又是怎么没的？</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            了解完网络协议，我们会发现，网络通信的五层模型里，有两个很重要的概念：IP 地址和 MAC 地址。
+那么 IP 地址是怎么来的，又是怎么没的？MAC 地址与 IP 地址又有什么区别？
+这回答上面问题前，先热下身，大家知道如何查看本机的 IP
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2018-10-31
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/网络协议/" class="post-category" target="_blank">
+                                    网络协议
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/IP格式/" target="_blank">
+                        <span class="chip bg-color">IP格式</span>
+                    </a>
+                    
+                    <a href="/tags/IP分配和释放/" target="_blank">
+                        <span class="chip bg-color">IP分配和释放</span>
+                    </a>
+                    
+                    <a href="/tags/DHCP-动态分配协议/" target="_blank">
+                        <span class="chip bg-color">DHCP-动态分配协议</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: ReliableCoder<br />'
+            + '作者: Reliable Mark<br />'
+            + '链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fa fa-list"></i>
+    </a>
+</div>
+
+
+<script src="http://47.106.81.116/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h1, h2, h3, h4, h5'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h1, h2, h3, h4, h5').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).slideUp(500);
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).slideDown(500);
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+    
+
+</main>
+
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right" style="width: 100%;">
+            
+                &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
+                <span class="white-color">143.9k</span>
+
+            
+            <br>
+
+            <span id="sitetime"></span>
+
+            
+
+            <!-- 
+                <br>
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'></span>
+                    <i class="fa fa-heart-o"></i>
+                    本站总访问量 <span id="busuanzi_value_site_pv" class="white-color"></span>
+
+                
+
+                
+                    <span id="busuanzi_container_site_uv" style='display:none'></span>
+                    人次,&nbsp;访客数 <span id="busuanzi_value_site_uv" class="white-color"></span> 人.
+                    
+                
+
+             -->
+
+        </div>
+
+        <div class="col s12 m4 l4 social-link social-statis">
+
+
+
+
+
+
+
+
+
+</div>
+
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+<script language=javascript>
+    function siteTime() {
+        window.setTimeout("siteTime()", 1000);
+        var seconds = 1000;
+        var minutes = seconds * 60;
+        var hours = minutes * 60;
+        var days = hours * 24;
+        var years = days * 365;
+        var today = new Date();
+        var todayYear = today.getFullYear();
+        var todayMonth = today.getMonth() + 1;
+        var todayDate = today.getDate();
+        var todayHour = today.getHours();
+        var todayMinute = today.getMinutes();
+        var todaySecond = today.getSeconds();
+
+        /* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+        year - 作为date对象的年份，为4位年份值
+        month - 0-11之间的整数，做为date对象的月份
+        day - 1-31之间的整数，做为date对象的天数
+        hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+        minutes - 0-59之间的整数，做为date对象的分钟数
+        seconds - 0-59之间的整数，做为date对象的秒数
+        microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+
+        var t1 = Date.UTC(2018, 08, 01, 00, 00, 00); //北京时间2019-8-1 00:00:00
+        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+        var diff = t2 - t1;
+        var diffYears = Math.floor(diff / years);
+        var diffDays = Math.floor((diff / days) - diffYears * 365);
+        var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+        var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) / minutes);
+        var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours - diffMinutes * minutes) / seconds);
+        document.getElementById("sitetime").innerHTML = "本站已运行 " + diffYears + " 年 " + diffDays + " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+    }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+    siteTime();
+</script>
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+
+    <script src="http://47.106.81.116/libs/materialize/materialize.min.js"></script>
+    <script src="http://47.106.81.116/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="http://47.106.81.116/libs/aos/aos.js"></script>
+    <script src="http://47.106.81.116/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="http://47.106.81.116/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+
+    
+        <script src="http://47.106.81.116/libs/others/clicklove.js"></script>
+    
+    
+    
+        <script async src="http://47.106.81.116/libs/others/busuanzi.pure.mini.js"></script>
+    
+    
+</body>
+
+</html>
