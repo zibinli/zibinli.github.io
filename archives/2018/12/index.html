@@ -1,4 +1,262 @@
-<!DOCTYPE HTML><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.9.0"><meta charset="utf-8"><meta name="keywords" content="归档: 2018/12, PHP Redis Linux Nginx"><meta name="baidu-site-verification" content="fmlEuI34ir"><meta name="google-site-verification" content="KeoTn_OFy4ndJwXNmm2gMeQfPhd7alqE9vQDwI32KCY"><meta name="description" content="归档: 2018/12 | ReliableCoder"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"><meta name="renderer" content="webkit|ie-stand|ie-comp"><meta name="mobile-web-app-capable" content="yes"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><title>归档: 2018/12 | ReliableCoder</title><link rel="icon" type="image/png" href="/favicon.png"><link rel="stylesheet" type="text/css" href="http://47.106.81.116/libs/awesome/css/font-awesome.min.css"><link rel="stylesheet" type="text/css" href="http://47.106.81.116/libs/materialize/materialize.min.css"><link rel="stylesheet" type="text/css" href="http://47.106.81.116/libs/aos/aos.css"><link rel="stylesheet" type="text/css" href="http://47.106.81.116/libs/animate/animate.min.css"><link rel="stylesheet" type="text/css" href="http://47.106.81.116/libs/lightGallery/css/lightgallery.min.css"><link rel="stylesheet" type="text/css" href="/css/matery.css"><link rel="stylesheet" type="text/css" href="/css/my.css"><style type="text/css">code[class*=language-],pre[class*=language-]{white-space:pre!important}</style><script src="http://47.106.81.116/libs/jquery/jquery-2.2.0.min.js"></script><script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script><script>var _hmt=_hmt||[];!function(){var e=document.createElement("script");e.src="https://hm.baidu.com/hm.js?46e79e71af0709a5b9106bf20cecc493";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)}()</script><script>!function(){var t=document.createElement("script"),e=window.location.protocol.split(":")[0];t.src="https"===e?"https://zz.bdstatic.com/linksubmit/push.js":"http://push.zhanzhang.baidu.com/push.js";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(t,s)}()</script><link rel="stylesheet" href="/css/prism-xonokai.css" type="text/css"><link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head><body><header class="navbar-fixed"><nav id="headNav" class="bg-color nav-transparent"><div id="navContainer" class="nav-wrapper container"><div class="brand-logo"> <a href="/" class="waves-effect waves-light"><span class="logo-span">ReliableCoder</span></a></div><a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a><ul class="right"><li class="hide-on-med-and-down"><a href="/" class="waves-effect waves-light"><i class="fa fa-home"></i> <span>首页</span></a></li><li class="hide-on-med-and-down"><a href="/tags" class="waves-effect waves-light"><i class="fa fa-tags"></i> <span>标签</span></a></li><li class="hide-on-med-and-down"><a href="/categories" class="waves-effect waves-light"><i class="fa fa-bookmark"></i> <span>分类</span></a></li><li class="hide-on-med-and-down"><a href="/archives" class="waves-effect waves-light"><i class="fa fa-archive"></i> <span>归档</span></a></li><li class="hide-on-med-and-down"><a href="/about" class="waves-effect waves-light"><i class="fa fa-user-circle-o"></i> <span>关于我</span></a></li><li><a href="#searchModal" class="modal-trigger waves-effect waves-light"><i id="searchIcon" class="fa fa-search" title="搜索"></i></a></li></ul><div id="mobile-nav" class="side-nav sidenav"><div class="mobile-head bg-color"><div class="logo-name">ReliableCoder</div><div class="logo-desc"> WEB开发 | PHP开发 | 源码解读</div></div><ul class="menu-list mobile-menu-list"><li><a href="/" class="waves-effect waves-light"><i class="fa fa-fw fa-home"></i> 首页</a></li><li><a href="/tags" class="waves-effect waves-light"><i class="fa fa-fw fa-tags"></i> 标签</a></li><li><a href="/categories" class="waves-effect waves-light"><i class="fa fa-fw fa-bookmark"></i> 分类</a></li><li><a href="/archives" class="waves-effect waves-light"><i class="fa fa-fw fa-archive"></i> 归档</a></li><li><a href="/about" class="waves-effect waves-light"><i class="fa fa-fw fa-user-circle-o"></i> 关于我</a></li></ul></div></div></nav></header><div class="bg-cover pd-header about-cover"><div class="container"><div class="row"><div class="col s10 offset-s1 m8 offset-m2 l8 offset-l2"><div class="brand"><div class="title center-align"> 归档</div><div class="description center-align"> <span id="jinrishici-sentence">正在加载今日诗词...</span></div></div></div></div><script></script></div></div><main class="content"><div class="container archive-calendar"><div class="card"><div id="post-calendar" class="card-content"></div></div></div><script type="text/javascript" src="http://47.106.81.116/libs/echarts/echarts.min.js"></script><script type="text/javascript">
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="归档: 2018/12, PHP Redis Linux Nginx">
+    <meta name="baidu-site-verification" content="fmlEuI34ir">
+    <meta name="google-site-verification" content="KeoTn_OFy4ndJwXNmm2gMeQfPhd7alqE9vQDwI32KCY">
+    <meta name="description" content="归档: 2018/12 | ReliableCoder">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>归档: 2018/12 | ReliableCoder</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="http://47.106.81.116/libs/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="http://47.106.81.116/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="http://47.106.81.116/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="http://47.106.81.116/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="http://47.106.81.116/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    
+    <style type="text/css">
+        
+            
+            code[class*="language-"],
+            pre[class*="language-"] {
+                white-space: pre !important;
+            }
+
+        
+    </style>
+
+    <script src="http://47.106.81.116/libs/jquery/jquery-2.2.0.min.js"></script>
+    <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?46e79e71af0709a5b9106bf20cecc493";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+    
+    
+        <script>
+            (function(){
+                var bp = document.createElement('script');
+                var curProtocol = window.location.protocol.split(':')[0];
+                if (curProtocol === 'https') {
+                    bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+                }
+                else {
+                    bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+                }
+                var s = document.getElementsByTagName("script")[0];
+                s.parentNode.insertBefore(bp, s);
+            })();
+        </script>
+    
+
+<link rel="stylesheet" href="/css/prism-xonokai.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+
+<body>
+
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <span class="logo-span">ReliableCoder</span>
+                </a>
+            </div>
+            
+
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a>
+<ul class="right">
+    
+    <li class="hide-on-med-and-down">
+        <a href="/" class="waves-effect waves-light">
+            
+            <i class="fa fa-home"></i>
+            
+            <span>首页</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/tags" class="waves-effect waves-light">
+            
+            <i class="fa fa-tags"></i>
+            
+            <span>标签</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/categories" class="waves-effect waves-light">
+            
+            <i class="fa fa-bookmark"></i>
+            
+            <span>分类</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/archives" class="waves-effect waves-light">
+            
+            <i class="fa fa-archive"></i>
+            
+            <span>归档</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/about" class="waves-effect waves-light">
+            
+            <i class="fa fa-user-circle-o"></i>
+            
+            <span>关于我</span>
+        </a>
+    </li>
+    
+    <li>
+        <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+            <i id="searchIcon" class="fa fa-search" title="搜索"></i>
+        </a>
+    </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <div class="logo-name">ReliableCoder</div>
+        <div class="logo-desc">
+            
+            WEB开发 | PHP开发 | 源码解读
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li>
+            <a href="/" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-home"></i>
+                
+                首页
+            </a>
+        </li>
+        
+        <li>
+            <a href="/tags" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-tags"></i>
+                
+                标签
+            </a>
+        </li>
+        
+        <li>
+            <a href="/categories" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-bookmark"></i>
+                
+                分类
+            </a>
+        </li>
+        
+        <li>
+            <a href="/archives" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-archive"></i>
+                
+                归档
+            </a>
+        </li>
+        
+        <li>
+            <a href="/about" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-user-circle-o"></i>
+                
+                关于我
+            </a>
+        </li>
+        
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    <div class="bg-cover pd-header about-cover">
+    <div class="container">
+    <div class="row">
+    <div class="col s10 offset-s1 m8 offset-m2 l8 offset-l2">
+        <div class="brand">
+            <div class="title center-align">
+                <!-- 
+                    ReliableCoder
+                 -->
+                
+                    归档
+                
+            </div>
+
+            <div class="description center-align">
+                
+                    <!-- WEB开发 | PHP开发 | 源码解读 -->
+                    <span id="jinrishici-sentence">正在加载今日诗词...</span>
+                
+            </div>
+            
+            
+        </div>
+    </div>
+</div>
+<script>
+// 每天切换 banner 图.  Switch banner image every day.
+// $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay() + '.jpg)');
+</script>
+
+
+    </div>
+</div>
+
+<main class="content">
+
+    
+    <div class="container archive-calendar">
+    <div class="card">
+        <div id="post-calendar" class="card-content"></div>
+    </div>
+</div>
+
+<script type="text/javascript" src="http://47.106.81.116/libs/echarts/echarts.min.js"></script>
+<script type="text/javascript">
     let myChart = echarts.init(document.getElementById('post-calendar'));
 
     
@@ -71,4 +329,727 @@
     };
 
     myChart.setOption(option);
-</script><div id="cd-timeline" class="container"><div class="cd-timeline-block"><div class="cd-timeline-img year" data-aos="zoom-in-up"> <a href="/archives/2018">2018</a></div><div class="cd-timeline-img month" data-aos="zoom-in-up"> <a href="/archives/2018/12">12</a></div><div class="cd-timeline-img day" data-aos="zoom-in-up"> <span>31</span></div><article class="cd-timeline-content" data-aos="fade-up"><div class="article col s12 m6"><div class="card"><a href="/12/wangluoxieyi/ck0620v3600223vaa54dulajb/"><div class="card-image"> <img src="http://47.106.81.116/medias/featureimages/4.jpg" class="responsive-img" alt="网络协议 17 - HTTPDNS：私人定制的 DNS 服务"> <span class="card-title">网络协议 17 - HTTPDNS：私人定制的 DNS 服务</span></div></a><div class="card-content article-content"><div class="summary block-with-text"> 全球统一的 DNS 是很权威，但是我们都知道“适合自己的，才是最好的”。很多时候，标准统一化的 DNS 并不能满足我们定制的需求，这个时候就需要 HTTPDNS 了。 上一节我们知道了 DNS 可以根据名称查地址，也可以针对多个地址做负载均</div><div class="publish-info"><span class="publish-date"><i class="fa fa-clock-o fa-fw icon-date"></i> 2018-12-31</span><span class="publish-author"><i class="fa fa-bookmark fa-fw icon-category"></i> <a href="/categories/网络协议/" class="post-category" target="_blank">网络协议</a></span></div></div><div class="card-action article-tags"> <a href="/tags/负载均衡/"><span class="chip bg-color">负载均衡</span></a> <a href="/tags/HTTPDNS协议/"><span class="chip bg-color">HTTPDNS协议</span></a></div></div></div></article></div><div class="cd-timeline-block"><div class="cd-timeline-img day" data-aos="zoom-in-up"> <span>26</span></div><article class="cd-timeline-content" data-aos="fade-up"><div class="article col s12 m6"><div class="card"><a href="/12/wangluoxieyi/ck0620v3h002c3vaaymudtlds/"><div class="card-image"> <img src="http://47.106.81.116/medias/featureimages/0.jpg" class="responsive-img" alt="网络协议 16 - DNS 协议：网络世界的地址簿"> <span class="card-title">网络协议 16 - DNS 协议：网络世界的地址簿</span></div></a><div class="card-content article-content"><div class="summary block-with-text"> 为什么在地址栏输入域名，就能直接访问到对应服务器？全局负载均衡和内部负载均衡又是什么？这些都和 DNS 解析息息相关，让我们一起来解密 DNS 解析。 其实说起 DNS 解析，应该都知道它很像地址簿。就像我们去一家新开的沃尔玛超市，通过地址</div><div class="publish-info"><span class="publish-date"><i class="fa fa-clock-o fa-fw icon-date"></i> 2018-12-26</span><span class="publish-author"><i class="fa fa-bookmark fa-fw icon-category"></i> <a href="/categories/网络协议/" class="post-category" target="_blank">网络协议</a></span></div></div><div class="card-action article-tags"> <a href="/tags/负载均衡/"><span class="chip bg-color">负载均衡</span></a> <a href="/tags/DNS协议/"><span class="chip bg-color">DNS协议</span></a></div></div></div></article></div><div class="cd-timeline-block"><div class="cd-timeline-img day" data-aos="zoom-in-up"> <span>24</span></div><article class="cd-timeline-content" data-aos="fade-up"><div class="article col s12 m6"><div class="card"><a href="/12/wangluoxieyi/ck0620v8j006u3vaa424cdi9u/"><div class="card-image"> <img src="http://47.106.81.116/medias/featureimages/21.jpg" class="responsive-img" alt="网络协议 15 - P2P 协议：小种子大学问"> <span class="card-title">网络协议 15 - P2P 协议：小种子大学问</span></div></a><div class="card-content article-content"><div class="summary block-with-text"> “兄弟，有种子吗？”“什么种子？小麦种吗？”“……，来，哥今天带你认识下什么是种子”。 大家说起种子，应该都知道是用来下载资源的。那么资源下载都有哪些方式？种子下载又有什么优势呢？ 下载电影的两种方式第一种是通过 HTTP 进行下载。这种方</div><div class="publish-info"><span class="publish-date"><i class="fa fa-clock-o fa-fw icon-date"></i> 2018-12-24</span><span class="publish-author"><i class="fa fa-bookmark fa-fw icon-category"></i> <a href="/categories/网络协议/" class="post-category" target="_blank">网络协议</a></span></div></div><div class="card-action article-tags"> <a href="/tags/P2P协议/"><span class="chip bg-color">P2P协议</span></a></div></div></div></article></div><div class="cd-timeline-block"><div class="cd-timeline-img day" data-aos="zoom-in-up"> <span>19</span></div><article class="cd-timeline-content" data-aos="fade-up"><div class="article col s12 m6"><div class="card"><a href="/12/wangluoxieyi/ck0620v5a003h3vaaubpxypao/"><div class="card-image"> <img src="http://47.106.81.116/medias/featureimages/2.jpg" class="responsive-img" alt="网络协议 14 - 流媒体协议：要说爱你不容易"> <span class="card-title">网络协议 14 - 流媒体协议：要说爱你不容易</span></div></a><div class="card-content article-content"><div class="summary block-with-text"> 大家都会关注“在浏览器输入一个地址，然后回车，会发生什么”这样一个问题，但是有没有想过这样一个问题：主播开始直播，用户打开客户端观看，这个过程发生了什么？ 随着技术的发展，直播技术对人们生活的渗透日益加深。从最开始的游戏直播，到前几天爆出来</div><div class="publish-info"><span class="publish-date"><i class="fa fa-clock-o fa-fw icon-date"></i> 2018-12-19</span><span class="publish-author"><i class="fa fa-bookmark fa-fw icon-category"></i> <a href="/categories/网络协议/" class="post-category" target="_blank">网络协议</a></span></div></div><div class="card-action article-tags"> <a href="/tags/流媒体协议/"><span class="chip bg-color">流媒体协议</span></a></div></div></div></article></div><div class="cd-timeline-block"><div class="cd-timeline-img day" data-aos="zoom-in-up"> <span>17</span></div><article class="cd-timeline-content" data-aos="fade-up"><div class="article col s12 m6"><div class="card"><a href="/12/wangluoxieyi/ck0620v3n002h3vaafvz8gilx/"><div class="card-image"> <img src="http://47.106.81.116/medias/featureimages/19.jpg" class="responsive-img" alt="网络协议 13 - HTTPS 协议：加密路上无尽头"> <span class="card-title">网络协议 13 - HTTPS 协议：加密路上无尽头</span></div></a><div class="card-content article-content"><div class="summary block-with-text"> 之前说了 HTTP 协议的各种问题，但是它还是陪伴着互联网、陪伴着我们走过了将近二十年的风风雨雨。现在有很多新的协议尝试去取代它，来解决性能、效率等问题，但它还还能靠着“多年的情分”活的滋润。然而，近些年，因为致命的安全问题，它不得不升级成</div><div class="publish-info"><span class="publish-date"><i class="fa fa-clock-o fa-fw icon-date"></i> 2018-12-17</span><span class="publish-author"><i class="fa fa-bookmark fa-fw icon-category"></i> <a href="/categories/网络协议/" class="post-category" target="_blank">网络协议</a></span></div></div><div class="card-action article-tags"> <a href="/tags/HTTPS协议/"><span class="chip bg-color">HTTPS协议</span></a> <a href="/tags/对称加密/"><span class="chip bg-color">对称加密</span></a> <a href="/tags/非对称加密/"><span class="chip bg-color">非对称加密</span></a></div></div></div></article></div><div class="cd-timeline-block"><div class="cd-timeline-img day" data-aos="zoom-in-up"> <span>12</span></div><article class="cd-timeline-content" data-aos="fade-up"><div class="article col s12 m6"><div class="card"><a href="/12/wangluoxieyi/ck0620v8s00703vaaqzwpqn2w/"><div class="card-image"> <img src="http://47.106.81.116/medias/featureimages/21.jpg" class="responsive-img" alt="网络协议 12 - HTTP 协议：常用而不简单"> <span class="card-title">网络协议 12 - HTTP 协议：常用而不简单</span></div></a><div class="card-content article-content"><div class="summary block-with-text"> 网络协议五层通天路，咱们从物理层、到链路层、网络层、再到传输层，现在又进一步，来到了应用层。这也是我们五层协议里最上面的一层，关于应用层，有太多协议要了解。但要说最有名的，那肯定就是 HTTP 了。 HTTP 协议，几乎是每个人上网用的第一</div><div class="publish-info"><span class="publish-date"><i class="fa fa-clock-o fa-fw icon-date"></i> 2018-12-12</span><span class="publish-author"><i class="fa fa-bookmark fa-fw icon-category"></i> <a href="/categories/网络协议/" class="post-category" target="_blank">网络协议</a></span></div></div><div class="card-action article-tags"> <a href="/tags/HTTP协议/"><span class="chip bg-color">HTTP协议</span></a></div></div></div></article></div><div class="cd-timeline-block"><div class="cd-timeline-img day" data-aos="zoom-in-up"> <span>10</span></div><article class="cd-timeline-content" data-aos="fade-up"><div class="article col s12 m6"><div class="card"><a href="/12/wangluoxieyi/ck0620v09000f3vaarosow2ae/"><div class="card-image"> <img src="http://47.106.81.116/medias/featureimages/19.jpg" class="responsive-img" alt="网络协议 11 - Socket 编程（下）：眼见为实耳听为虚"> <span class="card-title">网络协议 11 - Socket 编程（下）：眼见为实耳听为虚</span></div></a><div class="card-content article-content"><div class="summary block-with-text"> 之前我们基本了解了网络通信里的大部分协议，一直都是在“听”的过程。很多人都会觉得，好像看懂了，但关了页面回忆起来，好像又什么都没懂。这次咱们就“真枪实弹”的码起来，再用一个“神器”-网络分析系统详细跟踪下数据包的生命历程，让我们的理论真实的</div><div class="publish-info"><span class="publish-date"><i class="fa fa-clock-o fa-fw icon-date"></i> 2018-12-10</span><span class="publish-author"><i class="fa fa-bookmark fa-fw icon-category"></i> <a href="/categories/网络协议/" class="post-category" target="_blank">网络协议</a></span></div></div><div class="card-action article-tags"> <a href="/tags/TCP协议/"><span class="chip bg-color">TCP协议</span></a> <a href="/tags/socket编程/"><span class="chip bg-color">socket编程</span></a></div></div></div></article></div><div class="cd-timeline-block"><div class="cd-timeline-img day" data-aos="zoom-in-up"> <span>05</span></div><article class="cd-timeline-content" data-aos="fade-up"><div class="article col s12 m6"><div class="card"><a href="/12/wangluoxieyi/ck0620v2w001v3vaae9hrmmnl/"><div class="card-image"> <img src="http://47.106.81.116/medias/featureimages/16.jpg" class="responsive-img" alt="网络协议 10 - Socket 编程（上）：实践是检验真理的唯一标准"> <span class="card-title">网络协议 10 - Socket 编程（上）：实践是检验真理的唯一标准</span></div></a><div class="card-content article-content"><div class="summary block-with-text"> 前面一直在说各种协议，偏理论方面的知识，这次咱们就来认识下基于 TCP 和 UDP 协议这些理论知识的 Socket 编程。 说 TCP 和 UDP 的时候，我们是分成客户端和服务端来认识的，那在写 Socket 的时候，我们也这样分。 S</div><div class="publish-info"><span class="publish-date"><i class="fa fa-clock-o fa-fw icon-date"></i> 2018-12-05</span><span class="publish-author"><i class="fa fa-bookmark fa-fw icon-category"></i> <a href="/categories/网络协议/" class="post-category" target="_blank">网络协议</a></span></div></div><div class="card-action article-tags"> <a href="/tags/TCP协议/"><span class="chip bg-color">TCP协议</span></a> <a href="/tags/socket编程/"><span class="chip bg-color">socket编程</span></a></div></div></div></article></div><div class="cd-timeline-block"><div class="cd-timeline-img day" data-aos="zoom-in-up"> <span>03</span></div><article class="cd-timeline-content" data-aos="fade-up"><div class="article col s12 m6"><div class="card"><a href="/12/wangluoxieyi/ck0620v4p00383vaaigw6prnx/"><div class="card-image"> <img src="http://47.106.81.116/medias/featureimages/13.jpg" class="responsive-img" alt="网络协议 9 - TCP协议（下）：聪明反被聪明误"> <span class="card-title">网络协议 9 - TCP协议（下）：聪明反被聪明误</span></div></a><div class="card-content article-content"><div class="summary block-with-text"> 上次了解了 TCP 建立连接与断开连接的过程，我们发现，TCP 会通过各种“套路”来保证传输数据的安全。除此之外，我们还大概了解了 TCP 包头格式所对应解决的五个问题：顺序问题、丢包问题、连接维护、流量控制、拥塞控制。今天，我们就来看下</div><div class="publish-info"><span class="publish-date"><i class="fa fa-clock-o fa-fw icon-date"></i> 2018-12-03</span><span class="publish-author"><i class="fa fa-bookmark fa-fw icon-category"></i> <a href="/categories/网络协议/" class="post-category" target="_blank">网络协议</a></span></div></div><div class="card-action article-tags"> <a href="/tags/TCP协议/"><span class="chip bg-color">TCP协议</span></a> <a href="/tags/三次握手/"><span class="chip bg-color">三次握手</span></a> <a href="/tags/四次挥手/"><span class="chip bg-color">四次挥手</span></a></div></div></div></article></div></div></main><footer class="page-footer bg-color"><div class="container row center-align"><div class="col s12 m8 l8 copy-right"> &copy; 2019 shw2018. All Rights Reserved. &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp; <span class="white-color">143.9k</span><br><span id="sitetime"></span></div><div class="col s12 m4 l4 social-link social-statis"></div></div></footer><div class="progress-bar"></div><script language="javascript">function siteTime(){window.setTimeout("siteTime()",1e3);var e=36e5,t=24*e,o=new Date,i=o.getFullYear(),a=o.getMonth()+1,n=o.getDate(),r=o.getHours(),l=o.getMinutes(),s=o.getSeconds(),M=Date.UTC(2018,8,1,0,0,0),g=Date.UTC(i,a,n,r,l,s)-M,m=Math.floor(g/31536e6),T=Math.floor(g/t-365*m),f=Math.floor((g-(365*m+T)*t)/e),h=Math.floor((g-(365*m+T)*t-f*e)/6e4),u=Math.floor((g-(365*m+T)*t-f*e-6e4*h)/1e3);document.getElementById("sitetime").innerHTML="本站已运行 "+m+" 年 "+T+" 天 "+f+" 小时 "+h+" 分钟 "+u+" 秒"}siteTime()</script><div id="searchModal" class="modal"><div class="modal-content"><div class="search-header"><span class="title"><i class="fa fa-search"></i> &nbsp;&nbsp;搜索</span> <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字" class="search-input"></div><div id="searchResult"></div></div></div><script src="/js/search.js"></script><script type="text/javascript">$(function(){searchFunc("/search.xml","searchInput","searchResult")})</script><div id="backTop" class="top-scroll"><a class="btn-floating btn-large waves-effect waves-light" href="#!"><i class="fa fa-angle-up"></i></a></div><script src="http://47.106.81.116/libs/materialize/materialize.min.js"></script><script src="http://47.106.81.116/libs/masonry/masonry.pkgd.min.js"></script><script src="http://47.106.81.116/libs/aos/aos.js"></script><script src="http://47.106.81.116/libs/scrollprogress/scrollProgress.min.js"></script><script src="http://47.106.81.116/libs/lightGallery/js/lightgallery-all.min.js"></script><script src="/js/matery.js"></script><script src="http://47.106.81.116/libs/others/clicklove.js"></script><script async src="http://47.106.81.116/libs/others/busuanzi.pure.mini.js"></script></body></html>
+</script>
+    
+
+    
+
+    <div id="cd-timeline" class="container">
+        
+        <div class="cd-timeline-block">
+
+            
+            
+            
+            <div class="cd-timeline-img year" data-aos="zoom-in-up">
+                <a href="/archives/2018">2018</a>
+            </div>
+            
+
+            
+            
+            
+            <div class="cd-timeline-img month" data-aos="zoom-in-up">
+                <a href="/archives/2018/12">12</a>
+            </div>
+            
+
+            
+            <div class="cd-timeline-img day" data-aos="zoom-in-up">
+                <span>31</span>
+            </div>
+            <article class="cd-timeline-content" data-aos="fade-up">
+                <div class="article col s12 m6">
+                    <div class="card">
+                        <a href="/12/wangluoxieyi/ck062ljqp00267yaa4m3qzt2s/">
+                            <div class="card-image">
+                                
+                                
+                                <img src="http://47.106.81.116/medias/featureimages/4.jpg" class="responsive-img" alt="网络协议 17 - HTTPDNS：私人定制的 DNS 服务">
+                                
+                                <span class="card-title">网络协议 17 - HTTPDNS：私人定制的 DNS 服务</span>
+                            </div>
+                        </a>
+                        <div class="card-content article-content">
+                            <div class="summary block-with-text">
+                                
+                                全球统一的 DNS 是很权威，但是我们都知道“适合自己的，才是最好的”。很多时候，标准统一化的 DNS 并不能满足我们定制的需求，这个时候就需要 HTTPDNS 了。
+上一节我们知道了 DNS 可以根据名称查地址，也可以针对多个地址做负载均
+                                
+                            </div>
+                            <div class="publish-info">
+                                <span class="publish-date">
+                                    <i
+                                        class="fa fa-clock-o fa-fw icon-date"></i>2018-12-31
+                                </span>
+                                <span class="publish-author">
+                                    
+                                    <i class="fa fa-bookmark fa-fw icon-category"></i>
+                                    
+                                    <a href="/categories/网络协议/" class="post-category" target="_blank">
+                                        网络协议
+                                    </a>
+                                    
+                                    
+                                </span>
+                            </div>
+                        </div>
+
+                        
+                        <div class="card-action article-tags">
+                            
+                            <a href="/tags/负载均衡/"><span class="chip bg-color">负载均衡</span></a>
+                            
+                            <a href="/tags/HTTPDNS协议/"><span class="chip bg-color">HTTPDNS协议</span></a>
+                            
+                        </div>
+                        
+                    </div>
+                </div>
+            </article>
+        </div>
+        
+        <div class="cd-timeline-block">
+
+            
+            
+
+            
+            
+
+            
+            <div class="cd-timeline-img day" data-aos="zoom-in-up">
+                <span>26</span>
+            </div>
+            <article class="cd-timeline-content" data-aos="fade-up">
+                <div class="article col s12 m6">
+                    <div class="card">
+                        <a href="/12/wangluoxieyi/ck062ljqt002b7yaa1l5z0un5/">
+                            <div class="card-image">
+                                
+                                
+                                <img src="http://47.106.81.116/medias/featureimages/0.jpg" class="responsive-img" alt="网络协议 16 - DNS 协议：网络世界的地址簿">
+                                
+                                <span class="card-title">网络协议 16 - DNS 协议：网络世界的地址簿</span>
+                            </div>
+                        </a>
+                        <div class="card-content article-content">
+                            <div class="summary block-with-text">
+                                
+                                为什么在地址栏输入域名，就能直接访问到对应服务器？全局负载均衡和内部负载均衡又是什么？这些都和 DNS 解析息息相关，让我们一起来解密 DNS 解析。
+其实说起 DNS 解析，应该都知道它很像地址簿。就像我们去一家新开的沃尔玛超市，通过地址
+                                
+                            </div>
+                            <div class="publish-info">
+                                <span class="publish-date">
+                                    <i
+                                        class="fa fa-clock-o fa-fw icon-date"></i>2018-12-26
+                                </span>
+                                <span class="publish-author">
+                                    
+                                    <i class="fa fa-bookmark fa-fw icon-category"></i>
+                                    
+                                    <a href="/categories/网络协议/" class="post-category" target="_blank">
+                                        网络协议
+                                    </a>
+                                    
+                                    
+                                </span>
+                            </div>
+                        </div>
+
+                        
+                        <div class="card-action article-tags">
+                            
+                            <a href="/tags/负载均衡/"><span class="chip bg-color">负载均衡</span></a>
+                            
+                            <a href="/tags/DNS协议/"><span class="chip bg-color">DNS协议</span></a>
+                            
+                        </div>
+                        
+                    </div>
+                </div>
+            </article>
+        </div>
+        
+        <div class="cd-timeline-block">
+
+            
+            
+
+            
+            
+
+            
+            <div class="cd-timeline-img day" data-aos="zoom-in-up">
+                <span>24</span>
+            </div>
+            <article class="cd-timeline-content" data-aos="fade-up">
+                <div class="article col s12 m6">
+                    <div class="card">
+                        <a href="/12/wangluoxieyi/ck062ljvh006y7yaa8lgvgo4s/">
+                            <div class="card-image">
+                                
+                                
+                                <img src="http://47.106.81.116/medias/featureimages/21.jpg" class="responsive-img" alt="网络协议 15 - P2P 协议：小种子大学问">
+                                
+                                <span class="card-title">网络协议 15 - P2P 协议：小种子大学问</span>
+                            </div>
+                        </a>
+                        <div class="card-content article-content">
+                            <div class="summary block-with-text">
+                                
+                                “兄弟，有种子吗？”“什么种子？小麦种吗？”“……，来，哥今天带你认识下什么是种子”。
+大家说起种子，应该都知道是用来下载资源的。那么资源下载都有哪些方式？种子下载又有什么优势呢？
+下载电影的两种方式第一种是通过 HTTP 进行下载。这种方
+                                
+                            </div>
+                            <div class="publish-info">
+                                <span class="publish-date">
+                                    <i
+                                        class="fa fa-clock-o fa-fw icon-date"></i>2018-12-24
+                                </span>
+                                <span class="publish-author">
+                                    
+                                    <i class="fa fa-bookmark fa-fw icon-category"></i>
+                                    
+                                    <a href="/categories/网络协议/" class="post-category" target="_blank">
+                                        网络协议
+                                    </a>
+                                    
+                                    
+                                </span>
+                            </div>
+                        </div>
+
+                        
+                        <div class="card-action article-tags">
+                            
+                            <a href="/tags/P2P协议/"><span class="chip bg-color">P2P协议</span></a>
+                            
+                        </div>
+                        
+                    </div>
+                </div>
+            </article>
+        </div>
+        
+        <div class="cd-timeline-block">
+
+            
+            
+
+            
+            
+
+            
+            <div class="cd-timeline-img day" data-aos="zoom-in-up">
+                <span>19</span>
+            </div>
+            <article class="cd-timeline-content" data-aos="fade-up">
+                <div class="article col s12 m6">
+                    <div class="card">
+                        <a href="/12/wangluoxieyi/ck062ljqh00217yaai23q04d9/">
+                            <div class="card-image">
+                                
+                                
+                                <img src="http://47.106.81.116/medias/featureimages/2.jpg" class="responsive-img" alt="网络协议 14 - 流媒体协议：要说爱你不容易">
+                                
+                                <span class="card-title">网络协议 14 - 流媒体协议：要说爱你不容易</span>
+                            </div>
+                        </a>
+                        <div class="card-content article-content">
+                            <div class="summary block-with-text">
+                                
+                                大家都会关注“在浏览器输入一个地址，然后回车，会发生什么”这样一个问题，但是有没有想过这样一个问题：主播开始直播，用户打开客户端观看，这个过程发生了什么？
+随着技术的发展，直播技术对人们生活的渗透日益加深。从最开始的游戏直播，到前几天爆出来
+                                
+                            </div>
+                            <div class="publish-info">
+                                <span class="publish-date">
+                                    <i
+                                        class="fa fa-clock-o fa-fw icon-date"></i>2018-12-19
+                                </span>
+                                <span class="publish-author">
+                                    
+                                    <i class="fa fa-bookmark fa-fw icon-category"></i>
+                                    
+                                    <a href="/categories/网络协议/" class="post-category" target="_blank">
+                                        网络协议
+                                    </a>
+                                    
+                                    
+                                </span>
+                            </div>
+                        </div>
+
+                        
+                        <div class="card-action article-tags">
+                            
+                            <a href="/tags/流媒体协议/"><span class="chip bg-color">流媒体协议</span></a>
+                            
+                        </div>
+                        
+                    </div>
+                </div>
+            </article>
+        </div>
+        
+        <div class="cd-timeline-block">
+
+            
+            
+
+            
+            
+
+            
+            <div class="cd-timeline-img day" data-aos="zoom-in-up">
+                <span>17</span>
+            </div>
+            <article class="cd-timeline-content" data-aos="fade-up">
+                <div class="article col s12 m6">
+                    <div class="card">
+                        <a href="/12/wangluoxieyi/ck062ljqa001x7yaasupmczyg/">
+                            <div class="card-image">
+                                
+                                
+                                <img src="http://47.106.81.116/medias/featureimages/19.jpg" class="responsive-img" alt="网络协议 13 - HTTPS 协议：加密路上无尽头">
+                                
+                                <span class="card-title">网络协议 13 - HTTPS 协议：加密路上无尽头</span>
+                            </div>
+                        </a>
+                        <div class="card-content article-content">
+                            <div class="summary block-with-text">
+                                
+                                之前说了 HTTP 协议的各种问题，但是它还是陪伴着互联网、陪伴着我们走过了将近二十年的风风雨雨。现在有很多新的协议尝试去取代它，来解决性能、效率等问题，但它还还能靠着“多年的情分”活的滋润。然而，近些年，因为致命的安全问题，它不得不升级成
+                                
+                            </div>
+                            <div class="publish-info">
+                                <span class="publish-date">
+                                    <i
+                                        class="fa fa-clock-o fa-fw icon-date"></i>2018-12-17
+                                </span>
+                                <span class="publish-author">
+                                    
+                                    <i class="fa fa-bookmark fa-fw icon-category"></i>
+                                    
+                                    <a href="/categories/网络协议/" class="post-category" target="_blank">
+                                        网络协议
+                                    </a>
+                                    
+                                    
+                                </span>
+                            </div>
+                        </div>
+
+                        
+                        <div class="card-action article-tags">
+                            
+                            <a href="/tags/HTTPS协议/"><span class="chip bg-color">HTTPS协议</span></a>
+                            
+                            <a href="/tags/对称加密/"><span class="chip bg-color">对称加密</span></a>
+                            
+                            <a href="/tags/非对称加密/"><span class="chip bg-color">非对称加密</span></a>
+                            
+                        </div>
+                        
+                    </div>
+                </div>
+            </article>
+        </div>
+        
+        <div class="cd-timeline-block">
+
+            
+            
+
+            
+            
+
+            
+            <div class="cd-timeline-img day" data-aos="zoom-in-up">
+                <span>12</span>
+            </div>
+            <article class="cd-timeline-content" data-aos="fade-up">
+                <div class="article col s12 m6">
+                    <div class="card">
+                        <a href="/12/wangluoxieyi/ck062ljvj00707yaa48d5b8qv/">
+                            <div class="card-image">
+                                
+                                
+                                <img src="http://47.106.81.116/medias/featureimages/21.jpg" class="responsive-img" alt="网络协议 12 - HTTP 协议：常用而不简单">
+                                
+                                <span class="card-title">网络协议 12 - HTTP 协议：常用而不简单</span>
+                            </div>
+                        </a>
+                        <div class="card-content article-content">
+                            <div class="summary block-with-text">
+                                
+                                网络协议五层通天路，咱们从物理层、到链路层、网络层、再到传输层，现在又进一步，来到了应用层。这也是我们五层协议里最上面的一层，关于应用层，有太多协议要了解。但要说最有名的，那肯定就是 HTTP 了。
+HTTP 协议，几乎是每个人上网用的第一
+                                
+                            </div>
+                            <div class="publish-info">
+                                <span class="publish-date">
+                                    <i
+                                        class="fa fa-clock-o fa-fw icon-date"></i>2018-12-12
+                                </span>
+                                <span class="publish-author">
+                                    
+                                    <i class="fa fa-bookmark fa-fw icon-category"></i>
+                                    
+                                    <a href="/categories/网络协议/" class="post-category" target="_blank">
+                                        网络协议
+                                    </a>
+                                    
+                                    
+                                </span>
+                            </div>
+                        </div>
+
+                        
+                        <div class="card-action article-tags">
+                            
+                            <a href="/tags/HTTP协议/"><span class="chip bg-color">HTTP协议</span></a>
+                            
+                        </div>
+                        
+                    </div>
+                </div>
+            </article>
+        </div>
+        
+        <div class="cd-timeline-block">
+
+            
+            
+
+            
+            
+
+            
+            <div class="cd-timeline-img day" data-aos="zoom-in-up">
+                <span>10</span>
+            </div>
+            <article class="cd-timeline-content" data-aos="fade-up">
+                <div class="article col s12 m6">
+                    <div class="card">
+                        <a href="/12/wangluoxieyi/ck062ljlt000c7yaag5fw5vqz/">
+                            <div class="card-image">
+                                
+                                
+                                <img src="http://47.106.81.116/medias/featureimages/19.jpg" class="responsive-img" alt="网络协议 11 - Socket 编程（下）：眼见为实耳听为虚">
+                                
+                                <span class="card-title">网络协议 11 - Socket 编程（下）：眼见为实耳听为虚</span>
+                            </div>
+                        </a>
+                        <div class="card-content article-content">
+                            <div class="summary block-with-text">
+                                
+                                之前我们基本了解了网络通信里的大部分协议，一直都是在“听”的过程。很多人都会觉得，好像看懂了，但关了页面回忆起来，好像又什么都没懂。这次咱们就“真枪实弹”的码起来，再用一个“神器”-网络分析系统详细跟踪下数据包的生命历程，让我们的理论真实的
+                                
+                            </div>
+                            <div class="publish-info">
+                                <span class="publish-date">
+                                    <i
+                                        class="fa fa-clock-o fa-fw icon-date"></i>2018-12-10
+                                </span>
+                                <span class="publish-author">
+                                    
+                                    <i class="fa fa-bookmark fa-fw icon-category"></i>
+                                    
+                                    <a href="/categories/网络协议/" class="post-category" target="_blank">
+                                        网络协议
+                                    </a>
+                                    
+                                    
+                                </span>
+                            </div>
+                        </div>
+
+                        
+                        <div class="card-action article-tags">
+                            
+                            <a href="/tags/TCP协议/"><span class="chip bg-color">TCP协议</span></a>
+                            
+                            <a href="/tags/socket编程/"><span class="chip bg-color">socket编程</span></a>
+                            
+                        </div>
+                        
+                    </div>
+                </div>
+            </article>
+        </div>
+        
+        <div class="cd-timeline-block">
+
+            
+            
+
+            
+            
+
+            
+            <div class="cd-timeline-img day" data-aos="zoom-in-up">
+                <span>05</span>
+            </div>
+            <article class="cd-timeline-content" data-aos="fade-up">
+                <div class="article col s12 m6">
+                    <div class="card">
+                        <a href="/12/wangluoxieyi/ck062ljtf003m7yaaabdohmxb/">
+                            <div class="card-image">
+                                
+                                
+                                <img src="http://47.106.81.116/medias/featureimages/16.jpg" class="responsive-img" alt="网络协议 10 - Socket 编程（上）：实践是检验真理的唯一标准">
+                                
+                                <span class="card-title">网络协议 10 - Socket 编程（上）：实践是检验真理的唯一标准</span>
+                            </div>
+                        </a>
+                        <div class="card-content article-content">
+                            <div class="summary block-with-text">
+                                
+                                前面一直在说各种协议，偏理论方面的知识，这次咱们就来认识下基于 TCP 和 UDP 协议这些理论知识的 Socket 编程。
+说 TCP 和 UDP 的时候，我们是分成客户端和服务端来认识的，那在写 Socket 的时候，我们也这样分。
+S
+                                
+                            </div>
+                            <div class="publish-info">
+                                <span class="publish-date">
+                                    <i
+                                        class="fa fa-clock-o fa-fw icon-date"></i>2018-12-05
+                                </span>
+                                <span class="publish-author">
+                                    
+                                    <i class="fa fa-bookmark fa-fw icon-category"></i>
+                                    
+                                    <a href="/categories/网络协议/" class="post-category" target="_blank">
+                                        网络协议
+                                    </a>
+                                    
+                                    
+                                </span>
+                            </div>
+                        </div>
+
+                        
+                        <div class="card-action article-tags">
+                            
+                            <a href="/tags/TCP协议/"><span class="chip bg-color">TCP协议</span></a>
+                            
+                            <a href="/tags/socket编程/"><span class="chip bg-color">socket编程</span></a>
+                            
+                        </div>
+                        
+                    </div>
+                </div>
+            </article>
+        </div>
+        
+        <div class="cd-timeline-block">
+
+            
+            
+
+            
+            
+
+            
+            <div class="cd-timeline-img day" data-aos="zoom-in-up">
+                <span>03</span>
+            </div>
+            <article class="cd-timeline-content" data-aos="fade-up">
+                <div class="article col s12 m6">
+                    <div class="card">
+                        <a href="/12/wangluoxieyi/ck062ljs200317yaagwsn87zd/">
+                            <div class="card-image">
+                                
+                                
+                                <img src="http://47.106.81.116/medias/featureimages/13.jpg" class="responsive-img" alt="网络协议 9 - TCP协议（下）：聪明反被聪明误">
+                                
+                                <span class="card-title">网络协议 9 - TCP协议（下）：聪明反被聪明误</span>
+                            </div>
+                        </a>
+                        <div class="card-content article-content">
+                            <div class="summary block-with-text">
+                                
+                                上次了解了 TCP 建立连接与断开连接的过程，我们发现，TCP 会通过各种“套路”来保证传输数据的安全。除此之外，我们还大概了解了 TCP 包头格式所对应解决的五个问题：顺序问题、丢包问题、连接维护、流量控制、拥塞控制。今天，我们就来看下 
+                                
+                            </div>
+                            <div class="publish-info">
+                                <span class="publish-date">
+                                    <i
+                                        class="fa fa-clock-o fa-fw icon-date"></i>2018-12-03
+                                </span>
+                                <span class="publish-author">
+                                    
+                                    <i class="fa fa-bookmark fa-fw icon-category"></i>
+                                    
+                                    <a href="/categories/网络协议/" class="post-category" target="_blank">
+                                        网络协议
+                                    </a>
+                                    
+                                    
+                                </span>
+                            </div>
+                        </div>
+
+                        
+                        <div class="card-action article-tags">
+                            
+                            <a href="/tags/TCP协议/"><span class="chip bg-color">TCP协议</span></a>
+                            
+                            <a href="/tags/三次握手/"><span class="chip bg-color">三次握手</span></a>
+                            
+                            <a href="/tags/四次挥手/"><span class="chip bg-color">四次挥手</span></a>
+                            
+                        </div>
+                        
+                    </div>
+                </div>
+            </article>
+        </div>
+        
+    </div>
+
+</main>
+
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            &copy; 2019 shw2018. All Rights Reserved.
+
+            
+                &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
+                <span class="white-color">143.9k</span>
+
+            
+            <br>
+
+            <span id="sitetime"></span>
+
+            
+
+            <!-- 
+                <br>
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'></span>
+                    <i class="fa fa-heart-o"></i>
+                    本站总访问量 <span id="busuanzi_value_site_pv" class="white-color"></span>
+
+                
+
+                
+                    <span id="busuanzi_container_site_uv" style='display:none'></span>
+                    人次,&nbsp;访客数 <span id="busuanzi_value_site_uv" class="white-color"></span> 人.
+                    
+                
+
+             -->
+
+        </div>
+
+        <div class="col s12 m4 l4 social-link social-statis">
+
+
+
+
+
+
+
+
+
+</div>
+
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+<script language=javascript>
+    function siteTime() {
+        window.setTimeout("siteTime()", 1000);
+        var seconds = 1000;
+        var minutes = seconds * 60;
+        var hours = minutes * 60;
+        var days = hours * 24;
+        var years = days * 365;
+        var today = new Date();
+        var todayYear = today.getFullYear();
+        var todayMonth = today.getMonth() + 1;
+        var todayDate = today.getDate();
+        var todayHour = today.getHours();
+        var todayMinute = today.getMinutes();
+        var todaySecond = today.getSeconds();
+
+        /* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+        year - 作为date对象的年份，为4位年份值
+        month - 0-11之间的整数，做为date对象的月份
+        day - 1-31之间的整数，做为date对象的天数
+        hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+        minutes - 0-59之间的整数，做为date对象的分钟数
+        seconds - 0-59之间的整数，做为date对象的秒数
+        microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+
+        var t1 = Date.UTC(2018, 08, 01, 00, 00, 00); //北京时间2019-8-1 00:00:00
+        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+        var diff = t2 - t1;
+        var diffYears = Math.floor(diff / years);
+        var diffDays = Math.floor((diff / days) - diffYears * 365);
+        var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+        var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) / minutes);
+        var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours - diffMinutes * minutes) / seconds);
+        document.getElementById("sitetime").innerHTML = "本站已运行 " + diffYears + " 年 " + diffDays + " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+    }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+    siteTime();
+</script>
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+
+    <script src="http://47.106.81.116/libs/materialize/materialize.min.js"></script>
+    <script src="http://47.106.81.116/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="http://47.106.81.116/libs/aos/aos.js"></script>
+    <script src="http://47.106.81.116/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="http://47.106.81.116/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+
+    
+        <script src="http://47.106.81.116/libs/others/clicklove.js"></script>
+    
+    
+    
+        <script async src="http://47.106.81.116/libs/others/busuanzi.pure.mini.js"></script>
+    
+    
+</body>
+
+</html>

@@ -1,1 +1,992 @@
-<!DOCTYPE HTML><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.9.0"><meta charset="utf-8"><meta name="keywords" content="PHP Redis Linux Nginx"><meta name="baidu-site-verification" content="fmlEuI34ir"><meta name="google-site-verification" content="KeoTn_OFy4ndJwXNmm2gMeQfPhd7alqE9vQDwI32KCY"><meta name="description" content="ReliableCoder"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"><meta name="renderer" content="webkit|ie-stand|ie-comp"><meta name="mobile-web-app-capable" content="yes"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><title>ReliableCoder</title><link rel="icon" type="image/png" href="/favicon.png"><link rel="stylesheet" type="text/css" href="http://47.106.81.116/libs/awesome/css/font-awesome.min.css"><link rel="stylesheet" type="text/css" href="http://47.106.81.116/libs/materialize/materialize.min.css"><link rel="stylesheet" type="text/css" href="http://47.106.81.116/libs/aos/aos.css"><link rel="stylesheet" type="text/css" href="http://47.106.81.116/libs/animate/animate.min.css"><link rel="stylesheet" type="text/css" href="http://47.106.81.116/libs/lightGallery/css/lightgallery.min.css"><link rel="stylesheet" type="text/css" href="/css/matery.css"><link rel="stylesheet" type="text/css" href="/css/my.css"><style type="text/css">code[class*=language-],pre[class*=language-]{white-space:pre!important}</style><script src="http://47.106.81.116/libs/jquery/jquery-2.2.0.min.js"></script><script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script><script>var _hmt=_hmt||[];!function(){var e=document.createElement("script");e.src="https://hm.baidu.com/hm.js?46e79e71af0709a5b9106bf20cecc493";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)}()</script><script>!function(){var t=document.createElement("script"),e=window.location.protocol.split(":")[0];t.src="https"===e?"https://zz.bdstatic.com/linksubmit/push.js":"http://push.zhanzhang.baidu.com/push.js";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(t,s)}()</script><link rel="stylesheet" href="/css/prism-xonokai.css" type="text/css"><link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head><body><header class="navbar-fixed"><nav id="headNav" class="bg-color nav-transparent"><div id="navContainer" class="nav-wrapper container"><div class="brand-logo"> <a href="/" class="waves-effect waves-light"><span class="logo-span">ReliableCoder</span></a></div><a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a><ul class="right"><li class="hide-on-med-and-down"><a href="/" class="waves-effect waves-light"><i class="fa fa-home"></i> <span>首页</span></a></li><li class="hide-on-med-and-down"><a href="/tags" class="waves-effect waves-light"><i class="fa fa-tags"></i> <span>标签</span></a></li><li class="hide-on-med-and-down"><a href="/categories" class="waves-effect waves-light"><i class="fa fa-bookmark"></i> <span>分类</span></a></li><li class="hide-on-med-and-down"><a href="/archives" class="waves-effect waves-light"><i class="fa fa-archive"></i> <span>归档</span></a></li><li class="hide-on-med-and-down"><a href="/about" class="waves-effect waves-light"><i class="fa fa-user-circle-o"></i> <span>关于我</span></a></li><li><a href="#searchModal" class="modal-trigger waves-effect waves-light"><i id="searchIcon" class="fa fa-search" title="搜索"></i></a></li></ul><div id="mobile-nav" class="side-nav sidenav"><div class="mobile-head bg-color"><div class="logo-name">ReliableCoder</div><div class="logo-desc"> WEB开发 | PHP开发 | 源码解读</div></div><ul class="menu-list mobile-menu-list"><li><a href="/" class="waves-effect waves-light"><i class="fa fa-fw fa-home"></i> 首页</a></li><li><a href="/tags" class="waves-effect waves-light"><i class="fa fa-fw fa-tags"></i> 标签</a></li><li><a href="/categories" class="waves-effect waves-light"><i class="fa fa-fw fa-bookmark"></i> 分类</a></li><li><a href="/archives" class="waves-effect waves-light"><i class="fa fa-fw fa-archive"></i> 归档</a></li><li><a href="/about" class="waves-effect waves-light"><i class="fa fa-fw fa-user-circle-o"></i> 关于我</a></li></ul></div></div></nav></header><div class="bg-cover pd-header about-cover"><div class="container"><div class="row"><div class="col s10 offset-s1 m8 offset-m2 l8 offset-l2"><div class="brand"><div class="title center-align"> ReliableCoder</div><div class="description center-align"> <span id="jinrishici-sentence">正在加载今日诗词...</span></div></div></div></div><script></script></div></div><main class="content"><article id="articles" class="container articles"><div class="row article-row"><div class="article col s12 m6 l4" data-aos="zoom-in"><div class="card"><a href="/11/wangluoxieyi/ck0620v48002x3vaagikuf0wf/" target="_blank"><div class="card-image"> <img src="http://47.106.81.116/medias/featureimages/8.jpg" class="responsive-img" alt="网络协议 6 - 路由协议：敢问路在何方？"> <span class="card-title">网络协议 6 - 路由协议：敢问路在何方？</span></div></a><div class="card-content article-content"><div class="summary block-with-text"> 前面例子中，我们都是在一个局域网内折腾。今天就让我们扩大范围，在多个局域网甚至到广阔的互联网世界中遨游，看看这中间会发生什么。 这个过程中，跨网关访问是我们要了解的第一个内容。 跨网关访问当我们要了解跨网关访问时，就牵扯到 MAC 地址和</div><div class="publish-info"><span class="publish-date"><i class="fa fa-clock-o fa-fw icon-date"></i> 2018-11-21</span><span class="publish-author"><i class="fa fa-bookmark fa-fw icon-category"></i> <a href="/categories/网络协议/" class="post-category" target="_blank">网络协议</a></span></div></div><div class="card-action article-tags"> <a href="/tags/路由协议/" target="_blank"><span class="chip bg-color">路由协议</span></a></div></div></div><div class="article col s12 m6 l4" data-aos="zoom-in"><div class="card"><a href="/11/uncategorized/ck0620uzw00093vaa7zxhkdil/" target="_blank"><div class="card-image"> <img src="http://47.106.81.116/medias/featureimages/9.jpg" class="responsive-img" alt="PHP 扩展管理"> <span class="card-title">PHP 扩展管理</span></div></a><div class="card-content article-content"><div class="summary block-with-text"> 一直对 PHP 扩展了解的似是而非，每次安装扩展都要百度教程，很容易出现各种错误。所幸整理下管理扩展的所有操作，方便日后操作。 查看已加载的扩展 输出 phpinfo()； 使用 get_loaded_extensions()； 使用 ex</div><div class="publish-info"><span class="publish-date"><i class="fa fa-clock-o fa-fw icon-date"></i> 2018-11-20</span><span class="publish-author"></span></div></div></div></div><div class="article col s12 m6 l4" data-aos="zoom-in"><div class="card"><a href="/11/wangluoxieyi/ck0620v4b002z3vaatfrpspbl/" target="_blank"><div class="card-image"> <img src="http://47.106.81.116/medias/featureimages/22.jpg" class="responsive-img" alt="网络协议 5 - ICMP 与 ping：投石问路的侦察兵"> <span class="card-title">网络协议 5 - ICMP 与 ping：投石问路的侦察兵</span></div></a><div class="card-content article-content"><div class="summary block-with-text"> 日常开发中，我们经常会碰到查询网络是否畅通以及域名对应 IP 地址等小需求，这时候用的最多的应该就是 ping 命令了。 那你知道 ping 命令是怎么工作的吗？今天，我们就来一起认识下 ping 命令及其对应的 ICMP 协议。 ICMP</div><div class="publish-info"><span class="publish-date"><i class="fa fa-clock-o fa-fw icon-date"></i> 2018-11-19</span><span class="publish-author"><i class="fa fa-bookmark fa-fw icon-category"></i> <a href="/categories/网络协议/" class="post-category" target="_blank">网络协议</a></span></div></div><div class="card-action article-tags"> <a href="/tags/查询报文/" target="_blank"><span class="chip bg-color">查询报文</span></a> <a href="/tags/ICMP协议/" target="_blank"><span class="chip bg-color">ICMP协议</span></a></div></div></div><div class="article col s12 m6 l4" data-aos="zoom-in"><div class="card"><a href="/11/wangluoxieyi/ck0620v45002u3vaak29ybkhl/" target="_blank"><div class="card-image"> <img src="http://47.106.81.116/medias/featureimages/20.jpg" class="responsive-img" alt="网络协议 4 - 交换机与 VLAN：办公室太复杂，我要回学校"> <span class="card-title">网络协议 4 - 交换机与 VLAN：办公室太复杂，我要回学校</span></div></a><div class="card-content article-content"><div class="summary block-with-text"> 上一次，我们通过宿舍联网打魔兽的需求，认识了如何通过物理层和链路层组建一个宿舍局域网。今天，让我们切换到稍微复杂点的场景，办公室。 在这个场景里，就不像在宿舍那样，搞几根网线，拉一拉，扯一扯就可以了。一个办公室少到数十人，大至上百人，每个人</div><div class="publish-info"><span class="publish-date"><i class="fa fa-clock-o fa-fw icon-date"></i> 2018-11-14</span><span class="publish-author"><i class="fa fa-bookmark fa-fw icon-category"></i> <a href="/categories/网络协议/" class="post-category" target="_blank">网络协议</a></span></div></div><div class="card-action article-tags"> <a href="/tags/交换机/" target="_blank"><span class="chip bg-color">交换机</span></a> <a href="/tags/VLAN/" target="_blank"><span class="chip bg-color">VLAN</span></a> <a href="/tags/拓扑结构/" target="_blank"><span class="chip bg-color">拓扑结构</span></a> <a href="/tags/广播风暴/" target="_blank"><span class="chip bg-color">广播风暴</span></a> <a href="/tags/STP协议/" target="_blank"><span class="chip bg-color">STP协议</span></a></div></div></div><div class="article col s12 m6 l4" data-aos="zoom-in"><div class="card"><a href="/11/wangluoxieyi/ck0620v41002r3vaaecggfoou/" target="_blank"><div class="card-image"> <img src="http://47.106.81.116/medias/featureimages/12.jpg" class="responsive-img" alt="网络协议 3 - 从物理层到 MAC 层"> <span class="card-title">网络协议 3 - 从物理层到 MAC 层</span></div></a><div class="card-content article-content"><div class="summary block-with-text"> 在上一篇博文中，我们见证了 IP 地址的诞生，机器一旦有了 IP，就可以在网络的环境里和其他的机器展开沟通了。 今天，我们来认识下 物理层 和 MAC 层。 日常生活中，身为 90 后的我们，如果不是通信相关专业出身的，应该从来没有接触过物</div><div class="publish-info"><span class="publish-date"><i class="fa fa-clock-o fa-fw icon-date"></i> 2018-11-12</span><span class="publish-author"><i class="fa fa-bookmark fa-fw icon-category"></i> <a href="/categories/网络协议/" class="post-category" target="_blank">网络协议</a></span></div></div><div class="card-action article-tags"> <a href="/tags/物理层/" target="_blank"><span class="chip bg-color">物理层</span></a> <a href="/tags/MAC层/" target="_blank"><span class="chip bg-color">MAC层</span></a></div></div></div><div class="article col s12 m6 l4" data-aos="zoom-in"><div class="card"><a href="/11/uncategorized/ck0620v3a00253vaapq92setm/" target="_blank"><div class="card-image"> <img src="http://47.106.81.116/medias/featureimages/4.jpg" class="responsive-img" alt="python小应用-博客园隐藏的小秘密及各类排行榜【附源码】"> <span class="card-title">python小应用-博客园隐藏的小秘密及各类排行榜【附源码】</span></div></a><div class="card-content article-content"><div class="summary block-with-text">     接触博客园有不短的时间了，今天突然想到，我们博客园各位博友，一天中哪个时间段比较活跃？又有多少夜猫子在深更半夜，冒着“聪明绝顶”的风险熬夜码字看博文？首页所有博文中，哪个博友发布博文数量最多？又是哪个博友大范围“收割”阅读量和评论量</div><div class="publish-info"><span class="publish-date"><i class="fa fa-clock-o fa-fw icon-date"></i> 2018-11-07</span><span class="publish-author"></span></div></div></div></div><div class="article col s12 m6 l4" data-aos="zoom-in"><div class="card"><a href="/11/gerenzongjie/ck0620v0d000i3vaakeckkb6u/" target="_blank"><div class="card-image"> <img src="http://47.106.81.116/medias/featureimages/7.jpg" class="responsive-img" alt="工作两年"> <span class="card-title">工作两年</span></div></a><div class="card-content article-content"><div class="summary block-with-text"> 毕业一年，工作将近两年。刚工作的时候会记录每一点的成长，随着时间的推移，写的越来越少。在这即将到来两年的时间点上，蓦然发现，已经好久没有进行个人总结了。 很多人都说，踏入工作 1-3 年是人生中一个重要的阶段。博主正处于这个阶段，不知道这个</div><div class="publish-info"><span class="publish-date"><i class="fa fa-clock-o fa-fw icon-date"></i> 2018-11-05</span><span class="publish-author"><i class="fa fa-bookmark fa-fw icon-category"></i> <a href="/categories/个人总结/" class="post-category" target="_blank">个人总结</a></span></div></div><div class="card-action article-tags"> <a href="/tags/两年/" target="_blank"><span class="chip bg-color">两年</span></a></div></div></div><div class="article col s12 m6 l4" data-aos="zoom-in"><div class="card"><a href="/10/wangluoxieyi/ck0620v3t002k3vaa6ea8190w/" target="_blank"><div class="card-image"> <img src="http://47.106.81.116/medias/featureimages/21.jpg" class="responsive-img" alt="网络协议 2 - IP 是怎么来，又是怎么没的？"> <span class="card-title">网络协议 2 - IP 是怎么来，又是怎么没的？</span></div></a><div class="card-content article-content"><div class="summary block-with-text"> 了解完网络协议，我们会发现，网络通信的五层模型里，有两个很重要的概念：IP 地址和 MAC 地址。 那么 IP 地址是怎么来的，又是怎么没的？MAC 地址与 IP 地址又有什么区别？ 这回答上面问题前，先热下身，大家知道如何查看本机的 IP</div><div class="publish-info"><span class="publish-date"><i class="fa fa-clock-o fa-fw icon-date"></i> 2018-10-31</span><span class="publish-author"><i class="fa fa-bookmark fa-fw icon-category"></i> <a href="/categories/网络协议/" class="post-category" target="_blank">网络协议</a></span></div></div><div class="card-action article-tags"> <a href="/tags/IP格式/" target="_blank"><span class="chip bg-color">IP格式</span></a> <a href="/tags/IP分配和释放/" target="_blank"><span class="chip bg-color">IP分配和释放</span></a> <a href="/tags/DHCP-动态分配协议/" target="_blank"><span class="chip bg-color">DHCP-动态分配协议</span></a></div></div></div><div class="article col s12 m6 l4" data-aos="zoom-in"><div class="card"><a href="/10/wangluoxieyi/ck0620v2k001p3vaal8lvc4lm/" target="_blank"><div class="card-image"> <img src="http://47.106.81.116/medias/featureimages/22.jpg" class="responsive-img" alt="网络协议 1 - 概述"> <span class="card-title">网络协议 1 - 概述</span></div></a><div class="card-content article-content"><div class="summary block-with-text"> 互联网世界中，网络协议的重要性不言而喻。很多人都知道，网络协议中的五层模型或者七层模型，这些在操作系统中，那都是“必考题”。上学的时候，无论是死记硬背，还是各种小抄，总得把下面这个图记下来。踏入工作，走进 web 开发“不归路”，发现还是不</div><div class="publish-info"><span class="publish-date"><i class="fa fa-clock-o fa-fw icon-date"></i> 2018-10-29</span><span class="publish-author"><i class="fa fa-bookmark fa-fw icon-category"></i> <a href="/categories/网络协议/" class="post-category" target="_blank">网络协议</a></span></div></div><div class="card-action article-tags"> <a href="/tags/协议概述/" target="_blank"><span class="chip bg-color">协议概述</span></a></div></div></div><div class="article col s12 m6 l4" data-aos="zoom-in"><div class="card"><a href="/10/uncategorized/ck0620v05000e3vaaqwa142st/" target="_blank"><div class="card-image"> <img src="http://47.106.81.116/medias/featureimages/20.jpg" class="responsive-img" alt="nginx 伪静态"> <span class="card-title">nginx 伪静态</span></div></a><div class="card-content article-content"><div class="summary block-with-text"> 最近有个在官网加【行业资讯】的需求。考虑到主要目的是为了推广，决定对资讯的栏目和内容页进行伪静态处理。 下面以文章 id 为 5 的文章页为例。原始地址为： oriUrl = http://blog.muzixizao.com/?p=5</div><div class="publish-info"><span class="publish-date"><i class="fa fa-clock-o fa-fw icon-date"></i> 2018-10-24</span><span class="publish-author"></span></div></div></div></div><div class="article col s12 m6 l4" data-aos="zoom-in"><div class="card"><a href="/10/uncategorized/ck0620uzk00033vaaylrno3od/" target="_blank"><div class="card-image"> <img src="http://47.106.81.116/medias/featureimages/12.jpg" class="responsive-img" alt="Nginx location匹配规则"> <span class="card-title">Nginx location匹配规则</span></div></a><div class="card-content article-content"><div class="summary block-with-text"> 1、语法location [=|~|~*|^~|@] /uri/ { ... } 2、说明从上面的语法出发，可以了解到 location 可以区分为三个部分，接下来一个一个的研究一下。 1) [=||*|^~|@] = : 表示精确匹配</div><div class="publish-info"><span class="publish-date"><i class="fa fa-clock-o fa-fw icon-date"></i> 2018-10-24</span><span class="publish-author"></span></div></div></div></div><div class="article col s12 m6 l4" data-aos="zoom-in"><div class="card"><a href="/10/uncategorized/ck0620v00000a3vaaflpwm8tk/" target="_blank"><div class="card-image"> <img src="http://47.106.81.116/medias/featureimages/18.jpg" class="responsive-img" alt="位运算符"> <span class="card-title">位运算符</span></div></a><div class="card-content article-content"><div class="summary block-with-text"> 位运算一览表 符号 示例 含义 &amp; $a &amp; $b 按位与。将 $a 和 $b 中都为 1 的位设为 1 | $a | $b 按位或。将 $a 和 $b 中任何一个为 1 的位设为 1 ^ $a ^ $c</div><div class="publish-info"><span class="publish-date"><i class="fa fa-clock-o fa-fw icon-date"></i> 2018-10-23</span><span class="publish-author"></span></div></div></div></div></div></article></main><div class="container paging"><div class="row"><div class="col s6 m4 l4"><a href="/page/3/" class="left btn-floating btn-large waves-effect waves-light bg-color"><i class="fa fa-angle-left"></i></a></div><div class="page-info col m4 l4 hide-on-small-only"><div class="center-align b-text-gray">4 / 5</div></div><div class="col s6 m4 l4"><a href="/page/5/" class="right btn-floating btn-large waves-effect waves-light bg-color"><i class="fa fa-angle-right"></i></a></div></div></div><footer class="page-footer bg-color"><div class="container row center-align"><div class="col s12 m8 l8 copy-right"> &copy; 2019 shw2018. All Rights Reserved. &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp; <span class="white-color">143.9k</span><br><span id="sitetime"></span></div><div class="col s12 m4 l4 social-link social-statis"></div></div></footer><div class="progress-bar"></div><script language="javascript">function siteTime(){window.setTimeout("siteTime()",1e3);var e=36e5,t=24*e,o=new Date,i=o.getFullYear(),a=o.getMonth()+1,n=o.getDate(),r=o.getHours(),l=o.getMinutes(),s=o.getSeconds(),M=Date.UTC(2018,8,1,0,0,0),g=Date.UTC(i,a,n,r,l,s)-M,m=Math.floor(g/31536e6),T=Math.floor(g/t-365*m),f=Math.floor((g-(365*m+T)*t)/e),h=Math.floor((g-(365*m+T)*t-f*e)/6e4),u=Math.floor((g-(365*m+T)*t-f*e-6e4*h)/1e3);document.getElementById("sitetime").innerHTML="本站已运行 "+m+" 年 "+T+" 天 "+f+" 小时 "+h+" 分钟 "+u+" 秒"}siteTime()</script><div id="searchModal" class="modal"><div class="modal-content"><div class="search-header"><span class="title"><i class="fa fa-search"></i> &nbsp;&nbsp;搜索</span> <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字" class="search-input"></div><div id="searchResult"></div></div></div><script src="/js/search.js"></script><script type="text/javascript">$(function(){searchFunc("/search.xml","searchInput","searchResult")})</script><div id="backTop" class="top-scroll"><a class="btn-floating btn-large waves-effect waves-light" href="#!"><i class="fa fa-angle-up"></i></a></div><script src="http://47.106.81.116/libs/materialize/materialize.min.js"></script><script src="http://47.106.81.116/libs/masonry/masonry.pkgd.min.js"></script><script src="http://47.106.81.116/libs/aos/aos.js"></script><script src="http://47.106.81.116/libs/scrollprogress/scrollProgress.min.js"></script><script src="http://47.106.81.116/libs/lightGallery/js/lightgallery-all.min.js"></script><script src="/js/matery.js"></script><script src="http://47.106.81.116/libs/others/clicklove.js"></script><script async src="http://47.106.81.116/libs/others/busuanzi.pure.mini.js"></script></body></html>
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="PHP Redis Linux Nginx">
+    <meta name="baidu-site-verification" content="fmlEuI34ir">
+    <meta name="google-site-verification" content="KeoTn_OFy4ndJwXNmm2gMeQfPhd7alqE9vQDwI32KCY">
+    <meta name="description" content="ReliableCoder">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>ReliableCoder</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="http://47.106.81.116/libs/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="http://47.106.81.116/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="http://47.106.81.116/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="http://47.106.81.116/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="http://47.106.81.116/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    
+    <style type="text/css">
+        
+            
+            code[class*="language-"],
+            pre[class*="language-"] {
+                white-space: pre !important;
+            }
+
+        
+    </style>
+
+    <script src="http://47.106.81.116/libs/jquery/jquery-2.2.0.min.js"></script>
+    <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?46e79e71af0709a5b9106bf20cecc493";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+    
+    
+        <script>
+            (function(){
+                var bp = document.createElement('script');
+                var curProtocol = window.location.protocol.split(':')[0];
+                if (curProtocol === 'https') {
+                    bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+                }
+                else {
+                    bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+                }
+                var s = document.getElementsByTagName("script")[0];
+                s.parentNode.insertBefore(bp, s);
+            })();
+        </script>
+    
+
+<link rel="stylesheet" href="/css/prism-xonokai.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+
+<body>
+
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <span class="logo-span">ReliableCoder</span>
+                </a>
+            </div>
+            
+
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a>
+<ul class="right">
+    
+    <li class="hide-on-med-and-down">
+        <a href="/" class="waves-effect waves-light">
+            
+            <i class="fa fa-home"></i>
+            
+            <span>首页</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/tags" class="waves-effect waves-light">
+            
+            <i class="fa fa-tags"></i>
+            
+            <span>标签</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/categories" class="waves-effect waves-light">
+            
+            <i class="fa fa-bookmark"></i>
+            
+            <span>分类</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/archives" class="waves-effect waves-light">
+            
+            <i class="fa fa-archive"></i>
+            
+            <span>归档</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/about" class="waves-effect waves-light">
+            
+            <i class="fa fa-user-circle-o"></i>
+            
+            <span>关于我</span>
+        </a>
+    </li>
+    
+    <li>
+        <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+            <i id="searchIcon" class="fa fa-search" title="搜索"></i>
+        </a>
+    </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <div class="logo-name">ReliableCoder</div>
+        <div class="logo-desc">
+            
+            WEB开发 | PHP开发 | 源码解读
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li>
+            <a href="/" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-home"></i>
+                
+                首页
+            </a>
+        </li>
+        
+        <li>
+            <a href="/tags" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-tags"></i>
+                
+                标签
+            </a>
+        </li>
+        
+        <li>
+            <a href="/categories" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-bookmark"></i>
+                
+                分类
+            </a>
+        </li>
+        
+        <li>
+            <a href="/archives" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-archive"></i>
+                
+                归档
+            </a>
+        </li>
+        
+        <li>
+            <a href="/about" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-user-circle-o"></i>
+                
+                关于我
+            </a>
+        </li>
+        
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+<div class="bg-cover pd-header about-cover">
+    <div class="container">
+    <div class="row">
+    <div class="col s10 offset-s1 m8 offset-m2 l8 offset-l2">
+        <div class="brand">
+            <div class="title center-align">
+                <!-- 
+                    ReliableCoder
+                 -->
+                
+                    ReliableCoder
+                
+            </div>
+
+            <div class="description center-align">
+                
+                    <!-- WEB开发 | PHP开发 | 源码解读 -->
+                    <span id="jinrishici-sentence">正在加载今日诗词...</span>
+                
+            </div>
+            
+            
+        </div>
+    </div>
+</div>
+<script>
+// 每天切换 banner 图.  Switch banner image every day.
+// $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay() + '.jpg)');
+</script>
+
+
+    </div>
+</div>
+
+
+<main class="content">
+
+    
+
+    
+
+    <!-- 所有文章卡片 -->
+    <article id="articles" class="container articles">
+        <div class="row article-row">
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/11/wangluoxieyi/ck062ljrv002x7yaayd4f6w3j/" target="_blank">
+                        <div class="card-image">
+                            
+                            
+                            <img src="http://47.106.81.116/medias/featureimages/8.jpg" class="responsive-img" alt="网络协议 6 - 路由协议：敢问路在何方？">
+                            
+                            <span class="card-title">网络协议 6 - 路由协议：敢问路在何方？</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                            前面例子中，我们都是在一个局域网内折腾。今天就让我们扩大范围，在多个局域网甚至到广阔的互联网世界中遨游，看看这中间会发生什么。
+这个过程中，跨网关访问是我们要了解的第一个内容。
+跨网关访问当我们要了解跨网关访问时，就牵扯到 MAC 地址和 
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2018-11-21
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fa fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/网络协议/" class="post-category" target="_blank">
+                                    网络协议
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/路由协议/" target="_blank">
+                            <span class="chip bg-color">路由协议</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/11/uncategorized/ck062ljm5000g7yaarwttyn5w/" target="_blank">
+                        <div class="card-image">
+                            
+                            
+                            <img src="http://47.106.81.116/medias/featureimages/9.jpg" class="responsive-img" alt="PHP 扩展管理">
+                            
+                            <span class="card-title">PHP 扩展管理</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                            一直对 PHP 扩展了解的似是而非，每次安装扩展都要百度教程，很容易出现各种错误。所幸整理下管理扩展的所有操作，方便日后操作。
+查看已加载的扩展
+输出 phpinfo()；
+使用 get_loaded_extensions()；
+使用 ex
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2018-11-20
+                            </span>
+                            <span class="publish-author">
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/11/wangluoxieyi/ck062ljr2002j7yaay8tgmats/" target="_blank">
+                        <div class="card-image">
+                            
+                            
+                            <img src="http://47.106.81.116/medias/featureimages/22.jpg" class="responsive-img" alt="网络协议 5 - ICMP 与 ping：投石问路的侦察兵">
+                            
+                            <span class="card-title">网络协议 5 - ICMP 与 ping：投石问路的侦察兵</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                            日常开发中，我们经常会碰到查询网络是否畅通以及域名对应 IP 地址等小需求，这时候用的最多的应该就是 ping 命令了。 那你知道 ping 命令是怎么工作的吗？今天，我们就来一起认识下 ping 命令及其对应的 ICMP 协议。
+ICMP
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2018-11-19
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fa fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/网络协议/" class="post-category" target="_blank">
+                                    网络协议
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/查询报文/" target="_blank">
+                            <span class="chip bg-color">查询报文</span>
+                        </a>
+                        
+                        <a href="/tags/ICMP协议/" target="_blank">
+                            <span class="chip bg-color">ICMP协议</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/11/wangluoxieyi/ck062ljrb002m7yaa8pyz940x/" target="_blank">
+                        <div class="card-image">
+                            
+                            
+                            <img src="http://47.106.81.116/medias/featureimages/20.jpg" class="responsive-img" alt="网络协议 4 - 交换机与 VLAN：办公室太复杂，我要回学校">
+                            
+                            <span class="card-title">网络协议 4 - 交换机与 VLAN：办公室太复杂，我要回学校</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                            上一次，我们通过宿舍联网打魔兽的需求，认识了如何通过物理层和链路层组建一个宿舍局域网。今天，让我们切换到稍微复杂点的场景，办公室。
+在这个场景里，就不像在宿舍那样，搞几根网线，拉一拉，扯一扯就可以了。一个办公室少到数十人，大至上百人，每个人
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2018-11-14
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fa fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/网络协议/" class="post-category" target="_blank">
+                                    网络协议
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/交换机/" target="_blank">
+                            <span class="chip bg-color">交换机</span>
+                        </a>
+                        
+                        <a href="/tags/VLAN/" target="_blank">
+                            <span class="chip bg-color">VLAN</span>
+                        </a>
+                        
+                        <a href="/tags/拓扑结构/" target="_blank">
+                            <span class="chip bg-color">拓扑结构</span>
+                        </a>
+                        
+                        <a href="/tags/广播风暴/" target="_blank">
+                            <span class="chip bg-color">广播风暴</span>
+                        </a>
+                        
+                        <a href="/tags/STP协议/" target="_blank">
+                            <span class="chip bg-color">STP协议</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/11/wangluoxieyi/ck062ljqw002d7yaapi6jnr0d/" target="_blank">
+                        <div class="card-image">
+                            
+                            
+                            <img src="http://47.106.81.116/medias/featureimages/12.jpg" class="responsive-img" alt="网络协议 3 - 从物理层到 MAC 层">
+                            
+                            <span class="card-title">网络协议 3 - 从物理层到 MAC 层</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                            在上一篇博文中，我们见证了 IP 地址的诞生，机器一旦有了 IP，就可以在网络的环境里和其他的机器展开沟通了。
+今天，我们来认识下 物理层 和 MAC 层。
+日常生活中，身为 90 后的我们，如果不是通信相关专业出身的，应该从来没有接触过物
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2018-11-12
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fa fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/网络协议/" class="post-category" target="_blank">
+                                    网络协议
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/物理层/" target="_blank">
+                            <span class="chip bg-color">物理层</span>
+                        </a>
+                        
+                        <a href="/tags/MAC层/" target="_blank">
+                            <span class="chip bg-color">MAC层</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/11/uncategorized/ck062ljq1001q7yaa2pxafmu2/" target="_blank">
+                        <div class="card-image">
+                            
+                            
+                            <img src="http://47.106.81.116/medias/featureimages/4.jpg" class="responsive-img" alt="python小应用-博客园隐藏的小秘密及各类排行榜【附源码】">
+                            
+                            <span class="card-title">python小应用-博客园隐藏的小秘密及各类排行榜【附源码】</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                接触博客园有不短的时间了，今天突然想到，我们博客园各位博友，一天中哪个时间段比较活跃？又有多少夜猫子在深更半夜，冒着“聪明绝顶”的风险熬夜码字看博文？首页所有博文中，哪个博友发布博文数量最多？又是哪个博友大范围“收割”阅读量和评论量
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2018-11-07
+                            </span>
+                            <span class="publish-author">
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/11/gerenzongjie/ck062ljlm000a7yaarubtaekn/" target="_blank">
+                        <div class="card-image">
+                            
+                            
+                            <img src="http://47.106.81.116/medias/featureimages/7.jpg" class="responsive-img" alt="工作两年">
+                            
+                            <span class="card-title">工作两年</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                            毕业一年，工作将近两年。刚工作的时候会记录每一点的成长，随着时间的推移，写的越来越少。在这即将到来两年的时间点上，蓦然发现，已经好久没有进行个人总结了。
+很多人都说，踏入工作 1-3 年是人生中一个重要的阶段。博主正处于这个阶段，不知道这个
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2018-11-05
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fa fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/个人总结/" class="post-category" target="_blank">
+                                    个人总结
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/两年/" target="_blank">
+                            <span class="chip bg-color">两年</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/10/wangluoxieyi/ck062ljqy002g7yaa29vwqjby/" target="_blank">
+                        <div class="card-image">
+                            
+                            
+                            <img src="http://47.106.81.116/medias/featureimages/21.jpg" class="responsive-img" alt="网络协议 2 - IP 是怎么来，又是怎么没的？">
+                            
+                            <span class="card-title">网络协议 2 - IP 是怎么来，又是怎么没的？</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                            了解完网络协议，我们会发现，网络通信的五层模型里，有两个很重要的概念：IP 地址和 MAC 地址。
+那么 IP 地址是怎么来的，又是怎么没的？MAC 地址与 IP 地址又有什么区别？
+这回答上面问题前，先热下身，大家知道如何查看本机的 IP
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2018-10-31
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fa fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/网络协议/" class="post-category" target="_blank">
+                                    网络协议
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/IP格式/" target="_blank">
+                            <span class="chip bg-color">IP格式</span>
+                        </a>
+                        
+                        <a href="/tags/IP分配和释放/" target="_blank">
+                            <span class="chip bg-color">IP分配和释放</span>
+                        </a>
+                        
+                        <a href="/tags/DHCP-动态分配协议/" target="_blank">
+                            <span class="chip bg-color">DHCP-动态分配协议</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/10/wangluoxieyi/ck062ljq7001u7yaavf63oqe1/" target="_blank">
+                        <div class="card-image">
+                            
+                            
+                            <img src="http://47.106.81.116/medias/featureimages/22.jpg" class="responsive-img" alt="网络协议 1 - 概述">
+                            
+                            <span class="card-title">网络协议 1 - 概述</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                            互联网世界中，网络协议的重要性不言而喻。很多人都知道，网络协议中的五层模型或者七层模型，这些在操作系统中，那都是“必考题”。上学的时候，无论是死记硬背，还是各种小抄，总得把下面这个图记下来。踏入工作，走进 web 开发“不归路”，发现还是不
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2018-10-29
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fa fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/网络协议/" class="post-category" target="_blank">
+                                    网络协议
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/协议概述/" target="_blank">
+                            <span class="chip bg-color">协议概述</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/10/uncategorized/ck062ljlg00077yaabyg2muif/" target="_blank">
+                        <div class="card-image">
+                            
+                            
+                            <img src="http://47.106.81.116/medias/featureimages/20.jpg" class="responsive-img" alt="nginx 伪静态">
+                            
+                            <span class="card-title">nginx 伪静态</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                            最近有个在官网加【行业资讯】的需求。考虑到主要目的是为了推广，决定对资讯的栏目和内容页进行伪静态处理。
+下面以文章 id 为 5 的文章页为例。原始地址为：
+
+oriUrl = http://blog.muzixizao.com/?p=5
+
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2018-10-24
+                            </span>
+                            <span class="publish-author">
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/10/uncategorized/ck062ljl800037yaaivjw30mf/" target="_blank">
+                        <div class="card-image">
+                            
+                            
+                            <img src="http://47.106.81.116/medias/featureimages/12.jpg" class="responsive-img" alt="Nginx location匹配规则">
+                            
+                            <span class="card-title">Nginx location匹配规则</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                            1、语法location [=|~|~*|^~|@] /uri/ {
+  ...
+} 2、说明从上面的语法出发，可以了解到 location 可以区分为三个部分，接下来一个一个的研究一下。
+1) [=||*|^~|@]
+= : 表示精确匹配
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2018-10-24
+                            </span>
+                            <span class="publish-author">
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/10/uncategorized/ck062ljlj00097yaat2j0r6mh/" target="_blank">
+                        <div class="card-image">
+                            
+                            
+                            <img src="http://47.106.81.116/medias/featureimages/18.jpg" class="responsive-img" alt="位运算符">
+                            
+                            <span class="card-title">位运算符</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                            位运算一览表
+
+
+符号
+示例
+含义
+
+
+
+&amp;
+$a &amp; $b
+按位与。将 $a 和 $b 中都为 1 的位设为 1
+
+
+|
+$a | $b
+按位或。将 $a 和 $b 中任何一个为 1 的位设为 1
+
+
+^
+$a ^ $c
+
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2018-10-23
+                            </span>
+                            <span class="publish-author">
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                </div>
+            </div>
+            
+        </div>
+    </article>
+
+</main>
+
+
+<div class="container paging">
+    <div class="row">
+        <div class="col s6 m4 l4">
+            
+            <a href="/page/3/"
+               class="left btn-floating btn-large waves-effect waves-light bg-color">
+                <i class="fa fa-angle-left"></i>
+            </a>
+            
+        </div>
+        <div class="page-info col m4 l4 hide-on-small-only">
+            <div class="center-align b-text-gray">4 / 5</div>
+        </div>
+        <div class="col s6 m4 l4">
+            
+            <a href="/page/5/"
+               class="right btn-floating btn-large waves-effect waves-light bg-color">
+                <i class="fa fa-angle-right"></i>
+            </a>
+            
+        </div>
+    </div>
+</div>
+
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            &copy; 2019 shw2018. All Rights Reserved.
+
+            
+                &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
+                <span class="white-color">143.9k</span>
+
+            
+            <br>
+
+            <span id="sitetime"></span>
+
+            
+
+            <!-- 
+                <br>
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'></span>
+                    <i class="fa fa-heart-o"></i>
+                    本站总访问量 <span id="busuanzi_value_site_pv" class="white-color"></span>
+
+                
+
+                
+                    <span id="busuanzi_container_site_uv" style='display:none'></span>
+                    人次,&nbsp;访客数 <span id="busuanzi_value_site_uv" class="white-color"></span> 人.
+                    
+                
+
+             -->
+
+        </div>
+
+        <div class="col s12 m4 l4 social-link social-statis">
+
+
+
+
+
+
+
+
+
+</div>
+
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+<script language=javascript>
+    function siteTime() {
+        window.setTimeout("siteTime()", 1000);
+        var seconds = 1000;
+        var minutes = seconds * 60;
+        var hours = minutes * 60;
+        var days = hours * 24;
+        var years = days * 365;
+        var today = new Date();
+        var todayYear = today.getFullYear();
+        var todayMonth = today.getMonth() + 1;
+        var todayDate = today.getDate();
+        var todayHour = today.getHours();
+        var todayMinute = today.getMinutes();
+        var todaySecond = today.getSeconds();
+
+        /* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+        year - 作为date对象的年份，为4位年份值
+        month - 0-11之间的整数，做为date对象的月份
+        day - 1-31之间的整数，做为date对象的天数
+        hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+        minutes - 0-59之间的整数，做为date对象的分钟数
+        seconds - 0-59之间的整数，做为date对象的秒数
+        microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+
+        var t1 = Date.UTC(2018, 08, 01, 00, 00, 00); //北京时间2019-8-1 00:00:00
+        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+        var diff = t2 - t1;
+        var diffYears = Math.floor(diff / years);
+        var diffDays = Math.floor((diff / days) - diffYears * 365);
+        var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+        var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) / minutes);
+        var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours - diffMinutes * minutes) / seconds);
+        document.getElementById("sitetime").innerHTML = "本站已运行 " + diffYears + " 年 " + diffDays + " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+    }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+    siteTime();
+</script>
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+
+    <script src="http://47.106.81.116/libs/materialize/materialize.min.js"></script>
+    <script src="http://47.106.81.116/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="http://47.106.81.116/libs/aos/aos.js"></script>
+    <script src="http://47.106.81.116/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="http://47.106.81.116/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+
+    
+        <script src="http://47.106.81.116/libs/others/clicklove.js"></script>
+    
+    
+    
+        <script async src="http://47.106.81.116/libs/others/busuanzi.pure.mini.js"></script>
+    
+    
+</body>
+
+</html>

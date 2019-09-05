@@ -1,0 +1,1036 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="网络协议 6 - 路由协议：敢问路在何方？, PHP Redis Linux Nginx">
+    <meta name="baidu-site-verification" content="fmlEuI34ir">
+    <meta name="google-site-verification" content="KeoTn_OFy4ndJwXNmm2gMeQfPhd7alqE9vQDwI32KCY">
+    <meta name="description" content="前面例子中，我们都是在一个局域网内折腾。今天就让我们扩大范围，在多个局域网甚至到广阔的互联网世界中遨游，看看这中间会发生什么。
+这个过程中，跨网关访问是我们要了解的第一个内容。
+跨网关访问当我们要了解跨网关访问时，就牵扯到 MAC 地址和 ">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>网络协议 6 - 路由协议：敢问路在何方？ | ReliableCoder</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="http://47.106.81.116/libs/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="http://47.106.81.116/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="http://47.106.81.116/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="http://47.106.81.116/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="http://47.106.81.116/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    
+    <style type="text/css">
+        
+            
+            code[class*="language-"],
+            pre[class*="language-"] {
+                white-space: pre !important;
+            }
+
+        
+    </style>
+
+    <script src="http://47.106.81.116/libs/jquery/jquery-2.2.0.min.js"></script>
+    <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?46e79e71af0709a5b9106bf20cecc493";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+    
+    
+        <script>
+            (function(){
+                var bp = document.createElement('script');
+                var curProtocol = window.location.protocol.split(':')[0];
+                if (curProtocol === 'https') {
+                    bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+                }
+                else {
+                    bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+                }
+                var s = document.getElementsByTagName("script")[0];
+                s.parentNode.insertBefore(bp, s);
+            })();
+        </script>
+    
+
+<link rel="stylesheet" href="/css/prism-xonokai.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+
+<body>
+
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <span class="logo-span">ReliableCoder</span>
+                </a>
+            </div>
+            
+
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a>
+<ul class="right">
+    
+    <li class="hide-on-med-and-down">
+        <a href="/" class="waves-effect waves-light">
+            
+            <i class="fa fa-home"></i>
+            
+            <span>首页</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/tags" class="waves-effect waves-light">
+            
+            <i class="fa fa-tags"></i>
+            
+            <span>标签</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/categories" class="waves-effect waves-light">
+            
+            <i class="fa fa-bookmark"></i>
+            
+            <span>分类</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/archives" class="waves-effect waves-light">
+            
+            <i class="fa fa-archive"></i>
+            
+            <span>归档</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/about" class="waves-effect waves-light">
+            
+            <i class="fa fa-user-circle-o"></i>
+            
+            <span>关于我</span>
+        </a>
+    </li>
+    
+    <li>
+        <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+            <i id="searchIcon" class="fa fa-search" title="搜索"></i>
+        </a>
+    </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <div class="logo-name">ReliableCoder</div>
+        <div class="logo-desc">
+            
+            WEB开发 | PHP开发 | 源码解读
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li>
+            <a href="/" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-home"></i>
+                
+                首页
+            </a>
+        </li>
+        
+        <li>
+            <a href="/tags" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-tags"></i>
+                
+                标签
+            </a>
+        </li>
+        
+        <li>
+            <a href="/categories" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-bookmark"></i>
+                
+                分类
+            </a>
+        </li>
+        
+        <li>
+            <a href="/archives" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-archive"></i>
+                
+                归档
+            </a>
+        </li>
+        
+        <li>
+            <a href="/about" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-user-circle-o"></i>
+                
+                关于我
+            </a>
+        </li>
+        
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+<script src="http://47.106.81.116/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/';
+            }
+        }
+    })();
+</script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('http://47.106.81.116/medias/featureimages/8.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        网络协议 6 - 路由协议：敢问路在何方？
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="http://47.106.81.116/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 20px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/路由协议/" target="_blank">
+                                <span class="chip bg-color">路由协议</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fa fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/网络协议/" class="post-category" target="_blank">
+                                网络协议
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="post-info">
+                <div class="post-date info-break-policy">
+                    <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2018-11-21
+                </div>
+
+                <div class="post-author info-break-policy">
+                    <i class="fa fa-user-o fa-fw"></i>作者:&nbsp;&nbsp;
+                    
+                        Reliable Mark
+                    
+                </div>
+
+                
+                    
+                    <div class="info-break-policy">
+                        <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
+                        3.5k
+                    </div>
+                    
+
+                    
+                    <div class="info-break-policy">
+                        <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                        13 分
+                    </div>
+                    
+                
+                
+                <!-- 
+                        <span id="busuanzi_container_site_pv" style='display:none'></span>
+                        <i class="fa fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv" ></span>
+    
+                 -->
+
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <p>前面例子中，我们都是在一个局域网内折腾。今天就让我们扩大范围，在多个局域网甚至到广阔的互联网世界中遨游，看看这中间会发生什么。</p>
+<p>这个过程中，跨网关访问是我们要了解的第一个内容。</p>
+<h3 id="跨网关访问"><a href="#跨网关访问" class="headerlink" title="跨网关访问"></a>跨网关访问</h3><p>当我们要了解跨网关访问时，就牵扯到 MAC 地址和 IP 地址的变化，因此，我们先来看下 MAC 头和 IP 头的细节。</p>
+<h4 id="MAC-头和IP-头的细节"><a href="#MAC-头和IP-头的细节" class="headerlink" title="MAC 头和IP 头的细节"></a>MAC 头和IP 头的细节</h4><p><img src="https://img2018.cnblogs.com/blog/861679/201811/861679-20181120204824723-362613673.png" alt=""></p>
+<p>如图，在 MAC 头里，先是目标 MAC 地址，然后是源 MAC 地址，最后是协议类型。</p>
+<p>在 IP 头里，最重要的就是源 IP 地址和目标 IP 地址。除此之外，还有版本号，也就是我们常说的 IPv4 和 IPv6、服务类型 TOS（表示数据包优先级）、TTL（数据包生存周期）以及标识协议（TCP 和 UDP）</p>
+<p>当我们访问博客园时，经过的第一个网关应该就是我们配置的默认网关。当本机访问默认网关时，还是走局域网内部访问的步骤：</p>
+<ol>
+<li>将源地址和目标 IP 地址放入 IP 头；</li>
+<li>通过 ARP 协议获得网关的 MAC 地址；</li>
+<li>将源 MAC 地址和网关的 MAC 地址放入 MAC 头中，发送给网关。</li>
+</ol>
+<p>而我们的网关，一般就是指<strong>家里的路由器，是一个三层转发的设备</strong>。它会把 MAC 头和 IP 头都取下来，然后根据里面的内容，看看接下来把数据包转发到哪里。</p>
+<p>很多情况下，人们把网关叫做路由器。其实并不准备，用这个比喻应该更为恰当些：</p>
+<blockquote>
+<p>路由器是一台设备，它有五个网口或者网卡，相当于有五只手，分别连着五个局域网。每只手的 IP 地址都和局域网的 IP 地址有着相同的网段，每只手都是它握住的那个局域网的网关。</p>
+</blockquote>
+<p>任何一个想发往其他局域网的包，都会到达其中一只手，被拿进来，拿下 MAC 头和 IP 头，然后根据自己的<strong>路由算法</strong>，选择另一只手，加上 IP 头和 MAC 头，然后扔出去。</p>
+<p>注意，在上面这个过程中，有出现<strong>路由算法</strong>。接下来，我们就来认识下它。</p>
+<h3 id="路由算法"><a href="#路由算法" class="headerlink" title="路由算法"></a>路由算法</h3><p>路由算法，又名选路算法，是提高路由协议功能，尽量减少路由时所带来的开销的算法。</p>
+<p>路由算法可以根据多个特性来加以区分，找到到达目的地的最佳路由。</p>
+<p>路由算法的区分点有很多，有</p>
+<ul>
+<li>静态与动态</li>
+<li>单路径与多路径</li>
+<li>平坦与分层</li>
+<li>主机智能与路由器智能</li>
+<li>域内与域间</li>
+<li>链接状态与距离向量</li>
+</ul>
+<p>这里主要介绍<strong>静态与动态</strong>路由算法。</p>
+<h4 id="静态路由"><a href="#静态路由" class="headerlink" title="静态路由"></a>静态路由</h4><p>静态路由算法，实质上是由网关配置好的映射表。</p>
+<p>我们家里的路由器，可能会有这样的路由配置</p>
+<blockquote>
+<p>访问博客园，从 2 号口出去，下一跳是 IP2；<br>访问百度，从 3 号口出去，下一跳是 IP3。</p>
+</blockquote>
+<p>类似上述这样的规则就是静态路由，按照一定的语法保存在路由器里。</p>
+<p>每当要选择从哪个口抛出去的时候，就一条一条的匹配规则，找到符合的规则，就按规则办事，从指定口抛出去，找下一跳 IP。</p>
+<h4 id="过网关的“变”与“不变”"><a href="#过网关的“变”与“不变”" class="headerlink" title="过网关的“变”与“不变”"></a>过网关的“变”与“不变”</h4><p>之前我们了解到，MAC 地址是一个局域网内才有效的地址。因此，MAC 地址只要过网关，就肯定会改变。而 IP 地址在过网关后 ，就不一定会改变了。</p>
+<p>经过网关 A 后，如果IP 地址没有改变，那 A 就是<strong>转发网关</strong>，否则，就是<strong>NAT网关</strong>。</p>
+<h5 id="转发网关"><a href="#转发网关" class="headerlink" title="转发网关"></a>转发网关</h5><p><img src="https://img2018.cnblogs.com/blog/861679/201811/861679-20181120183127766-1231266411.png" alt=""></p>
+<p>如上图，服务器 A 要访问服务器 B，要经过过程：</p>
+<p><strong>1）服务器 A 到 网关 A</strong></p>
+<ol>
+<li>检查 B 的网段，发现不在同一个网段，因此发给网关</li>
+<li>由于网关的 IP 地址是已经配置好了，因此发送 ARP 获取网关的 MAC 地址</li>
+<li>发送包</li>
+</ol>
+<p>而最后发送包的内容主要有：</p>
+<ul>
+<li>源 MAC：服务器 A 的 MAC</li>
+<li>模板 MAC：192.168.1.1 网关的 MAC</li>
+<li>源 IP：192.168.1.101</li>
+<li>目标 IP：192.168.4.101</li>
+</ul>
+<p>数据包到达 192.168.1.1 这个网口后，网口发现 MAC 地址是它的，就将包收进来，然后开始“思考”往哪里转发。</p>
+<p>这时候，路由器 A 中配置了规则 A1：</p>
+<blockquote>
+<p>要访问 192.168.4.0/24，就从 192.168.56.1 这个网口出去，下一跳是 192.168.56.2</p>
+</blockquote>
+<p><strong>2）网关 A 到 网关 B</strong></p>
+<p>于是，路由器 A 匹配了 A1，要从 192.168.56.1 这个口发出去，发给 192.168.56.2。于是，又开始了这个过程：</p>
+<ol>
+<li>检查 B 的网段，发现在同一个网段， ARP 获取 MAC 地址</li>
+<li>发送包</li>
+</ol>
+<p>数据包的内容是：</p>
+<ul>
+<li>源 MAC：192.168.56.1 的 MAC</li>
+<li>模板 MAC：192.168.56.2 的 MAC</li>
+<li>源 IP：192.168.1.101</li>
+<li>目标 IP：192.168.4.101</li>
+</ul>
+<p>数据包到达 192 .168.56.2 网口，网口发现 MAC 地址是它的，就将包收进来，然后去检查路由规则。</p>
+<p>路由器 B 配置以下规则 B1：</p>
+<blockquote>
+<p>想访问 192.168.4.0/24，就从 192.168.4.1 </p>
+</blockquote>
+<p>而路由器 B 发现，它的右网口就是目标地址网段的，因此就没有下一跳了。</p>
+<p><strong>3）网关 B 到 服务器 B</strong></p>
+<p>路由器 B 匹配上 B1。从 192.168.4.1 出口，发给 192.168.4.101。数据包内容：</p>
+<ul>
+<li>源 MAC：192.168.4.1 的 MAC</li>
+<li>模板 MAC：192.168.4.101 的 MAC</li>
+<li>源 IP：192.168.1.101</li>
+<li>目标 IP：192.168.4.101</li>
+</ul>
+<p>服务器 B 收到数据包，发现 MAC 地址是它的，就把包收进来。</p>
+<p>通过上面的过程可以看出，每到一个新的局域网， MAC 地址都是要变的，而 IP 地址则都不变。在 IP 头里面，不会保存任何网关的 IP 地址。</p>
+<p>而我们说的下一跳，<strong>就是某个 IP 要将这个 IP 地址转换为 MAC 放入 MAC 头</strong>。</p>
+<h5 id="NAT-网关"><a href="#NAT-网关" class="headerlink" title="NAT 网关"></a>NAT 网关</h5><p>NAT 网关，也就是 Network Address Translation。</p>
+<p><img src="https://img2018.cnblogs.com/blog/861679/201811/861679-20181120183155658-172470405.png" alt=""></p>
+<p>由于各个局域网都有各自的网段，很容易出现 IP 冲突的情况。如上图，美国服务器 A 的 IP 地址和 法国服务器 B 的 IP 地址都是 192.168.1.101/24，从 IP 上看，好像是自己访问自己，但实际上从美国的 192.168.1.101 访问法国的 192.168.1.101。</p>
+<p>如何解决这个问题呢？既然局域网之间没有商量好 IP 分配，各管各的，那到国际上，也就是中间的局域网里面，就需要使用另外的地址，就像出国后，我们要改用护照一样。</p>
+<p>首先，目标服务器 B 在国际上要有一个<strong>国际的身份</strong>，我们给它一个 190.168.56.2.在网关 B 上，我们记下来，国际身份 192.168.56.2 对应国内身份 192.168.1.101.凡是要访问 192.168.56.2 的，网关都要转成 192.168.1.101。</p>
+<p>于是，源服务器 A 要访问目标服务器 B，目标地址就变成国际 IP 地址 192.168.56.2。过程如下：</p>
+<p><strong>1）源服务器 A 发数据包到网关 A</strong></p>
+<ol>
+<li>检查服务器 B IP，不在同一网段</li>
+<li>ARP 获取网关 MAC 地址</li>
+<li>发送包</li>
+</ol>
+<p>数据包的内容是这样的：</p>
+<ul>
+<li>源 MAC：服务器 A 的 MAC</li>
+<li>目标 MAC：192.168.1.1 这个网口的 MAC</li>
+<li>源 IP：192.168.1.101</li>
+<li>目标 IP：192.168.56.2</li>
+</ul>
+<p>路由器 A 中 192.168.1.1 这个网口收到数据包后，检查 MAC 地址一致，将包收进来。</p>
+<p>在路由器 A 中配置了规则：</p>
+<blockquote>
+<p>想访问 192.168.56.2/24，就从 192.168.56.1 网口发出去，发给 192.168.56.2，没有下一跳。</p>
+</blockquote>
+<p>由于路由器的右网口（192.168.56.1） IP 地址和目标 IP 地址在同一网段，因此没有下一跳。</p>
+<p><strong>2）网关 A 到网关 B</strong><br>当网络包发送到中间的局域网时，服务器 A 也需要有个国际身份。因此，源 IP 地址 192.168.1.101 要改成 192.168.56.1，所以数据包的内容是：</p>
+<ul>
+<li>源 MAC：192.168.56.1 的 MAC</li>
+<li>目标 MAC：192.168.56.2 的 MAC</li>
+<li>源 IP：192.168.56.1</li>
+<li>目标 IP：192.168.56.2</li>
+</ul>
+<p>包到达 192.168.56.2 这个网口后，发现 MAC 一致，就将包收进来。</p>
+<p>而路由器 B 是 NAT 网关，它上面配置了，国际身份 192.168.56.2 对应国内的 192.168.1.101，于是目标地址改为 192.168.1.101。</p>
+<p>同样的，路由器 B 中配置了规则：</p>
+<blockquote>
+<p>想访问 192.168.1.101，就从 192.168.1.1 网口出去，没有下一跳。</p>
+</blockquote>
+<p>于是，数据包就从 192.168.1.1 这个网口发给 192.168.1.101。</p>
+<p><strong>3）网关 B 到服务器 B</strong><br>数据包从 192.168.1.1 网口发出后，同样经过这些步骤：</p>
+<ol>
+<li>检查服务器 B 的 IP，在同一网段</li>
+<li>ARP 获取服务器 B 的 MAC 地址</li>
+<li>发送包</li>
+</ol>
+<p>这时的数据包就变成了：</p>
+<ul>
+<li>源 MAC：192.168.1.1 的 MAC</li>
+<li>目标 MAC：192.168.1.101 的 MAC</li>
+<li>源 IP：192.168.56.1</li>
+<li>目标 IP：192.168.1.101</li>
+</ul>
+<p>服务器收到包后，检查 MAC 地址一致，就将数据包收进来。</p>
+<p>从服务器 B 接收的数据包可以看出，源 IP 为 服务器 A 的国际身份，因而发送返回包的时候，也发给这个国际身份，由路由器 A 做 NAT，转换为国内身份。</p>
+<h4 id="动态路由"><a href="#动态路由" class="headerlink" title="动态路由"></a>动态路由</h4><h5 id="动态路由算法"><a href="#动态路由算法" class="headerlink" title="动态路由算法"></a>动态路由算法</h5><h6 id="距离矢量路由算法"><a href="#距离矢量路由算法" class="headerlink" title="距离矢量路由算法"></a>距离矢量路由算法</h6><p><strong>1）基本思路</strong></p>
+<blockquote>
+<p>基于Bellman-Ford 算法。每个路由器都保存一个路由表，包含多行，每行对应网络中的一个路由器，每一行包含两部分信息，一个是要到目标路由器，从哪条线出去，另一个是到目标路由器的距离</p>
+</blockquote>
+<p><strong>2）存在问题</strong></p>
+<p>a. <strong>好消息传得块，坏消息传的慢</strong>。</p>
+<blockquote>
+<p>新加入的路由器能够很快的新路由器信息广播出去。但是如果一个路由器挂了，挂的消息没有广播。每个经过这个宕机节点的路由器，无法得知该节点一宕机，而是试图通过其他的路径访问，直到试过了所有的路径，才发现这个路由器已经宕机了。</p>
+</blockquote>
+<p>示例：</p>
+<p>b. <strong>每次发送消息，要发送整个全局路由表</strong></p>
+<p>上面的两个问题，限制了<strong><em>距离矢量路由</em></strong>的网络规模，仅适用于小型网络（小于 15 跳）。</p>
+<h6 id="链路状态路由算法"><a href="#链路状态路由算法" class="headerlink" title="链路状态路由算法"></a>链路状态路由算法</h6><p><strong>1）基本思路</strong></p>
+<blockquote>
+<p>基于Dijkstra 算法。当一个路由器加入网络是，首先是发现邻居，给邻居说 hello，邻居都回复。然后计算和邻居的距离，发送一个 echo，要求马上返回，除以 2 就是距离。接着将自己和邻居之间的链路状态包广播出去，发送到整个网络的每个路由器。</p>
+</blockquote>
+<p>这种算法中，每个路由器都能在自己本地构建一个完整的图，然后针对这个图使用 Dijkstra 算法，找到两点之间的最短路径。</p>
+<p>不像距离矢量路由协议那样，更新时发送整个路由表。链路状态路由协议只广播更新的或改变的网络拓扑，这使得更新信息更小，节省了宽带和 CPU 利用率。而且一旦一个路由器挂了，它的邻居都会广播这个消息，可以使得坏消息迅速收敛。</p>
+<h5 id="动态路由协议"><a href="#动态路由协议" class="headerlink" title="动态路由协议"></a>动态路由协议</h5><h6 id="基于链路状态路由算法的-OSPF"><a href="#基于链路状态路由算法的-OSPF" class="headerlink" title="基于链路状态路由算法的 OSPF"></a>基于链路状态路由算法的 OSPF</h6><blockquote>
+<p>OSPF（Open Shortest Path First, 开放式最短路径优先）协议，广泛应用在<strong><em>数据中心</em></strong>的协议。由于主要用在数据中心内部，用于路由决策，因此称为<strong><em>内部网关协议（Interior Gateway Protocol，简称 IGP）</em></strong></p>
+</blockquote>
+<p>内部网关协议的重点就是<strong><em>找到最短路径</em></strong>。当存在多个最短路径时，可以在这多个路径中进行负载均衡，这常常被称为<strong><em>等价路由</em></strong>。</p>
+<p>等价路由不仅可以用来分摊流量，还可以提高容错率，当一条路径不通时，还可以通过另外一条路到达目的地。</p>
+<h6 id="基于距离矢量路由算法的-BGP"><a href="#基于距离矢量路由算法的-BGP" class="headerlink" title="基于距离矢量路由算法的 BGP"></a>基于距离矢量路由算法的 BGP</h6><blockquote>
+<p>针对网络之间的路由协议，称为<strong><em>外网路由协议（Border Gateway Protocol，简称 BGP）</em></strong></p>
+</blockquote>
+<p>每个数据中心都有自己的路由配置。例如，哪些外部 IP 可以让内部知晓，哪些内部 IP 可以让外部知晓，哪些可以通过，哪些不能通过。</p>
+<p>因此，在各个数据中心进行交互时，需要一种协议，通过这种协议，可以知道相邻数据中心的路由配置，从而找到数据中心之间最好的路由。</p>
+<p>BGP 协议就是这样的协议。它不着眼于发现和计算路由，而在于控制路由的传播和选择最好的路由。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li>数据包要离开本局域网，就要经过网关，网关就是路由器的一个网口；</li>
+<li>路由器是一个三层设备，理由有如何寻找下一跳的规则；</li>
+<li>经过路由器之后的 MAC 头肯定会变。如果 IP 不变，就是 <strong>转发网关</strong>，否则就是 <strong>NAT网关</strong>；</li>
+<li>路由分静态路由和动态路由，动态路由可以配置复杂的策略路由，控制转发策略；</li>
+<li>动态路由主流算法有两种，距离矢量算法和链路状态算法。基于两种算法产生两种协议，BGP 协议和 OSPF 协议。</li>
+</ul>
+<p>参考：</p>
+<ol>
+<li>百度百科</li>
+<li>刘超-趣谈网络协议系列课；</li>
+</ol>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+            </div>
+            <hr/>
+
+            
+
+            <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    <div class="social-share" data-disabled="qzone" data-wechat-qrcode-helper="<p>微信里点“发现”->“扫一扫”二维码便可查看分享。</p>"></div>
+    
+</div>
+
+<script src="/libs/share/js/social-share.min.js"></script>
+
+            
+            
+            
+            <div class="reprint1">
+                <p>
+                    <span class="reprint1-tip">
+                        <i class="fa fa-exclamation-circle"></i>&nbsp;&nbsp;转载请注明:
+                    </span>
+                    <a href="http://yoursite.com" class="b-link-green">ReliableCoder</a>
+                    <i class="fa fa-angle-right fa-lg fa-fw text-color"></i>
+                    <a href="/11/wangluoxieyi/ck062ljrv002x7yaayd4f6w3j/" class="b-link-green">网络协议 6 - 路由协议：敢问路在何方？</a>
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/11/wangluoxieyi/ck062ljrg002o7yaar52xfcgi/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="http://47.106.81.116/medias/featureimages/10.jpg" class="responsive-img" alt="网络协议 7 - UDP 协议：性善碰到城会玩">
+                        
+                        <span class="card-title">网络协议 7 - UDP 协议：性善碰到城会玩</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            网络协议五步登天路，我们一路迈过了物理层、链路层，今天终于到了传输层。从这一层开始，很多知识应该都是服务端开发必备的知识了，今天我们就一起来梳理下。
+其实，讲到 UDP，就少不了 TCP。这俩货简直就是个“连体兄弟”，只要出现一个，另一个肯
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2018-11-26
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/网络协议/" class="post-category" target="_blank">
+                                    网络协议
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/TCP协议/" target="_blank">
+                        <span class="chip bg-color">TCP协议</span>
+                    </a>
+                    
+                    <a href="/tags/UDP协议/" target="_blank">
+                        <span class="chip bg-color">UDP协议</span>
+                    </a>
+                    
+                    <a href="/tags/UDP与TCP的区别/" target="_blank">
+                        <span class="chip bg-color">UDP与TCP的区别</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/11/uncategorized/ck062ljm5000g7yaarwttyn5w/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="http://47.106.81.116/medias/featureimages/9.jpg" class="responsive-img" alt="PHP 扩展管理">
+                        
+                        <span class="card-title">PHP 扩展管理</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            一直对 PHP 扩展了解的似是而非，每次安装扩展都要百度教程，很容易出现各种错误。所幸整理下管理扩展的所有操作，方便日后操作。
+查看已加载的扩展
+输出 phpinfo()；
+使用 get_loaded_extensions()；
+使用 ex
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2018-11-20
+                            </span>
+                        <span class="publish-author">
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: ReliableCoder<br />'
+            + '作者: Reliable Mark<br />'
+            + '链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fa fa-list"></i>
+    </a>
+</div>
+
+
+<script src="http://47.106.81.116/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h1, h2, h3, h4, h5'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h1, h2, h3, h4, h5').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).slideUp(500);
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).slideDown(500);
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+    
+
+</main>
+
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            &copy; 2019 shw2018. All Rights Reserved.
+
+            
+                &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
+                <span class="white-color">143.9k</span>
+
+            
+            <br>
+
+            <span id="sitetime"></span>
+
+            
+
+            <!-- 
+                <br>
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'></span>
+                    <i class="fa fa-heart-o"></i>
+                    本站总访问量 <span id="busuanzi_value_site_pv" class="white-color"></span>
+
+                
+
+                
+                    <span id="busuanzi_container_site_uv" style='display:none'></span>
+                    人次,&nbsp;访客数 <span id="busuanzi_value_site_uv" class="white-color"></span> 人.
+                    
+                
+
+             -->
+
+        </div>
+
+        <div class="col s12 m4 l4 social-link social-statis">
+
+
+
+
+
+
+
+
+
+</div>
+
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+<script language=javascript>
+    function siteTime() {
+        window.setTimeout("siteTime()", 1000);
+        var seconds = 1000;
+        var minutes = seconds * 60;
+        var hours = minutes * 60;
+        var days = hours * 24;
+        var years = days * 365;
+        var today = new Date();
+        var todayYear = today.getFullYear();
+        var todayMonth = today.getMonth() + 1;
+        var todayDate = today.getDate();
+        var todayHour = today.getHours();
+        var todayMinute = today.getMinutes();
+        var todaySecond = today.getSeconds();
+
+        /* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+        year - 作为date对象的年份，为4位年份值
+        month - 0-11之间的整数，做为date对象的月份
+        day - 1-31之间的整数，做为date对象的天数
+        hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+        minutes - 0-59之间的整数，做为date对象的分钟数
+        seconds - 0-59之间的整数，做为date对象的秒数
+        microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+
+        var t1 = Date.UTC(2018, 08, 01, 00, 00, 00); //北京时间2019-8-1 00:00:00
+        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+        var diff = t2 - t1;
+        var diffYears = Math.floor(diff / years);
+        var diffDays = Math.floor((diff / days) - diffYears * 365);
+        var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+        var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) / minutes);
+        var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours - diffMinutes * minutes) / seconds);
+        document.getElementById("sitetime").innerHTML = "本站已运行 " + diffYears + " 年 " + diffDays + " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+    }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+    siteTime();
+</script>
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+
+    <script src="http://47.106.81.116/libs/materialize/materialize.min.js"></script>
+    <script src="http://47.106.81.116/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="http://47.106.81.116/libs/aos/aos.js"></script>
+    <script src="http://47.106.81.116/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="http://47.106.81.116/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+
+    
+        <script src="http://47.106.81.116/libs/others/clicklove.js"></script>
+    
+    
+    
+        <script async src="http://47.106.81.116/libs/others/busuanzi.pure.mini.js"></script>
+    
+    
+</body>
+
+</html>
