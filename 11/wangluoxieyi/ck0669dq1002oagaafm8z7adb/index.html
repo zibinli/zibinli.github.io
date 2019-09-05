@@ -1,0 +1,947 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="网络协议 5 - ICMP 与 ping：投石问路的侦察兵, PHP Redis Linux Nginx">
+    <meta name="baidu-site-verification" content="fmlEuI34ir">
+    <meta name="google-site-verification" content="KeoTn_OFy4ndJwXNmm2gMeQfPhd7alqE9vQDwI32KCY">
+    <meta name="description" content="日常开发中，我们经常会碰到查询网络是否畅通以及域名对应 IP 地址等小需求，这时候用的最多的应该就是 ping 命令了。 那你知道 ping 命令是怎么工作的吗？今天，我们就来一起认识下 ping 命令及其对应的 ICMP 协议。
+ICMP">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>网络协议 5 - ICMP 与 ping：投石问路的侦察兵 | ReliableCoder</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="http://47.106.81.116/libs/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="http://47.106.81.116/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="http://47.106.81.116/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="http://47.106.81.116/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="http://47.106.81.116/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    
+    <style type="text/css">
+        
+            
+            code[class*="language-"],
+            pre[class*="language-"] {
+                white-space: pre !important;
+            }
+
+        
+    </style>
+
+    <script src="http://47.106.81.116/libs/jquery/jquery-2.2.0.min.js"></script>
+    <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?46e79e71af0709a5b9106bf20cecc493";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+    
+    
+        <script>
+            (function(){
+                var bp = document.createElement('script');
+                var curProtocol = window.location.protocol.split(':')[0];
+                if (curProtocol === 'https') {
+                    bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+                }
+                else {
+                    bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+                }
+                var s = document.getElementsByTagName("script")[0];
+                s.parentNode.insertBefore(bp, s);
+            })();
+        </script>
+    
+
+<link rel="stylesheet" href="/css/prism-xonokai.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+
+<body>
+
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <span class="logo-span">ReliableCoder</span>
+                </a>
+            </div>
+            
+
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a>
+<ul class="right">
+    
+    <li class="hide-on-med-and-down">
+        <a href="/" class="waves-effect waves-light">
+            
+            <i class="fa fa-home"></i>
+            
+            <span>首页</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/tags" class="waves-effect waves-light">
+            
+            <i class="fa fa-tags"></i>
+            
+            <span>标签</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/categories" class="waves-effect waves-light">
+            
+            <i class="fa fa-bookmark"></i>
+            
+            <span>分类</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/archives" class="waves-effect waves-light">
+            
+            <i class="fa fa-archive"></i>
+            
+            <span>归档</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/about" class="waves-effect waves-light">
+            
+            <i class="fa fa-user-circle-o"></i>
+            
+            <span>关于我</span>
+        </a>
+    </li>
+    
+    <li>
+        <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+            <i id="searchIcon" class="fa fa-search" title="搜索"></i>
+        </a>
+    </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <div class="logo-name">ReliableCoder</div>
+        <div class="logo-desc">
+            
+            WEB开发 | PHP开发 | 源码解读
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li>
+            <a href="/" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-home"></i>
+                
+                首页
+            </a>
+        </li>
+        
+        <li>
+            <a href="/tags" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-tags"></i>
+                
+                标签
+            </a>
+        </li>
+        
+        <li>
+            <a href="/categories" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-bookmark"></i>
+                
+                分类
+            </a>
+        </li>
+        
+        <li>
+            <a href="/archives" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-archive"></i>
+                
+                归档
+            </a>
+        </li>
+        
+        <li>
+            <a href="/about" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-user-circle-o"></i>
+                
+                关于我
+            </a>
+        </li>
+        
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+<script src="http://47.106.81.116/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/';
+            }
+        }
+    })();
+</script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('http://47.106.81.116/medias/featureimages/22.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        网络协议 5 - ICMP 与 ping：投石问路的侦察兵
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="http://47.106.81.116/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 20px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/查询报文/" target="_blank">
+                                <span class="chip bg-color">查询报文</span>
+                            </a>
+                        
+                            <a href="/tags/ICMP协议/" target="_blank">
+                                <span class="chip bg-color">ICMP协议</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fa fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/网络协议/" class="post-category" target="_blank">
+                                网络协议
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="post-info">
+                <div class="post-date info-break-policy">
+                    <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2018-11-19
+                </div>
+
+                <div class="post-author info-break-policy">
+                    <i class="fa fa-user-o fa-fw"></i>作者:&nbsp;&nbsp;
+                    
+                        Reliable Mark
+                    
+                </div>
+
+                
+                    
+                    <div class="info-break-policy">
+                        <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
+                        2.7k
+                    </div>
+                    
+
+                    
+                    <div class="info-break-policy">
+                        <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                        9 分
+                    </div>
+                    
+                
+                
+                <!-- 
+                        <span id="busuanzi_container_site_pv" style='display:none'></span>
+                        <i class="fa fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv" ></span>
+    
+                 -->
+
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <p>日常开发中，我们经常会碰到查询网络是否畅通以及域名对应 IP 地址等小需求，这时候用的最多的应该就是 ping 命令了。 那你知道 ping 命令是怎么工作的吗？今天，我们就来一起认识下 ping 命令及其对应的 ICMP 协议。</p>
+<h3 id="ICMP-协议"><a href="#ICMP-协议" class="headerlink" title="ICMP 协议"></a>ICMP 协议</h3><p>ICMP 全称 Internet Control Message Protocol，指<strong>互联网控制报文协议</strong>。</p>
+<p>网络本身是不可靠的，数据包在传输过程中，可能会发生很多突发事件并导致数据传输失败。而网络层的 IP 协议是一个无连接的协议，它不会处理网络层的故障，因此，我们需要其它的协议，在数据包传输出现故障时，能将故障信息传回来，这样才能对应处理相关问题。</p>
+<p>就像在电视剧里看到的古代战争一样，打仗的时候需要通过斥候来传递战局情况，进而更好的控制战局。而 ICMP 报文在网络世界中就充当“斥候”这样的角色。</p>
+<p>ICMP 报文是封装在 IP 包里面的。因为传输指令的时候，肯定需要源地址和目标地址。它本身格式非常简单，如下图：</p>
+<p><img src="https://img2018.cnblogs.com/blog/861679/201811/861679-20181116181719850-1322895430.png" alt=""></p>
+<p>ICMP 报文有很多的类型，不同的类型有不同的代码，<strong>最常用的类型是主动请求，代码为 8，主动请求的应答，代码为 0</strong>。从大的方面看可以分为 <strong>查询报文类型</strong>和<strong>差错报文类型</strong>。</p>
+<h4 id="查询报文类型"><a href="#查询报文类型" class="headerlink" title="查询报文类型"></a>查询报文类型</h4><p>我们经常在电视剧里听到这样的话：来人，前方战事如何？斥候回来没？一有情况，立刻通报。</p>
+<p>类似这种主帅发起，主动查看敌情的情况，就对应着 <strong>ICMP的查询报文类型</strong>。例如，常见的 ping 命令就是<strong>查询报文，是一种主动请求，并且获得主动应答的 ICMP 协议</strong>。因此，ping 命令发出的包也是符合 ICMP 协议格式的，只不过它在后面增加了自己的格式。</p>
+<p>对 ping 的主动请求，进行网络抓包，称为 <strong>ICMP ECHO REQUEST</strong>。同理，主动请求的回复，称为<strong>ICMP ECHO REPLY</strong>。比起原生的 ICMP，这里面多了两个字段，一个是标识符，另一个是序号。这不难理解，大帅派出去两队斥候，一队是找谁要的，一队是侦查战况的，要有个标识才能区分。</p>
+<p>另一方面，派出去的斥候，都要编个号。如果派出去 10 个，回来 10 个，就说明前方战况不错。如果派出去 10 个，回来 2 个，就说明情况可能不妙。</p>
+<p>在选项数据中，ping 还会存放发送请求的时间值，来计算往返时间，说明路程的长短。</p>
+<h4 id="差错报文类型"><a href="#差错报文类型" class="headerlink" title="差错报文类型"></a>差错报文类型</h4><p>差错报文主要是用来<strong>将发送的出错报文相关信息返回到源设备，以供源设备确定如果更好的重发失败的数据包</strong>。</p>
+<p>还是拿我们的“大帅”举例。</p>
+<p>当主帅正在大帐中看地图，思考战事时，外面的小兵突然喊到：大帅，不好啦，张将军遭遇埋伏，全军覆没了。</p>
+<p>这种是异常情况发起的，来报告发生了不好的事情，对应 ICMP 的差错报文。</p>
+<p>差错报文有以下常用的类型：</p>
+<ul>
+<li>3：终点不可达</li>
+<li>4：源抑制</li>
+<li>5：重定向</li>
+<li>11：超时</li>
+</ul>
+<p><strong>第一种情况终点不可达</strong>。小兵报告，大帅，送给张将军的粮草没有送到。</p>
+<p>那大帅肯定会问，为啥没有送到？这就对应 ICMP 中的以下代码了。</p>
+<ul>
+<li>网络不可达代码：0</li>
+<li>主机不可达代码：1</li>
+<li>协议不可达：2</li>
+<li>端口不可达：3</li>
+<li>需要进行分片但设置了不分片：4</li>
+</ul>
+<p>具体的场景就像这样：</p>
+<ul>
+<li>网络不可达：大帅，找不到地方</li>
+<li>主机不可达：大帅，找到地方，没找到张将军</li>
+<li>协议不可达：大帅，找到地方，也找到人了，但是口令没对上。</li>
+<li>端口不可达：大帅，找到地方，找到了人，也对上了口令，但事情没对上。我去送粮草，人家说在等救兵。</li>
+<li>需要进行分片但设置不分片：大帅，走到一半，山路狭窄，想换瞎扯，但是出发前你下令严禁换小车，就没办法送到了。</li>
+</ul>
+<p><strong>第二种是源站抑制</strong>。也就是让源站放慢发送速度（小兵：大帅，粮草送的太多了吃不完，你可以慢点送）。</p>
+<p><strong>第三种是时间超时</strong>。也就是超过网络包的生存时间还是没到目的地（大帅，送粮草的人都把粮食吃完了，还没到地方，已经饿死了）。</p>
+<p><strong>第四种是路由重定向</strong>。也就是下次发给另一个路由器（大帅，上次送粮草的人本来只要走大王村，一公里就到了，结果非要绕道张家界，多了五公里，下次记得走大王村）。</p>
+<p>差错报文的结构相对复杂一些。除了前面还是 IP，ICMP 的前 8 个字节不变，后面则跟上出错的那个 IP 包的 IP 头和 IP 正文的前 8 个字节。</p>
+<p>而且这类斥候特别尽责，不但字节返回来报信，还把一部分遗物带回来。</p>
+<ul>
+<li>斥候：大帅，张将军已经战死沙场，这是他的印信和佩剑。</li>
+<li>大帅：张将军是怎么死的（可以查看 ICMP 的前 8 字节）？没错，这是张将军的剑（IP 数据包的头及正文前 8 字节）。</li>
+</ul>
+<h3 id="ping：查询报文类型的使用"><a href="#ping：查询报文类型的使用" class="headerlink" title="ping：查询报文类型的使用"></a>ping：查询报文类型的使用</h3><p>接下来，我们重点来看 ping 命令的发送和接收过程。</p>
+<p><img src="https://img2018.cnblogs.com/blog/861679/201811/861679-20181116181827463-1109902557.png" alt=""></p>
+<p>假定主机 A 的 IP 地址是 192.168.1.1，主机 B 的 IP 地址是 192.168.1.2，它们都在同一个子网。那么，当在主机 A 上运行“ping 192.168.1.2” 后，会发生什么呢？</p>
+<ol>
+<li><strong>源主机构建 ICMP 请求数据包</strong>。这个数据包内包含多个字段。最重要的有两个，一个是<strong>类型字段</strong>，对应请求数据包而言，该字段为 8。另一个是<strong>顺序号</strong>，主要用于区分连续 ping 的时候发出的多个数据包。每发出一个请求数据包，顺序号会自动加 1.为了能够计算往返时间 RTT，它会在报文的数据部分插入发送时间。</li>
+<li><strong>IP 层构建 IP 数据包</strong>。ICMP 协议将数据包连同目标 IP 一起交给 IP 层，IP 层将以 192.168.1.2 作为目的地址，本机 IP 地址作为源地址，加上其他控制信息，构建一个 IP 数据包。</li>
+<li><strong>加入 MAC 头</strong>。找到 192.168.1.2 对应的 MAC 地址，附加上一些控制信息，依据以太网的介质访问规则，将它们传送出去。</li>
+</ol>
+<p>主机 B 收到数据帧后，会进行如下步骤：</p>
+<ol>
+<li><strong>检查 MAC 地址，丢弃或接收数据帧，提取 IP 数据包</strong>。检查数据包目的 MAC 地址，并与本机 MAC 地址对比。如符合，就接收数据帧，否则就丢弃。接收后检查数据帧，将 IP 数据包从帧中提取处理，交给本机的 IP 层。</li>
+<li><strong>IP 层检查IP</strong>。检查完成后，提取有用的信息交给 ICMP 协议。</li>
+<li><strong>构建 ICMP 应答包</strong>。应答数据包的类型字段为 0，顺序号为接收到的请求数据包中的顺序号。</li>
+<li>将应答数据包发给主机 A。</li>
+</ol>
+<p>在规定的时间内，源主机如果没有接到 ICMP 的应答包，则说明目标主机不可达。</p>
+<p>如果接收到了应打包，则说明目标主机可达。此时，源主机会检测时间延迟。就是用当前时刻减该数据包从源主机发出去的时刻。</p>
+<p>当然，这只是最简单的，同个局域网的情况。如果跨网段的话，还会涉及网关的转发、路由器的转发等。</p>
+<p>可以看出，ping 命令是使用了 ICMP 里面的 ECHO REQUEST 和 ECHO REPLY 类型。</p>
+<p>那其它类型呢？是不是只有真正遇到错误的时候，才能收到？答案是否定的。有一个 Traceroute 命令，它会使用 ICMP 的规则，故意制造一些能够产生错误的场景。</p>
+<h3 id="Traceroute：差错报文类型的使用"><a href="#Traceroute：差错报文类型的使用" class="headerlink" title="Traceroute：差错报文类型的使用"></a>Traceroute：差错报文类型的使用</h3><p>Traceroute 命令有两个比较常用的功能。</p>
+<p>第一个功能：</p>
+<p><strong>通过设置特殊的 TTL，追踪去往目的地时经过的路由器</strong></p>
+<p>Traceroute 的参数执行某个目的 IP 地址，会发送一个 UDP 的数据包。</p>
+<p>将 TTL 设置成 1 时，表示这个数据包的 MP 为 1，碰到第一个“拦路虎”（通常是路由器或一个其它类型的关卡）就会阵亡了，然后就会返回一个 ICMP 包，这个包就是 <strong>网络差错包</strong>，类型是<strong>时间超时</strong>。</p>
+<p>通过差错包，我们就能得到数据包到第一个关卡时花费的时间及其每个关卡的 IP 地址（有的主机不会响应 ICMP，所以会出现请求时全是 * 的情况）。</p>
+<p>那怎么知道 UDP 有没有到达目的主机呢？Traceroute 程序会发送一份 UDP 数据包给目的主机，但它会选择一个不可能的值作为 UDP 端口号（大于30000）。当该数据报到达目的主机时，由于找不到对应端口号，所以会返回一个“端口不可达”的错误报文。这样，我们就知道 UDP 是否到达主机了。</p>
+<p>第二个功能：</p>
+<p><strong>设置数据包不分片，确定路径的 MTU</strong></p>
+<p>发送分组，并设置“不分片”标志。发送的第一个分组的长度正好与出口的 MTU 相等。如果中间遇到窄的关卡就会被卡主，返回 ICMP 网络差错包，类型是“需要进行分片但设置了不分片”。就这样，每次收到ICMP“不能分片”差错时就减小分组的长度，从而确定整个路径中的 MTU。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
+<li>ICMP 相当于网络世界的侦察兵。常用的有两种类型，主动探查的查询报文和异常报告的差错报文。</li>
+<li>ping 命令使用查询报文，Traceroute 命令使用差错报文。</li>
+</ul>
+<p>参考：</p>
+<ol>
+<li>刘超-趣谈网络协议系列课；</li>
+</ol>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+            </div>
+            <hr/>
+
+            
+
+            <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    <div class="social-share" data-disabled="qzone" data-wechat-qrcode-helper="<p>微信里点“发现”->“扫一扫”二维码便可查看分享。</p>"></div>
+    
+</div>
+
+<script src="/libs/share/js/social-share.min.js"></script>
+
+            
+            
+            
+            <div class="reprint1">
+                <p>
+                    <span class="reprint1-tip">
+                        <i class="fa fa-exclamation-circle"></i>&nbsp;&nbsp;转载请注明:
+                    </span>
+                    <a href="http://yoursite.com" class="b-link-green">ReliableCoder</a>
+                    <i class="fa fa-angle-right fa-lg fa-fw text-color"></i>
+                    <a href="/11/wangluoxieyi/ck0669dq1002oagaafm8z7adb/" class="b-link-green">网络协议 5 - ICMP 与 ping：投石问路的侦察兵</a>
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/11/uncategorized/ck0669ddi000dagaazt1s3nih/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="http://47.106.81.116/medias/featureimages/9.jpg" class="responsive-img" alt="PHP 扩展管理">
+                        
+                        <span class="card-title">PHP 扩展管理</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            一直对 PHP 扩展了解的似是而非，每次安装扩展都要百度教程，很容易出现各种错误。所幸整理下管理扩展的所有操作，方便日后操作。
+查看已加载的扩展
+输出 phpinfo()；
+使用 get_loaded_extensions()；
+使用 ex
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2018-11-20
+                        </span>
+                        <span class="publish-author">
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/11/wangluoxieyi/ck0669dq8002ragaa38ycvzn7/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="http://47.106.81.116/medias/featureimages/20.jpg" class="responsive-img" alt="网络协议 4 - 交换机与 VLAN：办公室太复杂，我要回学校">
+                        
+                        <span class="card-title">网络协议 4 - 交换机与 VLAN：办公室太复杂，我要回学校</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            上一次，我们通过宿舍联网打魔兽的需求，认识了如何通过物理层和链路层组建一个宿舍局域网。今天，让我们切换到稍微复杂点的场景，办公室。
+在这个场景里，就不像在宿舍那样，搞几根网线，拉一拉，扯一扯就可以了。一个办公室少到数十人，大至上百人，每个人
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2018-11-14
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/网络协议/" class="post-category" target="_blank">
+                                    网络协议
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/交换机/" target="_blank">
+                        <span class="chip bg-color">交换机</span>
+                    </a>
+                    
+                    <a href="/tags/VLAN/" target="_blank">
+                        <span class="chip bg-color">VLAN</span>
+                    </a>
+                    
+                    <a href="/tags/拓扑结构/" target="_blank">
+                        <span class="chip bg-color">拓扑结构</span>
+                    </a>
+                    
+                    <a href="/tags/广播风暴/" target="_blank">
+                        <span class="chip bg-color">广播风暴</span>
+                    </a>
+                    
+                    <a href="/tags/STP协议/" target="_blank">
+                        <span class="chip bg-color">STP协议</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: ReliableCoder<br />'
+            + '作者: Reliable Mark<br />'
+            + '链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fa fa-list"></i>
+    </a>
+</div>
+
+
+<script src="http://47.106.81.116/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h1, h2, h3, h4, h5'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h1, h2, h3, h4, h5').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).slideUp(500);
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).slideDown(500);
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+    
+
+</main>
+
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right" style="width: 100%;">
+            
+                &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
+                <span class="white-color">143.9k</span>
+
+            
+            <br>
+
+            <span id="sitetime"></span>
+
+            
+
+            <!-- 
+                <br>
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'></span>
+                    <i class="fa fa-heart-o"></i>
+                    本站总访问量 <span id="busuanzi_value_site_pv" class="white-color"></span>
+
+                
+
+                
+                    <span id="busuanzi_container_site_uv" style='display:none'></span>
+                    人次,&nbsp;访客数 <span id="busuanzi_value_site_uv" class="white-color"></span> 人.
+                    
+                
+
+             -->
+
+        </div>
+
+        <div class="col s12 m4 l4 social-link social-statis">
+
+
+
+
+
+
+
+
+
+</div>
+
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+<script language=javascript>
+    function siteTime() {
+        window.setTimeout("siteTime()", 1000);
+        var seconds = 1000;
+        var minutes = seconds * 60;
+        var hours = minutes * 60;
+        var days = hours * 24;
+        var years = days * 365;
+        var today = new Date();
+        var todayYear = today.getFullYear();
+        var todayMonth = today.getMonth() + 1;
+        var todayDate = today.getDate();
+        var todayHour = today.getHours();
+        var todayMinute = today.getMinutes();
+        var todaySecond = today.getSeconds();
+
+        /* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+        year - 作为date对象的年份，为4位年份值
+        month - 0-11之间的整数，做为date对象的月份
+        day - 1-31之间的整数，做为date对象的天数
+        hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+        minutes - 0-59之间的整数，做为date对象的分钟数
+        seconds - 0-59之间的整数，做为date对象的秒数
+        microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+
+        var t1 = Date.UTC(2018, 08, 01, 00, 00, 00); //北京时间2019-8-1 00:00:00
+        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+        var diff = t2 - t1;
+        var diffYears = Math.floor(diff / years);
+        var diffDays = Math.floor((diff / days) - diffYears * 365);
+        var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+        var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) / minutes);
+        var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours - diffMinutes * minutes) / seconds);
+        document.getElementById("sitetime").innerHTML = "本站已运行 " + diffYears + " 年 " + diffDays + " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+    }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+    siteTime();
+</script>
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+
+    <script src="http://47.106.81.116/libs/materialize/materialize.min.js"></script>
+    <script src="http://47.106.81.116/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="http://47.106.81.116/libs/aos/aos.js"></script>
+    <script src="http://47.106.81.116/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="http://47.106.81.116/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+
+    
+        <script src="http://47.106.81.116/libs/others/clicklove.js"></script>
+    
+    
+    
+        <script async src="http://47.106.81.116/libs/others/busuanzi.pure.mini.js"></script>
+    
+    
+</body>
+
+</html>
