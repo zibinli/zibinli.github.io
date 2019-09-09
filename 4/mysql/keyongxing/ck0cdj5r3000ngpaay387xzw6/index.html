@@ -1,0 +1,1004 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="MySQL - 高可用性：少宕机即高可用？, PHP Redis Linux Nginx">
+    <meta name="baidu-site-verification" content="fmlEuI34ir">
+    <meta name="google-site-verification" content="KeoTn_OFy4ndJwXNmm2gMeQfPhd7alqE9vQDwI32KCY">
+    <meta name="description" content="我们之前了解了复制、扩展性，接下来就让我们来了解可用性。归根到底，高可用性就意味着 “更少的宕机时间”。
+老规矩，讨论一个名词，首先要给它下个定义，那么什么是可用性？
+1 什么是可用性我们常见的可用性通常以百分比表示，这本身就有其隐藏的意味">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>MySQL - 高可用性：少宕机即高可用？ | ReliableCoder</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="http://47.106.81.116/libs/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="http://47.106.81.116/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="http://47.106.81.116/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="http://47.106.81.116/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="http://47.106.81.116/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    
+    <style type="text/css">
+        
+            
+            code[class*="language-"],
+            pre[class*="language-"] {
+                white-space: pre !important;
+            }
+
+        
+    </style>
+
+    <script src="http://47.106.81.116/libs/jquery/jquery-2.2.0.min.js"></script>
+    <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?46e79e71af0709a5b9106bf20cecc493";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+    
+    
+        <script>
+            (function(){
+                var bp = document.createElement('script');
+                var curProtocol = window.location.protocol.split(':')[0];
+                if (curProtocol === 'https') {
+                    bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+                }
+                else {
+                    bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+                }
+                var s = document.getElementsByTagName("script")[0];
+                s.parentNode.insertBefore(bp, s);
+            })();
+        </script>
+    
+
+<link rel="stylesheet" href="/css/prism-xonokai.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+
+<body>
+
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <span class="logo-span">ReliableCoder</span>
+                </a>
+            </div>
+            
+
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a>
+<ul class="right">
+    
+    <li class="hide-on-med-and-down">
+        <a href="/" class="waves-effect waves-light">
+            
+            <i class="fa fa-home"></i>
+            
+            <span>首页</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/tags" class="waves-effect waves-light">
+            
+            <i class="fa fa-tags"></i>
+            
+            <span>标签</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/categories" class="waves-effect waves-light">
+            
+            <i class="fa fa-bookmark"></i>
+            
+            <span>分类</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/archives" class="waves-effect waves-light">
+            
+            <i class="fa fa-archive"></i>
+            
+            <span>归档</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/about" class="waves-effect waves-light">
+            
+            <i class="fa fa-user-circle-o"></i>
+            
+            <span>关于我</span>
+        </a>
+    </li>
+    
+    <li>
+        <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+            <i id="searchIcon" class="fa fa-search" title="搜索"></i>
+        </a>
+    </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <div class="logo-name">ReliableCoder</div>
+        <div class="logo-desc">
+            
+            WEB开发 | PHP开发 | 源码解读
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li>
+            <a href="/" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-home"></i>
+                
+                首页
+            </a>
+        </li>
+        
+        <li>
+            <a href="/tags" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-tags"></i>
+                
+                标签
+            </a>
+        </li>
+        
+        <li>
+            <a href="/categories" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-bookmark"></i>
+                
+                分类
+            </a>
+        </li>
+        
+        <li>
+            <a href="/archives" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-archive"></i>
+                
+                归档
+            </a>
+        </li>
+        
+        <li>
+            <a href="/about" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-user-circle-o"></i>
+                
+                关于我
+            </a>
+        </li>
+        
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+<script src="http://47.106.81.116/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/';
+            }
+        }
+    })();
+</script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('http://47.106.81.116/medias/featureimages/22.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        MySQL - 高可用性：少宕机即高可用？
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="http://47.106.81.116/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 20px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/高可用性/" target="_blank">
+                                <span class="chip bg-color">高可用性</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fa fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Mysql/" class="post-category" target="_blank">
+                                Mysql
+                            </a>
+                        
+                            <a href="/categories/Mysql/可用性/" class="post-category" target="_blank">
+                                可用性
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="post-info">
+                <div class="post-date info-break-policy">
+                    <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2019-04-29
+                </div>
+
+                <div class="post-author info-break-policy">
+                    <i class="fa fa-user-o fa-fw"></i>作者:&nbsp;&nbsp;
+                    
+                        Reliable Mark
+                    
+                </div>
+
+                
+                    
+                    <div class="info-break-policy">
+                        <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
+                        3.2k
+                    </div>
+                    
+
+                    
+                    <div class="info-break-policy">
+                        <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                        11 分
+                    </div>
+                    
+                
+                
+                <!-- 
+                        <span id="busuanzi_container_site_pv" style='display:none'></span>
+                        <i class="fa fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv" ></span>
+    
+                 -->
+
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <p>我们之前了解了复制、扩展性，接下来就让我们来了解可用性。归根到底，高可用性就意味着 “更少的宕机时间”。</p>
+<p>老规矩，讨论一个名词，首先要给它下个定义，那么什么是可用性？</p>
+<h3 id="1-什么是可用性"><a href="#1-什么是可用性" class="headerlink" title="1 什么是可用性"></a>1 什么是可用性</h3><p>我们常见的可用性通常以百分比表示，这本身就有其隐藏的意味：<strong>高可用性不是绝对的</strong>。换句话说，100% 的可用性是不可能达到的。没错，这里可以这么肯定的说。</p>
+<p>我们一般用 “9” 的个数来描述可用性。X个9表示在数据中心运行1年时间的使用过程中，各系统可以正常使用时间与总时间（1年）之比。例如：“5 个 9” 表示 99.999%，那么应用宕机时间 t：</p>
+<blockquote>
+<p>(1-99.999%) * 3600 * 24 * 365 = 315.36s = 5.256m</p>
+</blockquote>
+<p>因此，我们可以说，“5 个 9” 表示应用每年只允许 5.256 分钟的宕机时间。同样的计算，我们可以得出 3 个 9 每年宕机时间为 8.76 小时，4 个 9 的是 52.6 分钟。</p>
+<p>实际上，5 个 9 对于大多数应用来说已经是很难做到的，但是对于一些大型公司，肯定还会去尝试获得更多的 “9”，已尽量减少应用的宕机时间，降低宕机成本。</p>
+<p>每个应用对可用性的需求各不相同。在设定一个目标值之前，一定要考虑清楚是不是确实需要达到这个目标。可用性的效果和开销对应的比例并不是线性增长的，每提高一点可用性，所花费的成本都会远超之前。</p>
+<p>因此，对于可用性，我们可以遵循这样一个原则：</p>
+<blockquote>
+<p><strong>能够承担多少宕机成本，就保证相应的可用时间</strong>。</p>
+</blockquote>
+<p>说起来可能有点绕，简单来说：对于有 10W 用户的应用，<br>假设实现 5 个 9 需要 100W，每年应用即使宕机 9 小时，总损失也才 50W，你说这个应用有必要去实现 5 个 9 的可用性吗？</p>
+<p>另外，我们上面给可用性定义成了 “宕机时间”，但实际上可用性还应该<strong>包括应用是否能以足够好的性能处理请求</strong>。对于一个大型服务器而言，重启 MySQL 后，可能需要几个小时才能预热数据以保证请求的响应时间。这里的几个小时也应该包括在宕机时间内。</p>
+<p>到此为止，我们应该有个大致的印象，可用性与应用宕机有关系。接下来，让我们再深入一步，了解下应用宕机的原因。</p>
+<h3 id="2-导致宕机的原因"><a href="#2-导致宕机的原因" class="headerlink" title="2 导致宕机的原因"></a>2 导致宕机的原因</h3><p>我们最常听到的数据库宕机原因可能是** SQL 性能很差**。但实际上并非如此，按表现方式导致宕机的原因分为以下几类：</p>
+<table>
+<thead>
+<tr>
+<th>宕机事件表现形式</th>
+<th>占比</th>
+<th>导致宕机的原因</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>运行环境</td>
+<td>35%</td>
+<td>磁盘空间耗尽</td>
+</tr>
+<tr>
+<td>性能问题</td>
+<td>35%</td>
+<td>1. 低性能 SQL；2. 服务器 BUG；3. 糟糕的表结构设计和索引设计</td>
+</tr>
+<tr>
+<td>复制</td>
+<td>20%</td>
+<td>主备数据不一致</td>
+</tr>
+<tr>
+<td>数据丢失或损坏</td>
+<td>10%</td>
+<td>误操作删除数据，缺少备份</td>
+</tr>
+</tbody></table>
+<p>运行环境通常可以看作是支持数据库服务器运行的系统资源集合，包括操作系统、硬盘以及网络等。</p>
+<p>另外，我们虽然经常用复制来提高可用时间，但它也是导致宕机的重要 “元凶” 之一。这也说明了一个普遍的情况：</p>
+<blockquote>
+<p>许多高可用策略可能会产生反作用</p>
+</blockquote>
+<p>了解了可用性的定义及其降低可用性的因素，我们就要来考虑如何提高系统的可用性了。</p>
+<h3 id="3-如何实现高可用性"><a href="#3-如何实现高可用性" class="headerlink" title="3 如何实现高可用性"></a>3 如何实现高可用性</h3><p>通过上面的分析，也许你已经发现了，我们可用性取决于两个时间：</p>
+<ul>
+<li><strong>应用的平均失效时间</strong></li>
+<li><strong>应用的平均恢复时间</strong></li>
+</ul>
+<p>因此，提高可用性也可以从这两个方面入手。首先，可以尽量避免应用宕机来减少宕机时间。实际上，通过适当的配置、监控，以及规范或安全保障措施，很多导致宕机的问题很容易可以避免。</p>
+<p>其次，尽量保证在发生宕机时，能够快速恢复。最常见的策略是在系统中制造冗余，并且保证系统的故障转移能力。</p>
+<p>接下来，让我们一起来了解具体针对性措施。</p>
+<h4 id="3-1-降低平均失效时间"><a href="#3-1-降低平均失效时间" class="headerlink" title="3.1 降低平均失效时间"></a>3.1 降低平均失效时间</h4><p><strong>我们对系统变更缺少管理</strong>是所有导致宕机事件中最普遍的原因。典型的错误包括粗心的升级导致升级失败并碰到一些 bug，或是尚未测试就将数据表结构或查询语句的更改直接在线上运行，或者是没有为一些失败的情况制定对应计划，例如达到了磁盘容量限制等。</p>
+<p>另外一个导致宕机的主要原因是缺少严格的评估。例如因为疏忽没有确认备份是否是可恢复的。</p>
+<p>还有就是可能没有准确的监控 MySQL 的相关信息。例如缓存命中率报警可能只是误报，并不能说明出现问题，致使我们认为监控系统没有用，就忽略了真正出现问题的报警。导致 boss 问你，为什么磁盘满了没有收到报警信息时，你一脸无辜的看着他。</p>
+<p>因此，只要我们多做些针对性的工作，就可以避免很多宕机时间。具体可以从以下措施着手：</p>
+<ul>
+<li>测试恢复工具和流程，包括从备份中恢复数据。</li>
+<li>遵从最小权限原则。</li>
+<li>保持系统干净、整洁。</li>
+<li>使用好的命名和组织约定来避免产生混乱。例如服务器是用于开发还是生产环境。</li>
+<li>谨慎安排升级数据库服务器。</li>
+<li>在升级前，使用诸如 Percona Toolkit 中的 pt-upgrade 之类的工具仔细检查系统。</li>
+<li>使用 InnoDB 并进行适当的配置，确保 InnoDB 是默认存储引擎。如果存储引擎被禁止，服务器就无法启动。</li>
+<li>确认基本的服务器配置是正确的。</li>
+<li>通过 skip_name_resolve 禁止 DNS。</li>
+<li>在未明确查询缓存有用的情况下，应该禁用查询缓存。</li>
+<li>尽量避免使用复杂的特性，除非确实需要。例如复制过滤、触发器等。</li>
+<li>监控重要的组件和功能。<strong>特别是像磁盘空间和 RAID 卷状态这样的关键项目</strong>。</li>
+<li>尽可能久的记录服务器的状态和性能指标。</li>
+<li>定期检查复制完整性。</li>
+<li>将被刻意设置为只读，不要让复制自动启动。</li>
+<li>定期进行查询语句审查。</li>
+<li>归档并清理不需要的数据。</li>
+<li>为文件系统保留部分空闲空间；</li>
+<li>养成评估和管理系统的改变、状态和性能信息的习惯。</li>
+</ul>
+<h4 id="3-2-降低平均恢复时间"><a href="#3-2-降低平均恢复时间" class="headerlink" title="3.2 降低平均恢复时间"></a>3.2 降低平均恢复时间</h4><p>对于恢复时间，我们可以从三方面入手：</p>
+<ul>
+<li>为系统建立冗余，保证系统的故障转移能力，避免单点失效。</li>
+<li>为人员制定一个完善的恢复流程规范。</li>
+<li>为人员组织事后复盘，避免未来发生相似的错误。</li>
+</ul>
+<p>接下来，我们来讨论下具体措施。</p>
+<p><strong>1) 如何避免单点失效？</strong></p>
+<p>对于单点失效，我们首先要做的是找到它，然后针对性解决它。</p>
+<p>一个系统中，每个单点都有可能失效。可能是一个硬盘驱动器、一台服务器或者是一台交换机、路由器，甚至某个机架的电源等等单点。</p>
+<p>在进行相关措施前，我们要明白，单点失效并不能完全消除。我们可能引入新的的技术来解决单点失效问题，但引入的新技术可能导致更多的宕机时间。因此，我们应该按影响级别对失效单点进行排序，按照排序针对性解决单点失效问题。</p>
+<p>具体到增加冗余的相关措施，有两种方案：<strong>增加空余容量</strong>和<strong>重复组件</strong>。</p>
+<p>增加空余容量比较简单。可以创建一个集群或服务器池，使用负载均衡方案。这样在一台服务器失效时，其它服务器可以接管失效服务器的负载。</p>
+<p>另外，处于很多方面的考虑可能会需要冗余组件，可以主要组件失效时，能有一个备件来随时替换。可冗余的组件可以是空闲的网卡、路由器或者硬盘驱动器等。</p>
+<p>此外，最重要的是，要完全冗余 MySQL 服务器。这意味着我们必须确保备用服务器能够获得主服务器上的数据。可以从以下措施着手：</p>
+<ul>
+<li>共享存储或磁盘复制</li>
+<li>MySQL 同步复制</li>
+</ul>
+<p><strong>2) 如何保证系统的故障转移和恢复能力？</strong></p>
+<p>在开始这个话题之前，我们先来认识下什么是 “故障转移”。有些人用 “回退” 表示，也有人会使用 “切换”，以表明一次计划中的切换而不是故障后的应对措施。</p>
+<p>我们在这里使用 “故障恢复” 来表示故障转移的反面。如果系统拥有故障恢复能力，那么，故障转移就是一个双向过程：</p>
+<blockquote>
+<p>当服务器 A 失效，服务器 B 代替它，在修复 A 服务器后可以再替换回来。</p>
+</blockquote>
+<p>故障转移最重要的部分就是故障恢复。如果服务器间不能自由切换，故障转移就是一个死胡同，只能延缓宕机时间而已。因此，使用复制时，可以使用对称复制布局，如双主结构。因为配置是对等的，故障转移和故障恢复就是在相反方向上的相同操作。</p>
+<p>接下来我们就认识一些比较普遍的故障转移技术。</p>
+<p><strong>提升备库或切换角色</strong></p>
+<p>提升一台备库为主库，或者在一个 主-主复制结构中调换主动和被动角色，这些都是许多 MySQL 故障转移策略中很重要的一部分。详情参见<a href="https://www.cnblogs.com/BeiGuo-FengGuang/p/10706782.html" target="_blank" rel="noopener">MySQL 复制 - 性能与扩展性的基石 4：主备库切换</a></p>
+<p><strong>虚拟 IP 地址或 IP 接管</strong></p>
+<p>可以为需要提供特点服务的 MySQL 实例指定一个逻辑 IP 地址。当 MySQL 实例失效时，将 IP 地址转移到另一台 MySQL 服务器上。这里的解决方案本质上负载均衡里的虚拟 IP 技术是一样的，不同的是现在是用于故障转移。</p>
+<p>这种方法的好处是对应用透明。它会中断已有的连接，但不用修改配置。</p>
+<p>当然，它也有一些不足之处：</p>
+<ul>
+<li>需要把所有的 IP 地址定义在同一网段，或者使用网络桥接。</li>
+<li>有时候还需要更新 ARP 缓存。部分网络设备可能会把 ARP 信息保存太久，导致无法即时将一个 IP 地址切换到另一个 MAC 地址上。</li>
+<li>需要确定网络硬件是否支持快速 IP 接管。有些硬件需要克隆 MAC 地址后才能工作。</li>
+</ul>
+<p><strong>3) 团队人员如何提高系统恢复时间？</strong></p>
+<p>由于团队内每个人对于宕机恢复的熟练度和对应能力各有不同，因此我们还需要一个对应人员的流程规范，来帮助大家都能在宕机时参与进来，降低系统的恢复时间。</p>
+<p>系统恢复后，我们就要组织大家对对宕机时间进行评估，这里要注意的是，不要对此类的 “事后反思” 期望太高。导致宕机的原因通常是多方面的的，我们很难去回顾问题当时所处的状况，也很难找到真正的原因。因此，我们在事后反思得到的结论应该有所保留。</p>
+<h3 id="4-总结"><a href="#4-总结" class="headerlink" title="4 总结"></a>4 总结</h3><ol>
+<li>可用性用宕机时间 n 个 9 来衡量。</li>
+<li>实现可用性从<strong>平均失效时间</strong>和<strong>平均恢复时间入手</strong>。</li>
+</ol>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+            </div>
+            <hr/>
+
+            
+
+            <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    <div class="social-share" data-disabled="qzone" data-wechat-qrcode-helper="<p>微信里点“发现”->“扫一扫”二维码便可查看分享。</p>"></div>
+    
+</div>
+
+<script src="/libs/share/js/social-share.min.js"></script>
+
+            
+            
+            
+            <div class="reprint1">
+                <p>
+                    <span class="reprint1-tip">
+                        <i class="fa fa-exclamation-circle"></i>&nbsp;&nbsp;转载请注明:
+                    </span>
+                    <a href="http://yoursite.com" class="b-link-green">ReliableCoder</a>
+                    <i class="fa fa-angle-right fa-lg fa-fw text-color"></i>
+                    <a href="/4/mysql/keyongxing/ck0cdj5r3000ngpaay387xzw6/" class="b-link-green">MySQL - 高可用性：少宕机即高可用？</a>
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/7/redis/yuanma/ck0cdj5v20041gpaaqgy6pjbt/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="http://47.106.81.116/medias/featureimages/21.jpg" class="responsive-img" alt="跟着大彬读源码 - Redis 1 - 启动服务，程序都干了什么？">
+                        
+                        <span class="card-title">跟着大彬读源码 - Redis 1 - 启动服务，程序都干了什么？</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            一直很羡慕那些能读 Redis 源码的童鞋，也一直想自己解读一遍，但迫于 C 大魔王的压力，解读日期遥遥无期。
+相信很多小伙伴应该也都对或曾对源码感兴趣，但一来觉得自己不会 C 语言，二来也不知从何入手，结果就和博主一样，一拖再拖。
+但正所
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-07-08
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Redis/" class="post-category" target="_blank">
+                                    Redis
+                                </a>
+                            
+                            <a href="/categories/Redis/源码/" class="post-category" target="_blank">
+                                    源码
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/服务器启动过程/" target="_blank">
+                        <span class="chip bg-color">服务器启动过程</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/4/mysql/kuozhanxing/ck0cdj5ri000tgpaabdsuwxil/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="http://47.106.81.116/medias/featureimages/17.jpg" class="responsive-img" alt="MySQL - 扩展性 3 负载均衡：眼花缭乱迷人眼">
+                        
+                        <span class="card-title">MySQL - 扩展性 3 负载均衡：眼花缭乱迷人眼</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            负载均衡的基本思路很简单：
+
+在一个服务器集群中尽可能地的平均负载量。
+
+基于这个思路，我们通常的做法是在服务器前端设置一个负载均衡器。负载均衡器的作用是将请求的连接路由到最空闲的可用服务器上。如图 1，显示了一个大型网站负载均衡设置。其中
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-04-24
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Mysql/" class="post-category" target="_blank">
+                                    Mysql
+                                </a>
+                            
+                            <a href="/categories/Mysql/扩展性/" class="post-category" target="_blank">
+                                    扩展性
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/负载均衡/" target="_blank">
+                        <span class="chip bg-color">负载均衡</span>
+                    </a>
+                    
+                    <a href="/tags/扩展方式/" target="_blank">
+                        <span class="chip bg-color">扩展方式</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: ReliableCoder<br />'
+            + '作者: Reliable Mark<br />'
+            + '链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fa fa-list"></i>
+    </a>
+</div>
+
+
+<script src="http://47.106.81.116/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h1, h2, h3, h4, h5'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h1, h2, h3, h4, h5').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).slideUp(500);
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).slideDown(500);
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+    
+
+</main>
+
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right" style="width: 100%;">
+            
+                &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
+                <span class="white-color">143.9k</span>
+
+            
+            <br>
+
+            <span id="sitetime"></span>
+
+            
+
+            <!-- 
+                <br>
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'></span>
+                    <i class="fa fa-heart-o"></i>
+                    本站总访问量 <span id="busuanzi_value_site_pv" class="white-color"></span>
+
+                
+
+                
+                    <span id="busuanzi_container_site_uv" style='display:none'></span>
+                    人次,&nbsp;访客数 <span id="busuanzi_value_site_uv" class="white-color"></span> 人.
+                    
+                
+
+             -->
+
+        </div>
+
+        <div class="col s12 m4 l4 social-link social-statis">
+
+
+
+
+
+
+
+
+
+</div>
+
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+<script language=javascript>
+    function siteTime() {
+        window.setTimeout("siteTime()", 1000);
+        var seconds = 1000;
+        var minutes = seconds * 60;
+        var hours = minutes * 60;
+        var days = hours * 24;
+        var years = days * 365;
+        var today = new Date();
+        var todayYear = today.getFullYear();
+        var todayMonth = today.getMonth() + 1;
+        var todayDate = today.getDate();
+        var todayHour = today.getHours();
+        var todayMinute = today.getMinutes();
+        var todaySecond = today.getSeconds();
+
+        /* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+        year - 作为date对象的年份，为4位年份值
+        month - 0-11之间的整数，做为date对象的月份
+        day - 1-31之间的整数，做为date对象的天数
+        hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+        minutes - 0-59之间的整数，做为date对象的分钟数
+        seconds - 0-59之间的整数，做为date对象的秒数
+        microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+
+        var t1 = Date.UTC(2018, 08, 01, 00, 00, 00); //北京时间2019-8-1 00:00:00
+        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+        var diff = t2 - t1;
+        var diffYears = Math.floor(diff / years);
+        var diffDays = Math.floor((diff / days) - diffYears * 365);
+        var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+        var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) / minutes);
+        var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours - diffMinutes * minutes) / seconds);
+        document.getElementById("sitetime").innerHTML = "本站已运行 " + diffYears + " 年 " + diffDays + " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+    }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+    siteTime();
+</script>
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+
+    <script src="http://47.106.81.116/libs/materialize/materialize.min.js"></script>
+    <script src="http://47.106.81.116/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="http://47.106.81.116/libs/aos/aos.js"></script>
+    <script src="http://47.106.81.116/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="http://47.106.81.116/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+
+    
+        <script src="http://47.106.81.116/libs/others/clicklove.js"></script>
+    
+    
+    
+        <script async src="http://47.106.81.116/libs/others/busuanzi.pure.mini.js"></script>
+    
+    
+</body>
+
+</html>

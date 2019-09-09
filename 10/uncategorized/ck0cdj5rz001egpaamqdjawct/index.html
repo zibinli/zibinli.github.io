@@ -1,0 +1,949 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="位运算符, PHP Redis Linux Nginx">
+    <meta name="baidu-site-verification" content="fmlEuI34ir">
+    <meta name="google-site-verification" content="KeoTn_OFy4ndJwXNmm2gMeQfPhd7alqE9vQDwI32KCY">
+    <meta name="description" content="位运算一览表
+
+
+符号
+示例
+含义
+
+
+
+&amp;amp;
+$a &amp;amp; $b
+按位与。将 $a 和 $b 中都为 1 的位设为 1
+
+
+|
+$a | $b
+按位或。将 $a 和 $b 中任何一个为 1 的位设为 1
+
+
+^
+$a ^ $c
+">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>位运算符 | ReliableCoder</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="http://47.106.81.116/libs/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="http://47.106.81.116/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="http://47.106.81.116/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="http://47.106.81.116/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="http://47.106.81.116/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    
+    <style type="text/css">
+        
+            
+            code[class*="language-"],
+            pre[class*="language-"] {
+                white-space: pre !important;
+            }
+
+        
+    </style>
+
+    <script src="http://47.106.81.116/libs/jquery/jquery-2.2.0.min.js"></script>
+    <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?46e79e71af0709a5b9106bf20cecc493";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+    
+    
+        <script>
+            (function(){
+                var bp = document.createElement('script');
+                var curProtocol = window.location.protocol.split(':')[0];
+                if (curProtocol === 'https') {
+                    bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+                }
+                else {
+                    bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+                }
+                var s = document.getElementsByTagName("script")[0];
+                s.parentNode.insertBefore(bp, s);
+            })();
+        </script>
+    
+
+<link rel="stylesheet" href="/css/prism-xonokai.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+
+<body>
+
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <span class="logo-span">ReliableCoder</span>
+                </a>
+            </div>
+            
+
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a>
+<ul class="right">
+    
+    <li class="hide-on-med-and-down">
+        <a href="/" class="waves-effect waves-light">
+            
+            <i class="fa fa-home"></i>
+            
+            <span>首页</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/tags" class="waves-effect waves-light">
+            
+            <i class="fa fa-tags"></i>
+            
+            <span>标签</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/categories" class="waves-effect waves-light">
+            
+            <i class="fa fa-bookmark"></i>
+            
+            <span>分类</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/archives" class="waves-effect waves-light">
+            
+            <i class="fa fa-archive"></i>
+            
+            <span>归档</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/about" class="waves-effect waves-light">
+            
+            <i class="fa fa-user-circle-o"></i>
+            
+            <span>关于我</span>
+        </a>
+    </li>
+    
+    <li>
+        <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+            <i id="searchIcon" class="fa fa-search" title="搜索"></i>
+        </a>
+    </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <div class="logo-name">ReliableCoder</div>
+        <div class="logo-desc">
+            
+            WEB开发 | PHP开发 | 源码解读
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li>
+            <a href="/" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-home"></i>
+                
+                首页
+            </a>
+        </li>
+        
+        <li>
+            <a href="/tags" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-tags"></i>
+                
+                标签
+            </a>
+        </li>
+        
+        <li>
+            <a href="/categories" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-bookmark"></i>
+                
+                分类
+            </a>
+        </li>
+        
+        <li>
+            <a href="/archives" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-archive"></i>
+                
+                归档
+            </a>
+        </li>
+        
+        <li>
+            <a href="/about" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-user-circle-o"></i>
+                
+                关于我
+            </a>
+        </li>
+        
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+<script src="http://47.106.81.116/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/';
+            }
+        }
+    })();
+</script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('http://47.106.81.116/medias/featureimages/18.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        位运算符
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="http://47.106.81.116/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 20px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                          <div class="article-tag">
+                            <span class="chip bg-color">无标签</span>
+                          </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                </div>
+            </div>
+            
+            <div class="post-info">
+                <div class="post-date info-break-policy">
+                    <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2018-10-23
+                </div>
+
+                <div class="post-author info-break-policy">
+                    <i class="fa fa-user-o fa-fw"></i>作者:&nbsp;&nbsp;
+                    
+                        Reliable Mark
+                    
+                </div>
+
+                
+                    
+                    <div class="info-break-policy">
+                        <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
+                        925
+                    </div>
+                    
+
+                    
+                    <div class="info-break-policy">
+                        <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                        4 分
+                    </div>
+                    
+                
+                
+                <!-- 
+                        <span id="busuanzi_container_site_pv" style='display:none'></span>
+                        <i class="fa fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv" ></span>
+    
+                 -->
+
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h3 id="位运算一览表"><a href="#位运算一览表" class="headerlink" title="位运算一览表"></a>位运算一览表</h3><table>
+<thead>
+<tr>
+<th>符号</th>
+<th>示例</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&amp;</td>
+<td>$a &amp; $b</td>
+<td>按位与。将 $a 和 $b 中都为 1 的位设为 1</td>
+</tr>
+<tr>
+<td>|</td>
+<td>$a | $b</td>
+<td>按位或。将 $a 和 $b 中任何一个为 1 的位设为 1</td>
+</tr>
+<tr>
+<td>^</td>
+<td>$a ^ $c</td>
+<td>按位异或。将 $a 和 $b 中相同位不一致的位设为 1</td>
+</tr>
+<tr>
+<td>~$a</td>
+<td>~$a</td>
+<td>按位取反。将 $a 为 1 的位设为 0，为 0 的位设为 1</td>
+</tr>
+<tr>
+<td>&lt;&lt;</td>
+<td>$a &lt;&lt; $c</td>
+<td>左移。将 $a 的位向 <strong>左</strong> 移动 $b 次</td>
+</tr>
+<tr>
+<td>&gt;&gt;</td>
+<td>$d &gt;&gt; $b</td>
+<td>左移。将 $a 的位向 <strong>右</strong> 移动 $b 次</td>
+</tr>
+</tbody></table>
+<h3 id="amp-运算符"><a href="#amp-运算符" class="headerlink" title="&amp; 运算符"></a>&amp; 运算符</h3><blockquote>
+<p>按位与。相同为 1，不同为 0</p>
+<pre><code>$a = 1; // 0001
+$b = 2; // 0010
+echo $a &amp; $b; // 0000</code></pre><p>按位比较，相同位得1，不同位得 0。由于 1 和 2 的二进制数中每个位都不相同，所以结果为: 0000，也就是 0。</p>
+</blockquote>
+<h3 id="运算符"><a href="#运算符" class="headerlink" title="| 运算符"></a>| 运算符</h3><blockquote>
+<p>按位或。有 1 为 1，无 1 为 0</p>
+<pre><code>$a = 1; // 0001
+$b = 3; // 0011
+echo $a | $b; // 0011</code></pre></blockquote>
+<p>按位比较，相同位得 0 ，不同位 得 1，所以结果为: 0011，也就是 3。</p>
+<h3 id="运算符-1"><a href="#运算符-1" class="headerlink" title="^ 运算符"></a>^ 运算符</h3><blockquote>
+<p>按位异或。相同为 0，不同为 1</p>
+<pre><code>$a = 1; // 0001
+$b = 3; // 0011
+echo $a ^ $b; // 0010</code></pre></blockquote>
+<p>按位比较，相同位得 0 ，不同位 得 1，所以结果为: 0010，也就是 2。</p>
+<h3 id="运算符-2"><a href="#运算符-2" class="headerlink" title="~ 运算符"></a>~ 运算符</h3><blockquote>
+<p>按位取反。1 取 0，0 取 1</p>
+<pre><code>$a = 1; // 0000 0000 0000 0000 0000 0000 0000 0001
+$a1 = ~$a;
+echo $a1; // -2。 </code></pre><p>这个运算符相比较其它位运算符要复杂一些。我们知道，大多数编程语言中，最高位是符号位，那么，32 位操作系统下，PHP 整数的最大值是:<br>0111 1111 1111 1111 1111 1111 1111 1111 = 2147483647</p>
+</blockquote>
+<p>因此，当对 1 进行按位取反后，得到</p>
+<blockquote>
+<p>$A1 = 1111 1111 1111 1111 1111 1111 1111 1110</p>
+</blockquote>
+<p>符号位为 1，即为 <strong>负数</strong>。在计算机中，负数以其对应绝对值的补码形式表达。也就是说，$a1 的补码是 $A1，则</p>
+<blockquote>
+<p>反码 = 补码 - 1 = 1111 1111 1111 1111 1111 1111 1111 1101</p>
+</blockquote>
+<p>那么 $a1 对应的整数就是:</p>
+<blockquote>
+<p>原码 = 反码各位取反 = 0000 0000 0000 0000 0000 0000 0000 0010 = -2;</p>
+</blockquote>
+<h3 id="lt-lt-运算符"><a href="#lt-lt-运算符" class="headerlink" title="<< 运算符"></a>&lt;&lt; 运算符</h3><blockquote>
+<p>各位向左移动，末尾补 0</p>
+<pre><code>$a = 2; // 0000 0000 0000 0000 0000 0000 0000 0010
+$a1 = $a &lt;&lt; 3;
+echo $a1; // 16</code></pre><p>32 位系统下，一个整数用 32 位表示。当位数向左移动，舍去多余的位数，末尾补 0 ，则得到 $a1 为：<br>0000 0000 0000 0000 0000 0000 0001 0000 = 16</p>
+</blockquote>
+<p>因此</p>
+<blockquote>
+<p>$a &lt;&lt; $b = $a^($b+1) // $a 的 ($b + 1) 次方</p>
+</blockquote>
+<p>左移运算符有一个比较有趣的地方，当一个数向左移动超过计算机指定整数位时，就会出现不符合我们上述总结的原数平方规则的情况。比如 2 在 64 位系统下，向左移动 62、63、64 位：</p>
+<pre><code>echo 2 &gt;&gt; 61 // 4611686018427387904
+echo 2 &gt;&gt; 62 // -9223372036854775808
+echo 2 &gt;&gt; 63 // 0
+echo 2 &gt;&gt; 64 // 0</code></pre><p>有兴趣的朋友可以列出对应二进制数，推演下计算过程。</p>
+<h3 id="gt-gt-运算符"><a href="#gt-gt-运算符" class="headerlink" title=">> 运算符"></a>&gt;&gt; 运算符</h3><blockquote>
+<p>各位向右移动，前面补 0</p>
+<pre><code>$a = 8; // 0000 0000 0000 0000 0000 0000 0000 1000
+$a1 = $a &lt;&lt; 3;
+echo $a1; // 16</code></pre></blockquote>
+<h3 id="左移和右移运算符“误区”"><a href="#左移和右移运算符“误区”" class="headerlink" title="左移和右移运算符“误区”"></a>左移和右移运算符“误区”</h3><p>关于左移和右移运算符，很多朋友可能会看到这样的总结:</p>
+<blockquote>
+<p><del>左移平方，右移开方</del></p>
+</blockquote>
+<p>其实严格来说，这只针对<strong>值为 2 的正整数次幂的整数有效</strong>。当不是 2 的正整数次幂时，比如：</p>
+<pre><code>$a = 9; // 0000 0000 0000 0000 0000 0000 0000 1001
+$a1 = $a &gt;&gt; 1;
+echo $a1; // 4</code></pre><p>所以，遇到左移和右移运算符时，要实际情况实际分析，不能一味的按照别人的总结走。</p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+            </div>
+            <hr/>
+
+            
+
+            <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    <div class="social-share" data-disabled="qzone" data-wechat-qrcode-helper="<p>微信里点“发现”->“扫一扫”二维码便可查看分享。</p>"></div>
+    
+</div>
+
+<script src="/libs/share/js/social-share.min.js"></script>
+
+            
+            
+            
+            <div class="reprint1">
+                <p>
+                    <span class="reprint1-tip">
+                        <i class="fa fa-exclamation-circle"></i>&nbsp;&nbsp;转载请注明:
+                    </span>
+                    <a href="http://yoursite.com" class="b-link-green">ReliableCoder</a>
+                    <i class="fa fa-angle-right fa-lg fa-fw text-color"></i>
+                    <a href="/10/uncategorized/ck0cdj5rz001egpaamqdjawct/" class="b-link-green">位运算符</a>
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/10/uncategorized/ck0cdj5ox0004gpaa7z4ia117/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="http://47.106.81.116/medias/featureimages/12.jpg" class="responsive-img" alt="Nginx location匹配规则">
+                        
+                        <span class="card-title">Nginx location匹配规则</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            1、语法location [=|~|~*|^~|@] /uri/ {
+  ...
+} 2、说明从上面的语法出发，可以了解到 location 可以区分为三个部分，接下来一个一个的研究一下。
+1) [=||*|^~|@]
+= : 表示精确匹配
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2018-10-24
+                        </span>
+                        <span class="publish-author">
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/10/bianchengsixiang/ck0cdj5u5002vgpaamfsaodq5/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="http://47.106.81.116/medias/featureimages/17.jpg" class="responsive-img" alt="编程思想：面向对象和面向过程">
+                        
+                        <span class="card-title">编程思想：面向对象和面向过程</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            　　何谓面向对象？何谓面向过程？对于这编程界的两大思想，一直贯穿在我们学习和工作当中。我们知道面向过程和面向对象，但要让我们讲出来个所以然，又感觉是不知从何说起，最后可能也只会说出一句就是那样啦，你知道啦。而这种茫然，其实就是对这两大编程思
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2016-10-07
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/编程思想/" class="post-category" target="_blank">
+                                    编程思想
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/常见问题及解决方案/" target="_blank">
+                        <span class="chip bg-color">常见问题及解决方案</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: ReliableCoder<br />'
+            + '作者: Reliable Mark<br />'
+            + '链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fa fa-list"></i>
+    </a>
+</div>
+
+
+<script src="http://47.106.81.116/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h1, h2, h3, h4, h5'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h1, h2, h3, h4, h5').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).slideUp(500);
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).slideDown(500);
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+    
+
+</main>
+
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right" style="width: 100%;">
+            
+                &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
+                <span class="white-color">143.9k</span>
+
+            
+            <br>
+
+            <span id="sitetime"></span>
+
+            
+
+            <!-- 
+                <br>
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'></span>
+                    <i class="fa fa-heart-o"></i>
+                    本站总访问量 <span id="busuanzi_value_site_pv" class="white-color"></span>
+
+                
+
+                
+                    <span id="busuanzi_container_site_uv" style='display:none'></span>
+                    人次,&nbsp;访客数 <span id="busuanzi_value_site_uv" class="white-color"></span> 人.
+                    
+                
+
+             -->
+
+        </div>
+
+        <div class="col s12 m4 l4 social-link social-statis">
+
+
+
+
+
+
+
+
+
+</div>
+
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+<script language=javascript>
+    function siteTime() {
+        window.setTimeout("siteTime()", 1000);
+        var seconds = 1000;
+        var minutes = seconds * 60;
+        var hours = minutes * 60;
+        var days = hours * 24;
+        var years = days * 365;
+        var today = new Date();
+        var todayYear = today.getFullYear();
+        var todayMonth = today.getMonth() + 1;
+        var todayDate = today.getDate();
+        var todayHour = today.getHours();
+        var todayMinute = today.getMinutes();
+        var todaySecond = today.getSeconds();
+
+        /* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+        year - 作为date对象的年份，为4位年份值
+        month - 0-11之间的整数，做为date对象的月份
+        day - 1-31之间的整数，做为date对象的天数
+        hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+        minutes - 0-59之间的整数，做为date对象的分钟数
+        seconds - 0-59之间的整数，做为date对象的秒数
+        microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+
+        var t1 = Date.UTC(2018, 08, 01, 00, 00, 00); //北京时间2019-8-1 00:00:00
+        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+        var diff = t2 - t1;
+        var diffYears = Math.floor(diff / years);
+        var diffDays = Math.floor((diff / days) - diffYears * 365);
+        var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+        var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) / minutes);
+        var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours - diffMinutes * minutes) / seconds);
+        document.getElementById("sitetime").innerHTML = "本站已运行 " + diffYears + " 年 " + diffDays + " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+    }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+    siteTime();
+</script>
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+
+    <script src="http://47.106.81.116/libs/materialize/materialize.min.js"></script>
+    <script src="http://47.106.81.116/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="http://47.106.81.116/libs/aos/aos.js"></script>
+    <script src="http://47.106.81.116/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="http://47.106.81.116/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+
+    
+        <script src="http://47.106.81.116/libs/others/clicklove.js"></script>
+    
+    
+    
+        <script async src="http://47.106.81.116/libs/others/busuanzi.pure.mini.js"></script>
+    
+    
+</body>
+
+</html>
