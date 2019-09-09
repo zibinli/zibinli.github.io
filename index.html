@@ -324,6 +324,10 @@ $(function () {
         indicators: 'true' === 'true'
     });
 
+    if (getQueryString('admin') && getQueryString('admin') == 'zibin') {
+
+    }
+
     let carouselIntervalId;
     
     // Loop to call the next cover article picture.
@@ -353,6 +357,12 @@ $(function () {
         restartPlay();
     });
     
+
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]); return null;
+    }
 });
 </script>
 
@@ -394,7 +404,7 @@ $(function () {
                     <a href="/categories/Redis/源码/" class="category" target="_blank">源码</a>
                     
                 </div>
-                <a href="/7/redis/yuanma/ck06gou8i003iloaa9jmwm8fx/" target="_blank">
+                <a href="/7/redis/yuanma/ck07su6j0003h3vaa650lnaxj/" target="_blank">
                     <h3 class="post-title">跟着大彬读源码 - Redis 1 - 启动服务，程序都干了什么？</h3>
                 </a>
                 <p class="post-description">
@@ -403,7 +413,7 @@ $(function () {
 相信很多小伙伴应该也都对或曾
                     
                 </p>
-                <a href="/7/redis/yuanma/ck06gou8i003iloaa9jmwm8fx/" target="_blank"
+                <a href="/7/redis/yuanma/ck07su6j0003h3vaa650lnaxj/" target="_blank"
                         class="read-more btn waves-effect waves-light" style="background: linear-gradient(to right, #FF5E3A 0%, #FF2A68 100%)">
                     <i class="icon fa fa-eye fa-fw"></i>阅读更多
                 </a>
@@ -420,7 +430,7 @@ $(function () {
                     <a href="/categories/网络协议/" class="category" target="_blank">网络协议</a>
                     
                 </div>
-                <a href="/10/wangluoxieyi/ck06gou7a0022loaaeaa3rcsm/" target="_blank">
+                <a href="/10/wangluoxieyi/ck07su6iy003e3vaar115kvbo/" target="_blank">
                     <h3 class="post-title">网络协议 1 - 概述</h3>
                 </a>
                 <p class="post-description">
@@ -428,7 +438,7 @@ $(function () {
                         互联网世界中，网络协议的重要性不言而喻。很多人都知道，网络协议中的五层模型或者七层模型，这些在操作系统中，那都是“必考题”。上学的时候，无论
                     
                 </p>
-                <a href="/10/wangluoxieyi/ck06gou7a0022loaaeaa3rcsm/" target="_blank"
+                <a href="/10/wangluoxieyi/ck07su6iy003e3vaar115kvbo/" target="_blank"
                         class="read-more btn waves-effect waves-light" style="background: linear-gradient(to right, #EF4DB6 0%, #C643FC 100%)">
                     <i class="icon fa fa-eye fa-fw"></i>阅读更多
                 </a>
@@ -445,7 +455,7 @@ $(function () {
                     <a href="/categories/网络协议/" class="category" target="_blank">网络协议</a>
                     
                 </div>
-                <a href="/12/wangluoxieyi/ck06gou8n003vloaa8zya0w2e/" target="_blank">
+                <a href="/12/wangluoxieyi/ck07su6hw00223vaam4d876en/" target="_blank">
                     <h3 class="post-title">网络协议 13 - HTTPS 协议：加密路上无尽头</h3>
                 </a>
                 <p class="post-description">
@@ -453,7 +463,7 @@ $(function () {
                         之前说了 HTTP 协议的各种问题，但是它还是陪伴着互联网、陪伴着我们走过了将近二十年的风风雨雨。现在有很多新的协议尝试去取代它，来解决性能
                     
                 </p>
-                <a href="/12/wangluoxieyi/ck06gou8n003vloaa8zya0w2e/" target="_blank"
+                <a href="/12/wangluoxieyi/ck07su6hw00223vaam4d876en/" target="_blank"
                         class="read-more btn waves-effect waves-light" style="background: linear-gradient(to right, #1AD6FD 0%, #1D62F0 100%)">
                     <i class="icon fa fa-eye fa-fw"></i>阅读更多
                 </a>
@@ -472,7 +482,7 @@ $(function () {
                     <a href="/categories/Mysql/复制/" class="category" target="_blank">复制</a>
                     
                 </div>
-                <a href="/4/mysql/fuzhi/ck06gou6k001dloaa71yr2fvf/" target="_blank">
+                <a href="/4/mysql/fuzhi/ck07su6h3001b3vaaie2pttqw/" target="_blank">
                     <h3 class="post-title">MySQL 复制 - 性能与扩展性的基石 3：常见问题及解决方案</h3>
                 </a>
                 <p class="post-description">
@@ -481,7 +491,7 @@ $(function () {
 1 数据损坏或
                     
                 </p>
-                <a href="/4/mysql/fuzhi/ck06gou6k001dloaa71yr2fvf/" target="_blank"
+                <a href="/4/mysql/fuzhi/ck07su6h3001b3vaaie2pttqw/" target="_blank"
                         class="read-more btn waves-effect waves-light" style="background: linear-gradient(to right, #FFCC00 0%, #FF9500 100%)">
                     <i class="icon fa fa-eye fa-fw"></i>阅读更多
                 </a>
@@ -498,7 +508,7 @@ $(function () {
                     <a href="/categories/编程思想/" class="category" target="_blank">编程思想</a>
                     
                 </div>
-                <a href="/10/bianchengsixiang/ck06gou76001yloaagklsff9d/" target="_blank">
+                <a href="/10/bianchengsixiang/ck07su6hb001k3vaaxpgxcbt7/" target="_blank">
                     <h3 class="post-title">编程思想：面向对象和面向过程</h3>
                 </a>
                 <p class="post-description">
@@ -506,33 +516,8 @@ $(function () {
                         　　何谓面向对象？何谓面向过程？对于这编程界的两大思想，一直贯穿在我们学习和工作当中。我们知道面向过程和面向对象，但要让我们讲出来个所以然，
                     
                 </p>
-                <a href="/10/bianchengsixiang/ck06gou76001yloaagklsff9d/" target="_blank"
+                <a href="/10/bianchengsixiang/ck07su6hb001k3vaaxpgxcbt7/" target="_blank"
                         class="read-more btn waves-effect waves-light" style="background: linear-gradient(to right, #4cbf30 0%, #0f9d58 100%)">
-                    <i class="icon fa fa-eye fa-fw"></i>阅读更多
-                </a>
-            </div>
-        </div>
-    </div>
-    
-    
-    <div class="col s12 m6" data-aos="zoom-in-up">
-        <div class="post-card" style="background-image: url('http://47.106.81.116/medias/featureimages/10.jpg')">
-            <div class="post-body">
-                <div class="post-categories">
-                    
-                    <a href="/categories/网络协议/" class="category" target="_blank">网络协议</a>
-                    
-                </div>
-                <a href="/11/wangluoxieyi/ck06gou830033loaa3v1wm2e2/" target="_blank">
-                    <h3 class="post-title">网络协议 7 - UDP 协议：性善碰到城会玩</h3>
-                </a>
-                <p class="post-description">
-                    
-                        网络协议五步登天路，我们一路迈过了物理层、链路层，今天终于到了传输层。从这一层开始，很多知识应该都是服务端开发必备的知识了，今天我们就一起来
-                    
-                </p>
-                <a href="/11/wangluoxieyi/ck06gou830033loaa3v1wm2e2/" target="_blank"
-                        class="read-more btn waves-effect waves-light" style="background: linear-gradient(to right, #C644FC 0%, #5856D6 100%)">
                     <i class="icon fa fa-eye fa-fw"></i>阅读更多
                 </a>
             </div>
@@ -548,7 +533,7 @@ $(function () {
                     <a href="/categories/网络协议/" class="category" target="_blank">网络协议</a>
                     
                 </div>
-                <a href="/11/wangluoxieyi/ck06gou8c003cloaaymk32387/" target="_blank">
+                <a href="/11/wangluoxieyi/ck07su6iv003b3vaatwnu4gpm/" target="_blank">
                     <h3 class="post-title">网络协议 8 - TCP协议（上）：性恶就要套路深</h3>
                 </a>
                 <p class="post-description">
@@ -557,7 +542,32 @@ $(function () {
 与之相对应的，TCP 就像是老大
                     
                 </p>
-                <a href="/11/wangluoxieyi/ck06gou8c003cloaaymk32387/" target="_blank"
+                <a href="/11/wangluoxieyi/ck07su6iv003b3vaatwnu4gpm/" target="_blank"
+                        class="read-more btn waves-effect waves-light" style="background: linear-gradient(to right, #C644FC 0%, #5856D6 100%)">
+                    <i class="icon fa fa-eye fa-fw"></i>阅读更多
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    
+    <div class="col s12 m6" data-aos="zoom-in-up">
+        <div class="post-card" style="background-image: url('http://47.106.81.116/medias/featureimages/10.jpg')">
+            <div class="post-body">
+                <div class="post-categories">
+                    
+                    <a href="/categories/网络协议/" class="category" target="_blank">网络协议</a>
+                    
+                </div>
+                <a href="/11/wangluoxieyi/ck07su6j3003n3vaagr5w7vbw/" target="_blank">
+                    <h3 class="post-title">网络协议 7 - UDP 协议：性善碰到城会玩</h3>
+                </a>
+                <p class="post-description">
+                    
+                        网络协议五步登天路，我们一路迈过了物理层、链路层，今天终于到了传输层。从这一层开始，很多知识应该都是服务端开发必备的知识了，今天我们就一起来
+                    
+                </p>
+                <a href="/11/wangluoxieyi/ck07su6j3003n3vaagr5w7vbw/" target="_blank"
                         class="read-more btn waves-effect waves-light" style="background: linear-gradient(to right, #55EFCB 0%, #5BCAFF 100%)">
                     <i class="icon fa fa-eye fa-fw"></i>阅读更多
                 </a>
@@ -574,7 +584,7 @@ $(function () {
                     <a href="/categories/网络协议/" class="category" target="_blank">网络协议</a>
                     
                 </div>
-                <a href="/12/wangluoxieyi/ck06gou8q0040loaap5z8zphe/" target="_blank">
+                <a href="/12/wangluoxieyi/ck07su6j4003r3vaag6l5bhk1/" target="_blank">
                     <h3 class="post-title">网络协议 9 - TCP协议（下）：聪明反被聪明误</h3>
                 </a>
                 <p class="post-description">
@@ -582,7 +592,7 @@ $(function () {
                         上次了解了 TCP 建立连接与断开连接的过程，我们发现，TCP 会通过各种“套路”来保证传输数据的安全。除此之外，我们还大概了解了 TCP 
                     
                 </p>
-                <a href="/12/wangluoxieyi/ck06gou8q0040loaap5z8zphe/" target="_blank"
+                <a href="/12/wangluoxieyi/ck07su6j4003r3vaag6l5bhk1/" target="_blank"
                         class="read-more btn waves-effect waves-light" style="background: linear-gradient(to right, #FF5E3A 0%, #FF2A68 100%)">
                     <i class="icon fa fa-eye fa-fw"></i>阅读更多
                 </a>
@@ -599,7 +609,7 @@ $(function () {
                     <a href="/categories/网络协议/" class="category" target="_blank">网络协议</a>
                     
                 </div>
-                <a href="/12/wangluoxieyi/ck06gouay0076loaa9fdr1hpa/" target="_blank">
+                <a href="/12/wangluoxieyi/ck07su6lg00763vaa7kl8331p/" target="_blank">
                     <h3 class="post-title">网络协议 15 - P2P 协议：小种子大学问</h3>
                 </a>
                 <p class="post-description">
@@ -608,7 +618,7 @@ $(function () {
 大家说起种子，应该都知道是用来下载资源的。那么资源下
                     
                 </p>
-                <a href="/12/wangluoxieyi/ck06gouay0076loaa9fdr1hpa/" target="_blank"
+                <a href="/12/wangluoxieyi/ck07su6lg00763vaa7kl8331p/" target="_blank"
                         class="read-more btn waves-effect waves-light" style="background: linear-gradient(to right, #EF4DB6 0%, #C643FC 100%)">
                     <i class="icon fa fa-eye fa-fw"></i>阅读更多
                 </a>
@@ -625,7 +635,7 @@ $(function () {
                     <a href="/categories/网络协议/" class="category" target="_blank">网络协议</a>
                     
                 </div>
-                <a href="/1/wangluoxieyi/ck06gouaz0077loaa7kede7hk/" target="_blank">
+                <a href="/1/wangluoxieyi/ck07su6li00783vaavvbj4fkc/" target="_blank">
                     <h3 class="post-title">网络协议 终章 - GTP 协议：复杂的移动网络</h3>
                 </a>
                 <p class="post-description">
@@ -634,7 +644,7 @@ $(function () {
 移动网络的发展历程你一定知道手机上网有 2G、3G、4G 的说法，
                     
                 </p>
-                <a href="/1/wangluoxieyi/ck06gouaz0077loaa7kede7hk/" target="_blank"
+                <a href="/1/wangluoxieyi/ck07su6li00783vaavvbj4fkc/" target="_blank"
                         class="read-more btn waves-effect waves-light" style="background: linear-gradient(to right, #1AD6FD 0%, #1D62F0 100%)">
                     <i class="icon fa fa-eye fa-fw"></i>阅读更多
                 </a>
@@ -661,7 +671,7 @@ $(function () {
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/9/ngninx/ck06gou3y0009loaa5glp4rcr/" target="_blank">
+                    <a href="/9/ngninx/ck07su6ea000d3vaatpbqjt2t/" target="_blank">
                         <div class="card-image">
                             
                             
@@ -722,7 +732,7 @@ location ~* \.(gif|jpg|png)$ {
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/8/redis/yuanma/ck06gou8g003floaatryhfn8a/" target="_blank">
+                    <a href="/8/redis/yuanma/ck07su6j1003k3vaadw9zew62/" target="_blank">
                         <div class="card-image">
                             
                             
@@ -778,7 +788,7 @@ location ~* \.(gif|jpg|png)$ {
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/8/redis/yuanma/ck06gou8v0047loaarl66ykps/" target="_blank">
+                    <a href="/8/redis/yuanma/ck07su6jl00473vaahch4ysem/" target="_blank">
                         <div class="card-image">
                             
                             
@@ -838,7 +848,7 @@ location ~* \.(gif|jpg|png)$ {
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/8/redis/yuanma/ck06gou8t0045loaaty5eekzu/" target="_blank">
+                    <a href="/8/redis/yuanma/ck07su6jb003y3vaaftkht6bn/" target="_blank">
                         <div class="card-image">
                             
                             
@@ -895,7 +905,7 @@ location ~* \.(gif|jpg|png)$ {
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/7/redis/yuanma/ck06gou8s0042loaankxg983d/" target="_blank">
+                    <a href="/7/redis/yuanma/ck07su6j6003t3vaa2op3xhc2/" target="_blank">
                         <div class="card-image">
                             
                             
@@ -951,7 +961,7 @@ location ~* \.(gif|jpg|png)$ {
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/7/redis/yuanma/ck06gou8o003xloaae78bp5a5/" target="_blank">
+                    <a href="/7/redis/yuanma/ck07su6jd00413vaa49shf8ga/" target="_blank">
                         <div class="card-image">
                             
                             
@@ -1005,7 +1015,7 @@ location ~* \.(gif|jpg|png)$ {
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/7/redis/yuanma/ck06gou8l003oloaa24i3664e/" target="_blank">
+                    <a href="/7/redis/yuanma/ck07su6jh00443vaa8lco5q98/" target="_blank">
                         <div class="card-image">
                             
                             
@@ -1057,7 +1067,7 @@ location ~* \.(gif|jpg|png)$ {
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/7/redis/yuanma/ck06goubr007kloaat4qj1eiz/" target="_blank">
+                    <a href="/7/redis/yuanma/ck07su6m4007j3vaa8bm66cy4/" target="_blank">
                         <div class="card-image">
                             
                             
@@ -1111,7 +1121,7 @@ location ~* \.(gif|jpg|png)$ {
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/7/redis/yuanma/ck06gou8j003lloaahlprr5qv/" target="_blank">
+                    <a href="/7/redis/yuanma/ck07su6j9003v3vaaj525gvr0/" target="_blank">
                         <div class="card-image">
                             
                             
@@ -1164,7 +1174,7 @@ location ~* \.(gif|jpg|png)$ {
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/7/redis/yuanma/ck06gou4w000jloaaldcsx05g/" target="_blank">
+                    <a href="/7/redis/yuanma/ck07su6eh000h3vaao3vxbsjt/" target="_blank">
                         <div class="card-image">
                             
                             
@@ -1217,7 +1227,7 @@ location ~* \.(gif|jpg|png)$ {
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/7/redis/yuanma/ck06gou8i003iloaa9jmwm8fx/" target="_blank">
+                    <a href="/7/redis/yuanma/ck07su6j0003h3vaa650lnaxj/" target="_blank">
                         <div class="card-image">
                             
                             
@@ -1270,7 +1280,7 @@ location ~* \.(gif|jpg|png)$ {
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/4/mysql/keyongxing/ck06gou6o001iloaafhxjjemf/" target="_blank">
+                    <a href="/4/mysql/keyongxing/ck07su6gy001a3vaa6kfnuhyo/" target="_blank">
                         <div class="card-image">
                             
                             
@@ -1365,7 +1375,7 @@ location ~* \.(gif|jpg|png)$ {
 
             
 
-            <!-- 
+            
                 <br>
                 
                     <span id="busuanzi_container_site_pv" style='display:none'></span>
@@ -1380,7 +1390,7 @@ location ~* \.(gif|jpg|png)$ {
                     
                 
 
-             -->
+            
 
         </div>
 
@@ -1435,7 +1445,7 @@ location ~* \.(gif|jpg|png)$ {
         var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) / minutes);
         var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours - diffMinutes * minutes) / seconds);
         document.getElementById("sitetime").innerHTML = "本站已运行 " + diffYears + " 年 " + diffDays + " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
-    }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+    }
     siteTime();
 </script>
 

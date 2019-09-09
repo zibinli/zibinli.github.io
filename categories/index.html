@@ -269,29 +269,11 @@
                 </a>
                 
                 
-                <a href="/categories/Ngninx/" title="Ngninx: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            style="background-color: #F5EEF8;">Ngninx
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
-                
-                
                 <a href="/categories/Mysql/扩展性/" title="扩展性: 3">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
-                            style="background-color: #D5F5E3;">扩展性
+                            style="background-color: #F5EEF8;">扩展性
                         <span class="tag-length">3</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/categories/网络协议/" title="网络协议: 23">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            style="background-color: #E8F8F5;">网络协议
-                        <span class="tag-length">23</span>
                     </span>
                 </a>
                 
@@ -299,8 +281,26 @@
                 <a href="/categories/个人总结/" title="个人总结: 1">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
-                            style="background-color: #FEF9E7;">个人总结
+                            style="background-color: #D5F5E3;">个人总结
                         <span class="tag-length">1</span>
+                    </span>
+                </a>
+                
+                
+                <a href="/categories/Ngninx/" title="Ngninx: 1">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            style="background-color: #E8F8F5;">Ngninx
+                        <span class="tag-length">1</span>
+                    </span>
+                </a>
+                
+                
+                <a href="/categories/网络协议/" title="网络协议: 23">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            style="background-color: #FEF9E7;">网络协议
+                        <span class="tag-length">23</span>
                     </span>
                 </a>
                 
@@ -323,20 +323,20 @@
                 </a>
                 
                 
-                <a href="/categories/Mysql/复制/" title="复制: 4">
+                <a href="/categories/Mysql/可用性/" title="可用性: 1">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
-                            style="background-color: #D7BDE2;">复制
-                        <span class="tag-length">4</span>
+                            style="background-color: #D7BDE2;">可用性
+                        <span class="tag-length">1</span>
                     </span>
                 </a>
                 
                 
-                <a href="/categories/Mysql/可用性/" title="可用性: 1">
+                <a href="/categories/Mysql/复制/" title="复制: 4">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
-                            style="background-color: #A3E4D7;">可用性
-                        <span class="tag-length">1</span>
+                            style="background-color: #A3E4D7;">复制
+                        <span class="tag-length">4</span>
                     </span>
                 </a>
                 
@@ -391,7 +391,7 @@
                     color: '#3C4858'
                 }
             },
-            indicator: [{"name":"Mysql","max":24},{"name":"Ngninx","max":24},{"name":"扩展性","max":24},{"name":"网络协议","max":24},{"name":"个人总结","max":24},{"name":"Redis","max":24},{"name":"源码","max":24},{"name":"复制","max":24},{"name":"可用性","max":24},{"name":"编程思想","max":24}],
+            indicator: [{"name":"Mysql","max":24},{"name":"扩展性","max":24},{"name":"个人总结","max":24},{"name":"Ngninx","max":24},{"name":"网络协议","max":24},{"name":"Redis","max":24},{"name":"源码","max":24},{"name":"可用性","max":24},{"name":"复制","max":24},{"name":"编程思想","max":24}],
             nameGap: 5,
             center: ['50%','55%'],
             radius: '66%'
@@ -402,7 +402,7 @@
             itemStyle: {normal: {areaStyle: {type: 'default'}}},
             data : [
                 {
-                    value : [8,1,3,23,1,10,10,4,1,1],
+                    value : [8,3,1,1,23,10,10,1,4,1],
                     name : '文章分类数量'
                 }
             ]
@@ -429,7 +429,7 @@
 
             
 
-            <!-- 
+            
                 <br>
                 
                     <span id="busuanzi_container_site_pv" style='display:none'></span>
@@ -444,7 +444,7 @@
                     
                 
 
-             -->
+            
 
         </div>
 
@@ -499,7 +499,7 @@
         var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) / minutes);
         var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours - diffMinutes * minutes) / seconds);
         document.getElementById("sitetime").innerHTML = "本站已运行 " + diffYears + " 年 " + diffDays + " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
-    }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+    }
     siteTime();
 </script>
 
